@@ -22,12 +22,10 @@ services:
     volumes:
       - pgadmin-data:/var/lib/pgadmin
   spring-back:
-    build: ./asi-ii
-    container_name: asi-ii-backend
     depends_on:
       - db
-    links:
-      - db
+    build: ./asi-ii
+    container_name: asi-ii-backend
     ports:
       - "8081:8081"
 volumes:
