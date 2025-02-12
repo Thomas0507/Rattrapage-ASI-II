@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:14-alpine
+    container_name: db
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=asi-ii
+    volumes:
+      - local_pgdata:/var/lib/postgresql/data
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: always
+    ports:
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@asi-ii.com
+      PGADMIN_DEFAULT_PASSWORD: asi2
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+  spring-back:
+    build: ./asi-ii
+    container_name: asi-ii-backend
+    depends_on:
+      - db
+    links:
+      - db
+    ports:
+      - "8081:8081"
+volumes:
+  local_pgdata:
+  pgadmin-data:
