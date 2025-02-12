@@ -15,4 +15,4 @@ RUN mvn package -DskipTests
 
 FROM openjdk:21-jdk-slim
 COPY --from=build /app/target/*.jar /app/app.jar
-ENTRYPOINT java -jar /app/app.jar
+ENTRYPOINT ["java", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-Dspring.profiles.active=localdocker", "-jar", "/app/app.jar"]

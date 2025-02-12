@@ -28,6 +28,7 @@ services:
     container_name: asi-ii-backend
     ports:
       - "8081:8081"
+      - "5005:5005"
 volumes:
   local_pgdata:
   pgadmin-data:
