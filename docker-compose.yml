@@ -39,15 +39,22 @@ services:
       - ./express-socket:/app
     ports:
       - "3000:3000"
-  react-frontend:
-    container_name: react-frontend
-    restart: always
+  nextjs-frontend:
+    container_name: nextjs-frontend
+    restart: no
     build:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
       - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - spring-back
+    environment:
+      - CHOKIDAR_USEPOLLING=true  # Ensures file changes are detected
+      - WATCHPACK_POLLING=true
 volumes:
   local_pgdata:
   pgadmin-data:
-
