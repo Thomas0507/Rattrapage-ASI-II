@@ -30,7 +30,13 @@ services:
       - "8081:8081"
       - "5005:5005"
   app:
-    build: ./express-socket
+    container_name: express-socket
+    restart: always
+    build:
+      context: ./express-socket
+      dockerfile: Dockerfile
+    volumes:
+      - ./express-socket:/app
     ports:
       - "3000:3000"
 volumes:
