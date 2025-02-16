@@ -1,4 +1,4 @@
-package com.projet_asi_ii.asi_ii.Models;
+package com.projet_asi_ii.asi_ii.entities;
 
 
 import jakarta.persistence.*;
@@ -10,7 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "User")
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

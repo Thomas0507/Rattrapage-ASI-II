@@ -1,4 +1,4 @@
-package com.projet_asi_ii.asi_ii.Controllers;
+package com.projet_asi_ii.asi_ii.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

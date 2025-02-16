@@ -1,3 +1,9 @@
-export default function Cards() {
-    return <h1>Cards route</h1>
+export default async function Cards() {
+    const data = await fetch('https://api.vercel.app/blog')
+    const posts = await data.json()
+    return  <ul>
+    {posts.map((post: any) => (
+      <li key={post.id}>{post.title}</li>
+    ))}
+  </ul>
 }
