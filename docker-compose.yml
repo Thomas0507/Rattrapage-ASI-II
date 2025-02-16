@@ -29,7 +29,7 @@ services:
     ports:
       - "8081:8081"
       - "5005:5005"
-  app:
+  express-socket:
     container_name: express-socket
     restart: always
     build:
@@ -39,6 +39,15 @@ services:
       - ./express-socket:/app
     ports:
       - "3000:3000"
+  react-frontend:
+    container_name: react-frontend
+    restart: always
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
 volumes:
   local_pgdata:
   pgadmin-data:
+
