@@ -1,5 +1,6 @@
 package com.projet_asi_ii.asi_ii.configurations;
 
+import com.projet_asi_ii.asi_ii.services.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,12 +10,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -32,10 +29,10 @@ public class SecurityConfig {
 						.requestMatchers("/auth/**").permitAll()
 						.anyRequest().authenticated()
 				).csrf(AbstractHttpConfigurer::disable) // add custom csrf for unsafe methods
-//				.formLogin(form -> form
-//						.loginPage("/login")            // redirect page login
-//						.permitAll()
-//				)
+				.formLogin(form -> form
+						//.loginPage("/auth/login")            // redirect page login
+						.permitAll()
+				)
 				.logout(LogoutConfigurer::permitAll)
 
 		;
@@ -48,21 +45,33 @@ public class SecurityConfig {
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
 
-	@Bean
-	public UserDetailsService userDetailsService() {
-		UserDetails user =
-				User.withDefaultPasswordEncoder()
-						.username("user")
-						.password("password")
-						.roles("USER")
-						.build();
+//	/**
+//	 * Test user auth
+//	 */
+//	@Bean
+//	public UserDetailsService userDetailsService() {
+//		UserDetails user =
+//				User.withDefaultPasswordEncoder()
+//						.username("user")
+//						.password("password")
+//						.roles("USER")
+//						.build();
+//
+//		return new InMemoryUserDetailsManager(user);
+//	}
 
-		return new InMemoryUserDetailsManager(user);
+	/**
+	 * Database user auth
+	 */
+	@Bean
+	public UserDetailsServiceImpl userDetailsServiceImpl()
+	{
+		return new UserDetailsServiceImpl();
 	}
 
 	@Bean
 	public AuthenticationManager authenticationManager(
-			UserDetailsService userDetailsService,
+			UserDetailsServiceImpl userDetailsService,
 			PasswordEncoder passwordEncoder) {
 		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
 		authenticationProvider.setUserDetailsService(userDetailsService);
