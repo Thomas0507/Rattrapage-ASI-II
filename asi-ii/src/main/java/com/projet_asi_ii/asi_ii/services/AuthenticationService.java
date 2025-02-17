@@ -3,23 +3,24 @@ package com.projet_asi_ii.asi_ii.services;
 import com.projet_asi_ii.asi_ii.dtos.UserDto;
 import com.projet_asi_ii.asi_ii.entities.User;
 import com.projet_asi_ii.asi_ii.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthenticationService {
-	private final UserRepository appUserRepository;
-	private final PasswordEncoder passwordEncoder;
-	private final AuthenticationManager authenticationManager;
+	@Autowired
+	private UserRepository appUserRepository;
 
-	public AuthenticationService(UserRepository appUserRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
-		this.appUserRepository = appUserRepository;
-		this.passwordEncoder = passwordEncoder;
-		this.authenticationManager = authenticationManager;
-	}
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
 	public User addUser(UserDto userDto) {
 		User logUser = new User();
@@ -28,9 +29,9 @@ public class AuthenticationService {
 		return appUserRepository.save(logUser);
 	}
 
-	public User authenticate(UserDto userDto) {
+	public Authentication authenticate(UserDto userDto) {
 		try {
-			authenticationManager.authenticate(
+			return authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(
 							userDto.getUsername(),
 							userDto.getPassword()
@@ -42,7 +43,6 @@ public class AuthenticationService {
 			System.out.println("Authentication failed: " + e.getMessage());
 		}
 
-		return appUserRepository.findByUsername(userDto.getUsername())
-				.orElse(null);
+		return null;
 	}
 }
