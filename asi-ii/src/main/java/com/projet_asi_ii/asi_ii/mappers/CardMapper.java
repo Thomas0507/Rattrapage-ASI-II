@@ -10,6 +10,6 @@ public interface CardMapper {
 
     CardMapper INSTANCE = Mappers.getMapper( CardMapper.class );
 
-    CardEntity toCardDto(CardDto cardDto);
+    CardEntity toCardEntity(CardDto cardDto);
     CardDto toCardDto(CardEntity cardEntity);
 }
