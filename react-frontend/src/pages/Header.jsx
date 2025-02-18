@@ -11,20 +11,16 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
+import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useNavigate  } from "react-router-dom";
 
-function onClickRedirect(url) {
-}
 
 
 function Header (props) {
     const auth = props.user ? true : false;
-    let urlChosen = '';
-    let navigate = useNavigate();
 
     const [anchorEl, setAnchorEl] = React.useState(null);
-
 
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
@@ -33,8 +29,6 @@ function Header (props) {
     const handleClose = () => {
         setAnchorEl(null);
     };
-
-
 
     return (
     <Box sx={{ flexGrow: 1 }}>
@@ -52,7 +46,7 @@ function Header (props) {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Photos
           </Typography>
-          {auth && (
+          {auth ? (
             <div>
               <IconButton
                 size="large"
@@ -84,7 +78,9 @@ function Header (props) {
                 <MenuItem component={Link} to='/logout' onClick={handleClose}>Logout</MenuItem>
               </Menu>
             </div>
-          )}
+          ) : 
+          <Button color="inherit" href='/login'>Login</Button>
+          }
         </Toolbar>
       </AppBar>
     </Box>
