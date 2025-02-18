@@ -39,16 +39,16 @@ services:
       - ./express-socket:/app
     ports:
       - "3000:3000"
-  nextjs-frontend:
-    container_name: nextjs-frontend
+  react-frontend:
+    container_name: react-frontend
     restart: no
     build:
-      context: ./frontend
+      context: ./react-frontend
       dockerfile: Dockerfile
     ports:
       - "5173:5173"
     volumes:
-      - ./frontend:/app
+      - ./react-frontend:/app
       - /app/node_modules
     depends_on:
       - spring-back
