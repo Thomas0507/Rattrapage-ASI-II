@@ -1,4 +1,9 @@
+html, body, #app, #app>div {
+    height: 100%
+}
+
 .button-link {
     text-decoration: none;
     color: unset;
 }
+
