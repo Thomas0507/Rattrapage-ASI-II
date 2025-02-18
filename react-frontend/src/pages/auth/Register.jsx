@@ -11,7 +11,29 @@ import Typography from '@mui/material/Typography';
 // import { makeStyles } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 
+
+
+
 function Register () {
+  
+  function publish(formData) {
+    const signUpForm = {
+      username: formData.get('email'),
+      password: formData.get('password')
+    }
+    
+      // post to create an account;
+      fetch('http://spring-back:8081/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: signUpForm
+      })
+    
+    console.log(signUpForm);
+  }
     return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -19,7 +41,7 @@ function Register () {
         <Typography component="h1" variant="h5">
           Create an account
         </Typography>
-        <form noValidate>
+        <form action={publish}>
           <TextField
             variant="outlined"
             margin="normal"

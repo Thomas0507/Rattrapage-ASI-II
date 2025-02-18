@@ -79,7 +79,7 @@ public class SecurityConfig {
 	UrlBasedCorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 
-		configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+		configuration.setAllowedOrigins(List.of("http://react-frontend:5173"));
 		configuration.setAllowedMethods(List.of("GET","POST"));
 		configuration.setAllowedHeaders(List.of("authorization","content-Type", "x-auth-token"));
 
