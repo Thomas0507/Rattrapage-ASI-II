@@ -12,15 +12,20 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
 
+class LogInForm {
+  _username: string;
+  _password: string;
+  constructor(username, password) {
+    this._username = username || '';
+    this._password = password || '';
+  }
+}
 
 
 function Register () {
   
-  function publish(formData) {
-    const signUpForm = {
-      username: formData.get('email'),
-      password: formData.get('password')
-    }
+  function publish(formData: FormData) {
+    const signUpForm = new LogInForm(formData.get('email'), formData.get('password'));
     
       // post to create an account;
       fetch('http://spring-back:8081/auth/signup', {
@@ -29,7 +34,7 @@ function Register () {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         },
-        body: signUpForm
+        body: JSON.stringify(signUpForm)
       })
     
     console.log(signUpForm);
