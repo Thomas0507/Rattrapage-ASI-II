@@ -1,6 +1,8 @@
 import React from "react";
 import { Link, Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { Button } from "@mui/material";
+
 
 export const HomeLayout = () => {
   const { user } = useAuth();
@@ -10,12 +12,6 @@ export const HomeLayout = () => {
   }
 
   return (
-    <div>
-      <nav>
-        <Link to="/">Home</Link>
-        <Link to="/login">Login</Link>
-      </nav>
       <Outlet />
-    </div>
   )
 };

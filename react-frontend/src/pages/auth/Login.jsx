@@ -1,8 +1,11 @@
-import React from 'react'
+import React from 'react';
+import Button from '@mui/material/Button';
+
 
 const Login = () => {
     return (
-        <span>Login page</span>
+        <Button variant="contained">Log In</Button>
+
     )
 };
 
