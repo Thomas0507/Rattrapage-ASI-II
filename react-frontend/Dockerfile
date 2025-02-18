@@ -5,8 +5,7 @@ COPY package.json .
 RUN npm install
 
 COPY . .
-COPY next.config.ts ./next.config.ts
-
+COPY vite.config.js ./vite.config.js
 
 EXPOSE 5173
 
