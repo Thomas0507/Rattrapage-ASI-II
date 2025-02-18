@@ -7,3 +7,11 @@ html, body, #app, #app>div {
     color: unset;
 }
 
+body > #root {
+    height: 100vh;
+  }
+
+.header-wrapper {
+    margin-bottom: 3.5%;
+}
+
