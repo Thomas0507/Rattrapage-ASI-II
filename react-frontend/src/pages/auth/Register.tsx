@@ -19,6 +19,12 @@ class LogInForm {
     this._username = username || '';
     this._password = password || '';
   }
+  public get username() {
+    return this._username;
+  }
+  public get password() {
+    return this._password;
+  }
 }
 
 
@@ -28,13 +34,18 @@ function Register () {
     const signUpForm = new LogInForm(formData.get('email'), formData.get('password'));
     
       // post to create an account;
-      fetch('http://spring-back:8081/auth/signup', {
+      fetch('http://localhost:8081/auth/signup', {
         method: 'POST',
         headers: {
+          'Access-Control-Request-Method': 'POST',
+          'Origin': 'http://localhost:5173',
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(signUpForm)
+        body: JSON.stringify({
+          "username": signUpForm.username,
+          "password": signUpForm.password
+        })
       })
     
     console.log(signUpForm);
