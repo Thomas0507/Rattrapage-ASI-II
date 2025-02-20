@@ -7,7 +7,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "app_user")
-public class User implements Serializable, UserDetails
+public class UserEntity implements UserDetails
 {
 	@Id
 	@Column(nullable = false)

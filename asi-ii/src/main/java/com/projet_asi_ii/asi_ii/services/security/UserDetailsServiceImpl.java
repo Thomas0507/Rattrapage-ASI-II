@@ -1,6 +1,6 @@
-package com.projet_asi_ii.asi_ii.services;
+package com.projet_asi_ii.asi_ii.services.security;
 
-import com.projet_asi_ii.asi_ii.entities.User;
+import com.projet_asi_ii.asi_ii.entities.UserEntity;
 import com.projet_asi_ii.asi_ii.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +17,7 @@ public class UserDetailsServiceImpl implements UserDetailsService
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
 	{
-		Optional<User> optional = userRepository.findByUsername(username);
+		Optional<UserEntity> optional = userRepository.findByUsername(username);
 
 		if (optional.isEmpty())
 		{
