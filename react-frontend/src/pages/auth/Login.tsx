@@ -11,7 +11,45 @@ import Typography from '@mui/material/Typography';
 // import { makeStyles } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 
+class LogInForm {
+  _username: string;
+  _password: string;
+  constructor(username: string, password: string) {
+    this._username = username || '';
+    this._password = password || '';
+  }
+  public get username() {
+    return this._username;
+  }
+  public get password() {
+    return this._password;
+  }
+}
+
 function Login () {
+  function publish(formData: FormData) {
+    const signUpForm = new LogInForm(formData.get('email') as string, formData.get('password') as string);
+    
+      // post to create an account;
+      fetch('http://localhost:8081/auth/login', {
+        method: 'POST',
+        headers: {
+          'Access-Control-Request-Method': 'POST',
+          'Origin': 'http://localhost:5173',
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "username": signUpForm.username,
+          "password": signUpForm.password
+        })
+      })
+      .then(response => response.json())
+      .then(data => console.log(data));
+    
+    console.log(signUpForm);
+  }
+
     return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -19,7 +57,7 @@ function Login () {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form noValidate>
+        <form action={publish}>
           <TextField
             variant="outlined"
             margin="normal"
