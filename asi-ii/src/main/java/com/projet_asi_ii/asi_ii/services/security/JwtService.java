@@ -1,4 +1,4 @@
-package com.projet_asi_ii.asi_ii.services;
+package com.projet_asi_ii.asi_ii.services.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

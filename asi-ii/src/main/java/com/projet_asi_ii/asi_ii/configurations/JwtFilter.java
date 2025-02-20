@@ -1,7 +1,7 @@
 package com.projet_asi_ii.asi_ii.configurations;
 
-import com.projet_asi_ii.asi_ii.services.JwtService;
-import com.projet_asi_ii.asi_ii.services.UserDetailsServiceImpl;
+import com.projet_asi_ii.asi_ii.services.security.JwtService;
+import com.projet_asi_ii.asi_ii.services.security.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

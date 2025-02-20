@@ -1,6 +1,6 @@
 package com.projet_asi_ii.asi_ii.configurations;
 
-import com.projet_asi_ii.asi_ii.services.UserDetailsServiceImpl;
+import com.projet_asi_ii.asi_ii.services.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
