@@ -1,2 +1,4 @@
 ﻿express-socket/node_modules
 .idea
+react-frontend/Dockerfile
+express-socket/package.json
