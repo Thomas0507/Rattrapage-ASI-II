@@ -1,6 +1,7 @@
 package com.projet_asi_ii.asi_ii.mappers;
 
 import com.projet_asi_ii.asi_ii.dtos.UserDto;
+import com.projet_asi_ii.asi_ii.requests.UserRequest;
 import com.projet_asi_ii.asi_ii.entities.UserEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

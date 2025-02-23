@@ -1,6 +1,6 @@
 package com.projet_asi_ii.asi_ii.services.security;
 
-import com.projet_asi_ii.asi_ii.dtos.UserDto;
+import com.projet_asi_ii.asi_ii.requests.UserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,12 +13,12 @@ public class AuthenticationService {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
-	public Authentication authenticate(UserDto userDto) {
+	public Authentication authenticate(UserRequest userRequest) {
 		try {
 			return authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(
-							userDto.getUsername(),
-							userDto.getPassword()
+							userRequest.getUsername(),
+							userRequest.getPassword()
 					)
 			);
 		}
