@@ -10,5 +10,15 @@
             <column name="test_column" type="INT"/>
         </createTable>
     </changeSet>
+    <changeSet id="1740347953753-1" author="Thomas0507">
+        <insert tableName="card">
+            <column name="id">1</column>
+            <column name="attack">50</column>
+            <column name="defense">100</column>
+            <column name="description">Je suis un Lamball</column>
+            <column name="name">Lamball</column>
+            <column name="type">Normal</column>
+        </insert>
+    </changeSet>
 
 </databaseChangeLog>

@@ -11,6 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "card")
 public class CardEntity {
     @Id
     @GeneratedValue(
@@ -24,4 +25,5 @@ public class CardEntity {
     private int attack;
     private int defense;
     private String type;
+
 }
