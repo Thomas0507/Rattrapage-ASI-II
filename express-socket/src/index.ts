@@ -5,7 +5,7 @@ import swaggerUi from "swagger-ui-express";
 import http from "http";
 import Router from "./routes";
 import { initSocket } from './socket/socket';
-
+import mongoose from "mongoose";
 
 // configures dotenv to work in your application
 dotenv.config();
@@ -40,6 +40,12 @@ app.use(Router);
 // app.listen(PORT, () => {
 //   console.log("Server is running on port", PORT);
 // });
+
+// DB connection to store logs
+mongoose.connect(process.env.MONGODB_URI as string)
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => console.error("MongoDB connection error:", err));
+
 
 // Create an HTTP server from the Express app
 const server = http.createServer(app);
