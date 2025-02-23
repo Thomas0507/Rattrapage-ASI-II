@@ -1,6 +1,6 @@
 package com.projet_asi_ii.asi_ii.controllers;
 
-import com.projet_asi_ii.asi_ii.dtos.UserDto;
+import com.projet_asi_ii.asi_ii.requests.UserRequest;
 import com.projet_asi_ii.asi_ii.reponses.LoginResponse;
 import com.projet_asi_ii.asi_ii.services.security.AuthenticationService;
 import com.projet_asi_ii.asi_ii.services.UserService;
@@ -41,8 +41,8 @@ public class AuthController {
 			new HttpSessionSecurityContextRepository();
 
 	@PostMapping("/login")
-	public ResponseEntity<LoginResponse> login(@RequestBody UserDto userDto, HttpServletRequest request, HttpServletResponse response) {
-		Authentication authenticatedUser = authenticationService.authenticate(userDto);
+	public ResponseEntity<LoginResponse> login(@RequestBody UserRequest userRequest, HttpServletRequest request, HttpServletResponse response) {
+		Authentication authenticatedUser = authenticationService.authenticate(userRequest);
 
 		if (authenticatedUser == null) {
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -61,9 +61,9 @@ public class AuthController {
 	}
 
 	@PostMapping("/signup")
-	public ResponseEntity<UserDto> signup(@RequestBody UserDto userDto) {
-		userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-		boolean res = userService.insertUser(userDto);
+	public ResponseEntity<UserRequest> signup(@RequestBody UserRequest userRequest) {
+		userRequest.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+		boolean res = userService.insertUser(userRequest);
 		if (!res)
 		{
 			ResponseEntity.badRequest();
