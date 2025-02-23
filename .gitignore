@@ -1,3 +1,6 @@
 ﻿express-socket/node_modules
 react-frontend/Dockerfile
 express-socket/package.json
+
+docker-compose.yml
+mongo-data/

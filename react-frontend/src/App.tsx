@@ -9,6 +9,9 @@ import SelectScreen from "./pages/app/SelectScreen";
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import Header from "./pages/Header";
+import './App.css';
+import Conversation from "./pages/chat/Conversation"; // Import your Conversation component
+import React from "react";
 
 function App({ }) {
 
@@ -28,6 +31,7 @@ function App({ }) {
         <Route path="/app" element={<ProtectedLayout />}>
           <Route path="main" element={<SelectScreen />} />
           <Route path="cards" element={<CardScreen />} />
+          <Route path="conversation" element={<Conversation/>}/> 
         </Route>
 
         {/* catch all */}
