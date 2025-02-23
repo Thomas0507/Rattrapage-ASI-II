@@ -78,6 +78,7 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=root
     volumes:
       - ./react-frontend/mongo-data:/data/db
+      - ./mongo-data:/data/db
 volumes:
   local_pgdata:
   pgadmin-data:
