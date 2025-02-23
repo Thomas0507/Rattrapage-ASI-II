@@ -6,22 +6,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CardEntity {
+@Entity
+@Table(name = "player")
+public class PlayerEntity {
+
     @Id
     @GeneratedValue(
             strategy= GenerationType.AUTO,
             generator="native"
     )
-    private Long id;
-    private String name;
-    private String description;
-    private String image;
-    private int attack;
-    private int defense;
-    private String type;
+    private long id;
+
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_username", referencedColumnName = "username", nullable = false)
+    private UserEntity user;
 }
