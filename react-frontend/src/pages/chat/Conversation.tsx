@@ -12,7 +12,7 @@ import {
   Button,
 } from "@mui/material";
 
-// Replace with your actual Socket.IO server URL if different.
+// Socket.IO server URL 
 const SOCKET_SERVER_URL = "http://localhost:3000";
 
 // Initialize Socket.IO connection.
