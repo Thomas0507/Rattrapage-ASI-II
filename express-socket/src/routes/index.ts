@@ -2,6 +2,7 @@ import express from "express";
 import { Request, Response, NextFunction } from "express";
 import PingController from "../controllers/ping";
 
+//define routes 
 const router = express.Router();
 
 router.get("/ping", function (req: Request, res: Response, next: NextFunction) {
