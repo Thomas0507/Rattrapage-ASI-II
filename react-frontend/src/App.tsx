@@ -36,6 +36,7 @@ function App({ }) {
       <Route path="/app" element={<ProtectedLayout/>}>
         <Route path="logout" element={<Logout/>}/>
         <Route path="main" element={<SelectScreen/>}/>
+        <Route path="conversation" element={<Conversation/>}/> 
         <Route path="cards" element={<AllCardPage/>}/>
         <Route path="card/:cardId" element={<CardDetailPage/>}/>
       </Route>
