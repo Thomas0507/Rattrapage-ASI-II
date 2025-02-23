@@ -8,6 +8,9 @@ import ProfilePage from "./pages/profile/ProfilePage";
 import { ProtectedLayout } from "./layouts/ProtectedLayout";
 import { useAuth } from "./hooks/useAuth";
 import Header from "./pages/Header";
+import './App.css';
+import Conversation from "./pages/chat/Conversation"; // Import your Conversation component
+import React from "react";
 
 import './App.css';
 import React from "react";
