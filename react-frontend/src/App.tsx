@@ -11,6 +11,7 @@ import { ProtectedLayout } from "./layouts/ProtectedLayout";
 import { useAuth } from "./hooks/useAuth";
 import Header from "./pages/Header";
 import './App.css';
+import Conversation from "./pages/chat/Conversation"; // Import your Conversation component
 import React from "react";
 
 function App({}) {
@@ -31,6 +32,7 @@ const { user } = useAuth();
       <Route path="/app" element={<ProtectedLayout/>}>
         <Route path="main" element={<SelectScreen/>}/>
         <Route path="cards" element={<CardScreen/>}/>
+        <Route path="conversation" element={<Conversation/>}/> 
       </Route>
     </Routes>
     </>
