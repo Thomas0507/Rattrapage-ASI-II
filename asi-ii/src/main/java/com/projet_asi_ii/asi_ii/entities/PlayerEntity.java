@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -24,4 +27,7 @@ public class PlayerEntity {
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_username", referencedColumnName = "username", nullable = false)
     private UserEntity user;
+
+    @OneToMany
+    private Set<CardEntity> cards;
 }
