@@ -37,10 +37,6 @@
     <changeSet id="1740423624590-10" author="Thomas0507">
         <addNotNullConstraint columnName="rarity" tableName="card"/>
     </changeSet>
-    <changeSet id="1740423624590-12" author="Thomas0507">
-        <addUniqueConstraint columnNames="collection_entity_id" constraintName="uc_card_collection_entity"
-                             tableName="card"/>
-    </changeSet>
     <changeSet id="1740423624590-13" author="Thomas0507">
         <addForeignKeyConstraint baseColumnNames="collection_entity_id" baseTableName="card"
                                  constraintName="FK_CARD_ON_COLLECTION_ENTITY" referencedColumnNames="id"
