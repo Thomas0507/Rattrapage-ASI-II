@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.29.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1740392125931-1"
+               author="Thomas0507">
+        <createSequence incrementBy="50"
+                        sequenceName="native"
+                        startValue="1"/>
+    </changeSet>
+    <changeSet id="1740392125931-2"
+               author="Thomas0507">
+        <createTable tableName="app_user">
+            <column name="id"
+                    type="BIGINT">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="pk_app_user"/>
+            </column>
+            <column name="username"
+                    type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password"
+                    type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at"
+                    type="DATETIME"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1740392125931-3"
+               author="Thomas0507">
+        <createTable tableName="card">
+            <column name="id"
+                    type="BIGINT">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="pk_card"/>
+            </column>
+            <column name="name"
+                    type="VARCHAR(255)"/>
+            <column name="description"
+                    type="VARCHAR(255)"/>
+            <column name="image"
+                    type="VARCHAR(255)"/>
+            <column name="attack"
+                    type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="defense"
+                    type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type"
+                    type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1740392125931-4"
+               author="Thomas0507">
+        <createTable tableName="player">
+            <column name="id"
+                    type="BIGINT">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="pk_player"/>
+            </column>
+            <column name="user_username"
+                    type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cash"
+                    type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1740392125931-5"
+               author="Thomas0507">
+        <createTable tableName="player_cards">
+            <column name="player_entity_id"
+                    type="BIGINT">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="pk_player_cards"/>
+            </column>
+            <column name="cards_id"
+                    type="BIGINT">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="pk_player_cards"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1740392125931-6"
+               author="Thomas0507">
+        <createTable tableName="transaction">
+            <column name="id"
+                    type="BIGINT">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="pk_transaction"/>
+            </column>
+            <column name="user_username"
+                    type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount"
+                    type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type"
+                    type="SMALLINT"/>
+            <column name="created_at"
+                    type="DATETIME"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1740392125931-7"
+               author="Thomas0507">
+        <createTable tableName="transaction_cards">
+            <column name="transaction_entity_id"
+                    type="BIGINT">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="pk_transaction_cards"/>
+            </column>
+            <column name="cards_id"
+                    type="BIGINT">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="pk_transaction_cards"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1740392125931-8"
+               author="Thomas0507">
+        <addUniqueConstraint columnNames="username"
+                             constraintName="uc_app_user_username"
+                             tableName="app_user"/>
+    </changeSet>
+    <changeSet id="1740392125931-9"
+               author="Thomas0507">
+        <addUniqueConstraint columnNames="cards_id"
+                             constraintName="uc_player_cards_cards"
+                             tableName="player_cards"/>
+    </changeSet>
+    <changeSet id="1740392125931-10"
+               author="Thomas0507">
+        <addUniqueConstraint columnNames="user_username"
+                             constraintName="uc_player_user_username"
+                             tableName="player"/>
+    </changeSet>
+    <changeSet id="1740392125931-11"
+               author="Thomas0507">
+        <addUniqueConstraint columnNames="cards_id"
+                             constraintName="uc_transaction_cards_cards"
+                             tableName="transaction_cards"/>
+    </changeSet>
+    <changeSet id="1740392125931-12"
+               author="Thomas0507">
+        <addForeignKeyConstraint baseColumnNames="user_username"
+                                 baseTableName="player"
+                                 constraintName="FK_PLAYER_ON_USER_USERNAME"
+                                 referencedColumnNames="username"
+                                 referencedTableName="app_user"/>
+    </changeSet>
+    <changeSet id="1740392125931-13"
+               author="Thomas0507">
+        <addForeignKeyConstraint baseColumnNames="user_username"
+                                 baseTableName="transaction"
+                                 constraintName="FK_TRANSACTION_ON_USER_USERNAME"
+                                 referencedColumnNames="username"
+                                 referencedTableName="app_user"/>
+    </changeSet>
+    <changeSet id="1740392125931-14"
+               author="Thomas0507">
+        <addForeignKeyConstraint baseColumnNames="cards_id"
+                                 baseTableName="player_cards"
+                                 constraintName="fk_placar_on_card_entity"
+                                 referencedColumnNames="id"
+                                 referencedTableName="card"/>
+    </changeSet>
+    <changeSet id="1740392125931-15"
+               author="Thomas0507">
+        <addForeignKeyConstraint baseColumnNames="player_entity_id"
+                                 baseTableName="player_cards"
+                                 constraintName="fk_placar_on_player_entity"
+                                 referencedColumnNames="id"
+                                 referencedTableName="player"/>
+    </changeSet>
+    <changeSet id="1740392125931-16"
+               author="Thomas0507">
+        <addForeignKeyConstraint baseColumnNames="cards_id"
+                                 baseTableName="transaction_cards"
+                                 constraintName="fk_tracar_on_card_entity"
+                                 referencedColumnNames="id"
+                                 referencedTableName="card"/>
+    </changeSet>
+    <changeSet id="1740392125931-17"
+               author="Thomas0507">
+        <addForeignKeyConstraint baseColumnNames="transaction_entity_id"
+                                 baseTableName="transaction_cards"
+                                 constraintName="fk_tracar_on_transaction_entity"
+                                 referencedColumnNames="id"
+                                 referencedTableName="transaction"/>
+    </changeSet>
+
+</databaseChangeLog>
