@@ -14,7 +14,7 @@ import Menu from '@mui/material/Menu';
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useNavigate  } from "react-router-dom";
-
+import HomeIcon from '@mui/icons-material/Home';
 
 
 function Header (props) {
@@ -36,16 +36,17 @@ function Header (props) {
         <AppBar position="static">
           <Toolbar>
             <IconButton
+              component={Link} to="/"
               size="large"
               edge="start"
               color="inherit"
               aria-label="menu"
               sx={{ mr: 2 }}
             >
-              <MenuIcon />
+              <HomeIcon />
             </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Photos
+              Palworld Deck
             </Typography>
             {auth ? (
               <div>
