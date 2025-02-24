@@ -1,3 +1,5 @@
+import { Collection } from "./Collection";
+
 export class Card {
     private _id: number;
 
@@ -11,7 +13,15 @@ export class Card {
 
     private _defense: number;
 
-    private _type: string;
+    private _health: number;
+
+    private _mainType: string;
+
+    private _dropRate: number;
+
+    private _rarity: number;
+
+    private _collection: Collection;
 
     constructor(id, name, description, image, attack, defense, type) {
         this._id = id;
@@ -20,7 +30,7 @@ export class Card {
         this._image = image;
         this._attack = attack;
         this._defense = defense;
-        this._type = type;
+        this._mainType = type;
 
     }
 
@@ -67,10 +77,10 @@ export class Card {
     }
 
     public get type(): string {
-        return this._type;
+        return this._mainType;
     }
 
     public set type(value: string) {
-        this._type = value;
+        this._mainType = value;
     }
 }

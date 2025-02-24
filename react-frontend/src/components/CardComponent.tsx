@@ -3,15 +3,17 @@ import { Card as CardEntity}  from "../models/Card";
 import { Button, CardActions, CardContent, CardMedia, Typography, Card } from "@mui/material";
 
 interface CardProps {
-    card: CardEntity
+    card: CardEntity,
+    imageHeight?: number,
+    imageWidth?: number
 }
 
-const CardComponent = ({card}: CardProps) => {
+const CardComponent = ({card, imageHeight, imageWidth}: CardProps) => {
 
     return (
         <Card sx={{ maxWidth: 345 }}>
       <CardMedia
-        sx={{ height: 140 }}
+        sx={{ height: imageHeight || 140 }}
         image={card.image}
         title="card image"
       />

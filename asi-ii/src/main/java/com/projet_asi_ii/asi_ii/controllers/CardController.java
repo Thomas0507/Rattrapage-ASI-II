@@ -20,14 +20,27 @@ public class CardController {
     CardService cardService;
 
     @GetMapping(produces = "application/json")
-    public ResponseEntity<List<CardDto>> getCards() {
-        return ResponseEntity.ok(this.cardService.getCards());
+    public ResponseEntity<List<CardDto>> getCards(@RequestParam(value = "page", required = false)String page, @RequestParam(value = "size", required = false)String size) {
+        int pageNumber = 0;
+        int pageSize = 10;
+        if (page != null) {
+            pageNumber = Integer.parseInt(page);
+        }
+        if (size != null) {
+            pageSize = Integer.parseInt(size);
+        }
+        return ResponseEntity.ok(this.cardService.getCardsWithRange(pageNumber, pageSize));
     }
 
     @GetMapping("{cardId}")
     public ResponseEntity<CardDto> getCardById(@PathVariable(value = "cardId") String cardId) {
         long id = Long.parseLong(cardId);
         return ResponseEntity.ok(this.cardService.getCardById(id));
+    }
+
+    @GetMapping("/getNbCards")
+    public ResponseEntity<Integer> getNbCards() {
+        return ResponseEntity.ok(this.cardService.getNbCards());
     }
     @PostMapping
     public ResponseEntity<Boolean> createCard(@RequestBody List<CardDto> cardsDto) {

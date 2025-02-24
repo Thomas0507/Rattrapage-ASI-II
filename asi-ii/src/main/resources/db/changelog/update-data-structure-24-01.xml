@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.29.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1740423624590-1" author="Thomas0507">
+        <createTable tableName="collection">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_collection"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="release_date" type="DATETIME"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1740423624590-2" author="Thomas0507">
+        <addColumn tableName="card">
+            <column name="collection_entity_id" type="BIGINT"/>
+            <column name="drop_rate" type="FLOAT"/>
+            <column name="main_type" type="VARCHAR(255)"/>
+            <column name="price" type="INT"/>
+            <column name="rarity" type="INT"/>
+            <column name="secondary_type" type="VARCHAR(255)"/>
+            <column name="health" type="INT"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="1740423624590-3" author="Thomas0507">
+        <addNotNullConstraint columnName="collection_entity_id" tableName="card"/>
+    </changeSet>
+    <changeSet id="1740423624590-5" author="Thomas0507">
+        <addNotNullConstraint columnName="drop_rate" tableName="card"/>
+    </changeSet>
+    <changeSet id="1740423624590-8" author="Thomas0507">
+        <addNotNullConstraint columnName="price" tableName="card"/>
+    </changeSet>
+    <changeSet id="1740423624590-10" author="Thomas0507">
+        <addNotNullConstraint columnName="rarity" tableName="card"/>
+    </changeSet>
+    <changeSet id="1740423624590-12" author="Thomas0507">
+        <addUniqueConstraint columnNames="collection_entity_id" constraintName="uc_card_collection_entity"
+                             tableName="card"/>
+    </changeSet>
+    <changeSet id="1740423624590-13" author="Thomas0507">
+        <addForeignKeyConstraint baseColumnNames="collection_entity_id" baseTableName="card"
+                                 constraintName="FK_CARD_ON_COLLECTION_ENTITY" referencedColumnNames="id"
+                                 referencedTableName="collection"/>
+    </changeSet>
+    <changeSet id="1740423624590-14" author="Thomas0507">
+        <dropColumn columnName="type" tableName="card"/>
+    </changeSet>
+
+</databaseChangeLog>

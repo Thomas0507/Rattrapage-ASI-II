@@ -12,6 +12,8 @@ import Header from "./pages/Header";
 import './App.css';
 import React from "react";
 import CardDetailPage from "./pages/app/cards/card/CardDetailPage";
+import AllCardPage from "./pages/app/cards/AllCardPage";
+import Logout from "./pages/auth/Logout";
 
 function App({}) {
 
@@ -30,7 +32,9 @@ const { user } = useAuth();
 
       {/* private routes */}
       <Route path="/app" element={<ProtectedLayout/>}>
+        <Route path="logout" element={<Logout/>}/>
         <Route path="main" element={<SelectScreen/>}/>
+        <Route path="cards" element={<AllCardPage/>}/>
         <Route path="card/:cardId" element={<CardDetailPage/>}/>
       </Route>
       <Route path="/profile" element={<ProtectedLayout/>}>

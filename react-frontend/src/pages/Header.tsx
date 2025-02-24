@@ -76,7 +76,7 @@ function Header (props) {
                 >
                   <MenuItem component={Link} to='/profile' onClick={handleClose}>Profile</MenuItem>
                   <MenuItem component={Link} to='/settings' onClick={handleClose}>Settings</MenuItem>
-                  <MenuItem component={Link} to='/logout' onClick={handleClose}>Logout</MenuItem>
+                  <MenuItem component={Link} to='/app/logout' onClick={handleClose}>Logout</MenuItem>
                 </Menu>
               </div>
             ) : 

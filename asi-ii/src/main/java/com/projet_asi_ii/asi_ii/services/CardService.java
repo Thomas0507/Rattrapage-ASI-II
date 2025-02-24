@@ -6,6 +6,10 @@ import com.projet_asi_ii.asi_ii.mappers.CardMapper;
 import com.projet_asi_ii.asi_ii.repositories.CardRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,6 +23,9 @@ public class CardService {
     @Autowired
     private CardRepository cardRepository;
 
+    /*
+    * Depreciated
+    * */
     public List<CardDto> getCards() {
         List<CardEntity> cards = this.cardRepository.findAll();
         List<CardDto> cardDtos = new ArrayList<>();
@@ -41,8 +48,23 @@ public class CardService {
         }
         return true;
     }
+
+    public List<CardDto>getCardsWithRange(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id").ascending());
+        Page<CardEntity> resultPage = this.cardRepository.findAll(pageable);
+        List<CardDto> cardDtos = new ArrayList<>();
+        resultPage.getContent().forEach(cardEntity ->
+                cardDtos.add(CardMapper.INSTANCE.toCardDto(cardEntity)));
+        return cardDtos;
+    }
+
     public CardDto getCardById(long id) {
         Optional<CardEntity> cardEntity = this.cardRepository.findById(id);
         return cardEntity.map(CardMapper.INSTANCE::toCardDto).orElse(null);
     }
+
+    public int getNbCards() {
+        return Math.toIntExact(this.cardRepository.count());
+    }
+
 }
