@@ -38,6 +38,7 @@ public class UserService
 			userEntity = appUserRepository.save(userEntity);
 			playerEntity.setUser(userEntity);
 			playerEntity.setCards(Set.of(cardRepository.findById((long)1).get()));
+			playerEntity.setCash(500);
 			playerRepository.save(playerEntity);
 		} catch (Exception e) {
 			e.printStackTrace();

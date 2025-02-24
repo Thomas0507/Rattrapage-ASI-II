@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -10,6 +10,9 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 // import { makeStyles } from '@mui/material/styles';
 import Container from '@mui/material/Container';
+import { Snackbar, SnackbarOrigin } from '@mui/material';
+
+
 
 
 class LogInForm {
@@ -27,9 +30,24 @@ class LogInForm {
   }
 }
 
+interface State extends SnackbarOrigin {
+  open: boolean;
+}
 
 function Register () {
   
+  const handleClose = () => {
+    setState({ ...state, open: false });
+  };
+
+  const [state, setState] = useState<State>({
+    open: false,
+    vertical: 'top',
+    horizontal: 'center',
+  });
+  const { vertical, horizontal, open } = state;
+
+
   function publish(formData: FormData) {
     const signUpForm = new LogInForm(formData.get('email'), formData.get('password'));
     
@@ -46,6 +64,15 @@ function Register () {
           "username": signUpForm.username,
           "password": signUpForm.password
         })
+      }).then(res => {
+        setState({ open: true,
+          vertical: 'top',
+          horizontal: 'center',
+        });
+      }).catch(err => {
+        console.log(err)
+      }).finally(() => {
+
       })
     
   }
@@ -101,6 +128,17 @@ function Register () {
       </div>
       <Box mt={8}>
       </Box>
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        open={open}
+        message="I love snacks"
+        key={vertical + horizontal}
+        action={
+          <Button onClick={handleClose} color="primary" size="small">
+            Ok
+          </Button>
+        }
+      />
     </Container>
     )
 };
