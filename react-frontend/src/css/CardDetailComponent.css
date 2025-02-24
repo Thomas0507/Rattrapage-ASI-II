@@ -1,0 +1,26 @@
+.card-box {
+    background-color: #EEE;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+}
+
+.image-box {
+    border:solid 1px black;
+}
+
+.stat-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.description-wrapper {
+    margin: 0em 2em 2em 2em;
+    border: solid 1px black;
+    padding: 3em;
+}
+
+.id-wrapper {
+    text-align: right;
+}

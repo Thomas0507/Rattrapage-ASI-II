@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -40,5 +41,8 @@ public class CardService {
         }
         return true;
     }
-
+    public CardDto getCardById(long id) {
+        Optional<CardEntity> cardEntity = this.cardRepository.findById(id);
+        return cardEntity.map(CardMapper.INSTANCE::toCardDto).orElse(null);
+    }
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("cards")
@@ -21,6 +22,12 @@ public class CardController {
     @GetMapping(produces = "application/json")
     public ResponseEntity<List<CardDto>> getCards() {
         return ResponseEntity.ok(this.cardService.getCards());
+    }
+
+    @GetMapping("{cardId}")
+    public ResponseEntity<CardDto> getCardById(@PathVariable(value = "cardId") String cardId) {
+        long id = Long.parseLong(cardId);
+        return ResponseEntity.ok(this.cardService.getCardById(id));
     }
     @PostMapping
     public ResponseEntity<Boolean> createCard(@RequestBody List<CardDto> cardsDto) {
