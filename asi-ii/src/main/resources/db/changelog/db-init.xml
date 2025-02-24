@@ -141,12 +141,6 @@
                              constraintName="uc_app_user_username"
                              tableName="app_user"/>
     </changeSet>
-    <changeSet id="1740392125931-9"
-               author="Thomas0507">
-        <addUniqueConstraint columnNames="cards_id"
-                             constraintName="uc_player_cards_cards"
-                             tableName="player_cards"/>
-    </changeSet>
     <changeSet id="1740392125931-10"
                author="Thomas0507">
         <addUniqueConstraint columnNames="user_username"
