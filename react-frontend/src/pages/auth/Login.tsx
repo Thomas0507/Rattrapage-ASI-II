@@ -8,8 +8,8 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-// import { makeStyles } from '@mui/material/styles';
 import Container from '@mui/material/Container';
+import { useAuth } from '../../hooks/useAuth';
 
 class LogInForm {
   _username: string;
@@ -27,7 +27,9 @@ class LogInForm {
 }
 
 function Login () {
-  function publish(formData: FormData) {
+  const { login } = useAuth();
+
+  async function publish(formData: FormData) {
     const signUpForm = new LogInForm(formData.get('email') as string, formData.get('password') as string);
     
       // post to create an account;
@@ -45,10 +47,11 @@ function Login () {
         })
       })
       .then(response => response.json())
-      .then(data => console.log(data));
-    
-    console.log(signUpForm);
-  }
+      .then(async data => 
+        await login(data)
+      )      
+      .catch(err => console.log(err));
+      }
 
     return (
     <Container component="main" maxWidth="xs">
