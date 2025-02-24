@@ -22,8 +22,8 @@ const ProfileComponent = ({player}: ProfileProps) => {
                     <OutlinedInput
                     id="input-username"
                     label="Username"
-                    defaultValue={player.username}
                     disabled
+                    value={player.username}
                     />
                 </FormControl>
                 <FormControl fullWidth sx={{ m: 1 }}>
