@@ -12,22 +12,22 @@ interface CardListProps {
 const CardListComponent = ({cards}: CardListProps) => {
 
     return (
-        <Container>
+        <div className="card-wrapper">
             {/* cards */}
             {cards.length !== 0 ?
                     
                     cards.map(
                         (_card, _index) => (
-                            <Container fixed className="card-wrapper">
+                            <div className="card-wrapper">
                                 <CardComponent key={_index} card ={_card} imageHeight={140}
                                 />
-                            </Container>
+                            </div>
                         )
                     )
                 :
                     <Typography className="center-text">No cards could be found... Maybe we're effectuing a maintenance</Typography>
                 }
-        </Container>
+        </div>
     )
 };
 

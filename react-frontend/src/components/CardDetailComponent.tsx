@@ -14,7 +14,7 @@ const CardDetailComponent = ({card}: CardDetailProps) => {
                 {card.name}
             </Typography>
             <CardMedia className="image-box"
-                sx={{ height: 400 }}
+                sx={{ height: 800 }}
                 image={card.image}
                 title="card image"
             />
