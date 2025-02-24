@@ -48,7 +48,7 @@ function Login () {
       })
       .then(response => response.json())
       .then(async data => 
-        await login(data)
+        await login(data.token)
       )      
       .catch(err => console.log(err));
       }
