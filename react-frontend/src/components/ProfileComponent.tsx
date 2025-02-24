@@ -4,14 +4,16 @@ import { Button, Container, FormControl, InputAdornment, InputLabel, OutlinedInp
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import CardComponent from "./CardComponent";
 
+import "../css/ProfileComponent.css";
+
+
 interface ProfileProps {
     player: Player;
 }
 
 const ProfileComponent = ({player}: ProfileProps) => {
     return (
-        <Container fixed>
-            <div>
+        <Container fixed className="component-wrapper">
             <Typography variant="h3" className="center-text">
                     My Profile
                 </Typography>
@@ -39,16 +41,19 @@ const ProfileComponent = ({player}: ProfileProps) => {
                     My cards
                 </Typography>
 
-                {
+                {player.cards.length !== 0 ?
+                    
                     player.cards.map(
                         (_card, _index) => (
-                            <CardComponent card ={_card}
-                            />
+                            <Container fixed className="card-wrapper">
+                                <CardComponent card ={_card}
+                                />
+                            </Container>
                         )
                     )
+                :
+                    <Typography className="center-text">You don't have any cards. Go to the market to generate or buy some!</Typography>
                 }
-
-            </div>
         </Container>
 
     );
