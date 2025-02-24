@@ -1,5 +1,6 @@
 package com.projet_asi_ii.asi_ii.dtos;
 
+import com.projet_asi_ii.asi_ii.enumerations.CardTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,5 +18,11 @@ public class CardDto
     private String image;
     private int attack;
     private int defense;
-    private String type;
+    private int health;
+    private CardTypeEnum mainType;
+    private CardTypeEnum secondaryType;
+    private float dropRate;
+    private int price;
+    private CollectionDto collection;
+
 }

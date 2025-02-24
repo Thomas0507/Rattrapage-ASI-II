@@ -3,21 +3,24 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
     <changeSet id="1740347953753-1" author="Thomas0507">
+        <insert tableName="collection">
+            <column name="id">1</column>
+            <column name="name">Palworld</column>
+            <column name="release_date">2025-02-24</column>
+        </insert>
         <insert tableName="card">
             <column name="id">1</column>
-            <column name="attack">50</column>
-            <column name="defense">100</column>
-            <column name="description">Je suis un Lamball</column>
             <column name="name">Lamball</column>
-            <column name="type">Normal</column>
+            <column name="description">A walk up a hill tends to end with this Pal tumbling back down. This causes it to become dizzy and unable to move, making it easy to capture and kill. As a result, this Pal has tumbled down to the very bottom of the food chain itself.</column>
+            <column name="image" >https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_SheepBall_icon_normal.png</column>
+            <column name="attack">70</column>
+            <column name="defense">70</column>
+            <column name="health">70</column>
+            <column name="main_type">NEUTRAL</column>
+            <column name="drop_rate">15.5</column>
+            <column name="price">1</column>
+            <column name="rarity">1</column>
+            <column name="collection_entity_id">1</column>
         </insert>
     </changeSet>
-    <changeSet id="1740420038355-1"
-               author="Thomas0507">
-        <update tableName="card">
-            <column name="image" value="https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_SheepBall_icon_normal.png"></column>
-            <where>id = 1 </where>
-        </update>
-    </changeSet>
-
 </databaseChangeLog>

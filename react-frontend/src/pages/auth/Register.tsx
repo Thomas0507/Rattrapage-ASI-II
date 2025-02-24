@@ -48,7 +48,6 @@ function Register () {
         })
       })
     
-    console.log(signUpForm);
   }
     return (
     <Container component="main" maxWidth="xs">
