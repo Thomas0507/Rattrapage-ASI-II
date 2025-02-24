@@ -19,3 +19,8 @@ body > #root {
 .center-text {
     text-align: center;
 }
+.component-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+}
