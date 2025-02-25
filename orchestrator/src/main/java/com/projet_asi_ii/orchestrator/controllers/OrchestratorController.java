@@ -6,10 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/orchestrator")
@@ -20,9 +17,10 @@ public class OrchestratorController
 	private OrchestratorService orchestratorService;
 
 	@GetMapping("/generateCard")
-	public CompletableFuture<List<Map<String, Object>>> generateCard() {
+	public String generateCard() {
 		String requestId = UUID.randomUUID().toString();
+		orchestratorService.sendRequests(requestId);
 
-		return orchestratorService.sendRequests(requestId);
+		return "Request sent";
 	}
 }

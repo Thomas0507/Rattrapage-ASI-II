@@ -21,7 +21,7 @@ public class OrchestratorService
 
 	private List<Map<String, Object>> responses;
 
-	public CompletableFuture<List<Map<String, Object>>> sendRequests(String requestId) {
+	public void sendRequests(String requestId) {
 		Map<String, String> serviceQueues = Map.of(
 				"card-image", "service-image.queue",
 				"card-prompt", "service-text.queue"
@@ -46,8 +46,6 @@ public class OrchestratorService
 				future.complete(responses); // Renvoie ce qui est disponible
 			}
 		});
-
-		return future;
 	}
 
 	@JmsListener(destination = "response.queue")

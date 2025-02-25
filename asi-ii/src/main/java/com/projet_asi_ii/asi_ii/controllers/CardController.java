@@ -1,16 +1,13 @@
 package com.projet_asi_ii.asi_ii.controllers;
 
 import com.projet_asi_ii.asi_ii.dtos.CardDto;
-import com.projet_asi_ii.asi_ii.mappers.CardMapper;
 import com.projet_asi_ii.asi_ii.services.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
-import java.net.http.HttpResponse;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("cards")
@@ -45,5 +42,15 @@ public class CardController {
     @PostMapping
     public ResponseEntity<Boolean> createCard(@RequestBody List<CardDto> cardsDto) {
         return ResponseEntity.ok(this.cardService.insertCards(cardsDto));
+    }
+
+    @GetMapping("/generateCard")
+    public ResponseEntity<String> generateCard() {
+        final String uri = "http://orchestrator:8088/orchestrator/generateCard";
+
+        RestTemplate restTemplate = new RestTemplate();
+        String result = restTemplate.getForObject(uri, String.class);
+
+        return ResponseEntity.ok(result);
     }
 }
