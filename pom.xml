@@ -14,6 +14,7 @@
         <module>orchestrator</module>
         <module>card-image</module>
         <module>card-prompt</module>
+        <module>asi-ii</module>
     </modules>
 
 

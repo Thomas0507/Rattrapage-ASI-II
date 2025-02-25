@@ -95,7 +95,45 @@ services:
       ME_CONFIG_MONGODB_URL: mongodb://root:root@mongodb:27017/
       ME_CONFIG_BASICAUTH: false
       ME_CONFIG_MONGODB_SERVER: mongodb
+
+  spring-card-prompt:
+    depends_on:
+      - activemq
+    build: ./card-prompt
+    container_name: card-prompt
+    ports:
+      - "8082:8082"
+      - "5006:5006"
+  spring-card-image:
+    depends_on:
+        - activemq
+    build: ./card-image
+    container_name: card-image
+    ports:
+      - "8083:8083"
+      - "5007:5007"
+  spring-orchestrator:
+    depends_on:
+      - activemq
+      - mongo-orch
+    build: ./orchestrator
+    container_name: orchestrator
+    ports:
+      - "8088:8088"
+      - "5008:5008"
+  mongo-orch:
+    image: mongo:6
+    container_name: mongo-orch
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: root
+    volumes:
+      - mongo_data:/data/db
+  
 volumes:
   local_pgdata:
   pgadmin-data:
+  mongo_data:
   mongodb-data:
