@@ -68,6 +68,30 @@ services:
       ACTIVEMQ_PASSWORD: "asi2"
       ACTIVEMQ_WEBADMIN_USERNAME: "admin"
       ACTIVEMQ_WEBADMIN_PASSWORD: "asi2"
+  spring-card-prompt:
+    depends_on:
+      - activemq
+    build: ./card-prompt
+    container_name: card-prompt
+    ports:
+      - "8082:8082"
+      - "5006:5006"
+  spring-card-image:
+    depends_on:
+        - activemq
+    build: ./card-image
+    container_name: card-image
+    ports:
+      - "8083:8083"
+      - "5007:5007"
+  spring-orchestrator:
+    depends_on:
+      - activemq
+    build: ./orchestrator
+    container_name: orchestrator
+    ports:
+      - "8088:8088"
+      - "5008:5008"
 volumes:
   local_pgdata:
   pgadmin-data:
