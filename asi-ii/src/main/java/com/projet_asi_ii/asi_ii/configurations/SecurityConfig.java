@@ -37,7 +37,7 @@ public class SecurityConfig {
 						.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				)
 				.authorizeHttpRequests(requests -> requests
-						.requestMatchers("/auth/**").permitAll()
+						.requestMatchers("/auth/**", "/error/**").permitAll()
 						.anyRequest().authenticated()
 				).httpBasic(Customizer.withDefaults())
 				.logout(LogoutConfigurer::permitAll)
@@ -76,7 +76,7 @@ public class SecurityConfig {
 	UrlBasedCorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 
-		configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+		configuration.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost:8088"));
 		configuration.setAllowedMethods(List.of("GET","POST"));
 		configuration.setAllowedHeaders(List.of("authorization","content-Type", "x-auth-token"));
 

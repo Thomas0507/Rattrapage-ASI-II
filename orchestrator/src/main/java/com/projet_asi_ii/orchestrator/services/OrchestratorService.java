@@ -1,15 +1,16 @@
 package com.projet_asi_ii.orchestrator.services;
 
 import com.projet_asi_ii.MessageRequest;
+import com.projet_asi_ii.orchestrator.entities.CardEntity;
+import com.projet_asi_ii.orchestrator.repositories.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class OrchestratorService
@@ -17,49 +18,65 @@ public class OrchestratorService
 	@Autowired
 	private JmsTemplate jmsTemplate;
 
-	private final ConcurrentHashMap<String, CompletableFuture<List<Map<String, Object>>>> requestFutures = new ConcurrentHashMap<>();
+	@Autowired
+	private CardRepository cardRepository;
 
-	private List<Map<String, Object>> responses;
+	private String bearerToken;
 
-	public CompletableFuture<List<Map<String, Object>>> sendRequests(String requestId) {
+	public void sendRequests(UUID requestId, String userToken) {
+		this.bearerToken = userToken;
+		cardRepository.save(new CardEntity(requestId, null, null));
+
 		Map<String, String> serviceQueues = Map.of(
 				"card-image", "service-image.queue",
 				"card-prompt", "service-text.queue"
 		);
 
-		CompletableFuture<List<Map<String, Object>>> future = new CompletableFuture<>();
-		requestFutures.put(requestId, future);
-
-		responses = Collections.synchronizedList(new ArrayList<>());
-
 		for (Map.Entry<String, String> entry : serviceQueues.entrySet()) {
 			String serviceId = entry.getKey();
 			String queueName = entry.getValue();
 
-			MessageRequest message = new MessageRequest(requestId, serviceId, null);
+			MessageRequest message = new MessageRequest(requestId.toString(), serviceId, null);
 			jmsTemplate.convertAndSend(queueName, message);
 		}
-
-		CompletableFuture.delayedExecutor(5, TimeUnit.SECONDS).execute(() -> {
-			if (!future.isDone()) {
-				System.out.println("Timeout atteint pour requestId = " + requestId);
-				future.complete(responses); // Renvoie ce qui est disponible
-			}
-		});
-
-		return future;
 	}
 
 	@JmsListener(destination = "response.queue")
 	public void receiveResponse(MessageRequest message) {
-		CompletableFuture<List<Map<String, Object>>> future = requestFutures.get(message.getRequestId());
-		if (future != null) {
-			responses.add(Map.of("serviceId", message.getServiceId(), "data", message.getPayload().get("data")));
-
-			// Vérifie si toutes les réponses sont reçues
-			if (responses.size() == 2) {
-				future.complete(responses);
+		Optional<CardEntity> optionalCard = cardRepository.findByCardId(UUID.fromString(message.getRequestId()));
+		if (optionalCard.isPresent())
+		{
+			CardEntity finalCard = optionalCard.get();
+			switch (message.getServiceId())
+			{
+				case "card-image":
+					finalCard.setImage(message.getPayload().get("data").toString());
+					cardRepository.save(finalCard);
+					break;
+				case "card-prompt":
+					finalCard.setPrompt(message.getPayload().get("data").toString());
+					cardRepository.save(finalCard);
+					break;
+				default:
+					break;
 			}
+
+			if (finalCard.getPrompt() == null || finalCard.getImage() == null)
+			{
+				return;
+			}
+
+			final String uri = "http://spring-back:8081/cards/generateFromOrchestrator";
+
+			RestTemplate restTemplate = new RestTemplate();
+
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			headers.setBearerAuth(bearerToken.replace("Bearer ", ""));
+
+			HttpEntity<CardEntity> requestEntity = new HttpEntity<>(finalCard, headers);
+
+			restTemplate.postForObject(uri, requestEntity, String.class);
 		}
 	}
 }
