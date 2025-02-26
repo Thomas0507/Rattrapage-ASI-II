@@ -27,6 +27,7 @@ const { user } = useAuth();
         <Route path="/" element = {<Home/>}/>
         <Route path="/login" element = {<Login/>}/>
         <Route path="/register" element = {<Register/>}/>
+
       </Route>
       {/* private routes */}
       <Route path="/app" element={<ProtectedLayout/>}>
