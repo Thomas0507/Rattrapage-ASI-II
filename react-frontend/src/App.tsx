@@ -11,7 +11,6 @@ import Register from './pages/auth/Register';
 import Header from "./pages/Header";
 import './App.css';
 import Conversation from "./pages/chat/Conversation"; // Import your Conversation component
-import React from "react";
 
 function App({ }) {
 
