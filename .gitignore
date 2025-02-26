@@ -1,4 +1,5 @@
 ﻿express-socket/node_modules
+react-frontend/node_modules
 react-frontend/Dockerfile
 express-socket/package.json
 
