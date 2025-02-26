@@ -11,6 +11,7 @@ import {
   TextField,
   Button,
 } from "@mui/material";
+import { useAuth } from "../../hooks/useAuth"; 
 
 // Socket.IO server URL 
 const SOCKET_SERVER_URL = "http://localhost:3000";
@@ -27,37 +28,53 @@ interface Message {
 }
 
 const Conversation: React.FC = () => {
+  const { user } = useAuth(); 
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const [socket, setSocket] = useState<any>(null);
 
-  // Listen for incoming messages from the server.
+
   useEffect(() => {
-    socket.on("message", (data: Message) => {
-      setMessages((prevMessages) => [...prevMessages, data]);
-    });
-    // Clean up when the component unmounts.
-    return () => {
-      socket.off("message");
-    };
-  }, []);
+    // Only initialize the socket connection when user is present
+    if (user) {
+      console.log("User ID:", user.id);
+      // If you have a token or user id, pass it in auth data:
+      const newSocket = io(SOCKET_SERVER_URL, {
+        transports: ["websocket", "polling"],
+        auth: { token: user.token, userId: user.id } // adjust as per your auth object
+      });
+      setSocket(newSocket);
 
-  // Scroll to the bottom whenever a new message is added.
+      newSocket.on("connect", () => {
+        console.log("Socket connected:", newSocket.id);
+      });
+
+      newSocket.on("message", (data: Message) => {
+        setMessages((prevMessages) => [...prevMessages, data]);
+      });
+
+      return () => {
+        newSocket.disconnect();
+      };
+    }
+  }, [user]);
+
+  // Scroll to bottom when messages update
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
 
-  // Send a message to the server.
   const sendMessage = () => {
-    if (input.trim()) {
+    if (input.trim() && socket) {
+      // Emit the message to the server
       socket.emit("message", input);
       setInput("");
     }
   };
 
-  // Allow sending the message via Enter key.
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       sendMessage();
