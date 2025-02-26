@@ -89,7 +89,6 @@ function Login () {
             fullWidth
             variant="contained"
             color="primary"
-            href="/conversation" 
           >
             Sign In
           </Button>
