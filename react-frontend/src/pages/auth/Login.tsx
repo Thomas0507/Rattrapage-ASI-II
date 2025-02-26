@@ -26,34 +26,38 @@ class LogInForm {
   }
 }
 
-function Login () {
-  const { login } = useAuth();
-
-  async function publish(formData: FormData) {
+function Login() {
+  function publish(formData: FormData) {
     const signUpForm = new LogInForm(formData.get('email') as string, formData.get('password') as string);
-    
-      // post to create an account;
-      fetch('http://localhost:8081/auth/login', {
-        method: 'POST',
-        headers: {
-          'Access-Control-Request-Method': 'POST',
-          'Origin': 'http://localhost:5173',
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          "username": signUpForm.username,
-          "password": signUpForm.password
-        })
-      })
-      .then(response => response.json())
-      .then(async data => 
-        await login(data.token)
-      )      
-      .catch(err => console.log(err));
-      }
 
-    return (
+    // post to create an account;
+    fetch('http://localhost:8081/auth/login', {
+      method: 'POST',
+      headers: {
+        'Access-Control-Request-Method': 'POST',
+        'Origin': 'http://localhost:5173',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "username": signUpForm.username,
+        "password": signUpForm.password
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.token) {
+          // Store the token in localStorage
+          localStorage.setItem('token', data.token);
+          // Redirect to home page or dashboard
+          window.location.href = '/';
+        }
+      });
+
+    console.log(signUpForm);
+  }
+
+  return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div>
@@ -112,7 +116,7 @@ function Login () {
       <Box mt={8}>
       </Box>
     </Container>
-    )
+  )
 };
 
 export default Login;

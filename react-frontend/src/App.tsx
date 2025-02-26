@@ -15,9 +15,9 @@ import CardDetailPage from "./pages/app/cards/card/CardDetailPage";
 import AllCardPage from "./pages/app/cards/AllCardPage";
 import Logout from "./pages/auth/Logout";
 
-function App({}) {
+function App({ }) {
 
-const { user } = useAuth();
+  const { user } = useAuth();
 
   return (
     <>
