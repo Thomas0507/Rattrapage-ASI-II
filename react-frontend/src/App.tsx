@@ -1,38 +1,38 @@
-import { createBrowserRouter, createRoutesFromElements, Route, Routes, RouterProvider } from "react-router-dom";
+import React from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
+import './App.css';
+import { useAuth } from "./hooks/useAuth";
+import { HomeLayout } from "./layouts/HomeLayout";
+import { ProtectedLayout } from "./layouts/ProtectedLayout";
+import CardScreen from "./pages/app/CardScreen";
+import SelectScreen from "./pages/app/SelectScreen";
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
-import Home from './pages/Home';
-import { AuthProvider } from "./hooks/useAuth";
-import { ProtectedRoute } from "./components/ProtectedRoute";
-import { HomeLayout } from "./layouts/HomeLayout";
-import SelectScreen from "./pages/app/SelectScreen";
-import CardScreen from "./pages/app/CardScreen";
-import { ProtectedLayout } from "./layouts/ProtectedLayout";
-import { useAuth } from "./hooks/useAuth";
 import Header from "./pages/Header";
-import './App.css';
-import React from "react";
 
-function App({}) {
+function App({ }) {
 
-const { user } = useAuth();
+  const { user } = useAuth();
 
   return (
     <>
-    <Header user={user}/>
-    <Routes>
-      {/* public routes */}
-      <Route element={<HomeLayout/>}>
-        <Route path="/" element = {<Home/>}/>
-        <Route path="/login" element = {<Login/>}/>
-        <Route path="/register" element = {<Register/>}/>
-      </Route>
-      {/* private routes */}
-      <Route path="/app" element={<ProtectedLayout/>}>
-        <Route path="main" element={<SelectScreen/>}/>
-        <Route path="cards" element={<CardScreen/>}/>
-      </Route>
-    </Routes>
+      <Header user={user} />
+      <Routes>
+        {/* public routes */}
+        <Route element={<HomeLayout />}>
+          <Route path="/" element={<Navigate to="/app/main" replace />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
+        {/* private routes */}
+        <Route path="/app" element={<ProtectedLayout />}>
+          <Route path="main" element={<SelectScreen />} />
+          <Route path="cards" element={<CardScreen />} />
+        </Route>
+
+        {/* catch all */}
+        <Route path="*" element={<Navigate to="/app/main" replace />} />
+      </Routes>
     </>
   );
 }
