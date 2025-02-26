@@ -6,3 +6,4 @@ express-socket/package.json
 
 docker-compose.yml
 mongo-data/
+node_modules
