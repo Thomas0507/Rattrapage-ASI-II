@@ -19,7 +19,7 @@ export const initSocket = (server: any) => {
         // Assume data is a string and the sender information comes from the authenticated token
         await Message.create({
           content: data,
-          //sender: socket.data.user.id, // Adjust according to the payload in your token
+          //sender: socket.data.user.id, 
           createdAt: new Date(),
         });
       } catch (error) {
