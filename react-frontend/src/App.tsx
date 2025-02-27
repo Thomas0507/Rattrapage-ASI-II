@@ -14,6 +14,7 @@ import React from "react";
 import CardDetailPage from "./pages/app/cards/card/CardDetailPage";
 import AllCardPage from "./pages/app/cards/AllCardPage";
 import Logout from "./pages/auth/Logout";
+import Generator from "./pages/generator/Generator";
 
 function App({}) {
 
@@ -36,6 +37,7 @@ const { user } = useAuth();
         <Route path="main" element={<SelectScreen/>}/>
         <Route path="cards" element={<AllCardPage/>}/>
         <Route path="card/:cardId" element={<CardDetailPage/>}/>
+        <Route path="generate" element={<Generator/>}/>
       </Route>
       <Route path="/profile" element={<ProtectedLayout/>}>
         <Route path="" element={<ProfilePage/>}></Route>
