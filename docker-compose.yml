@@ -125,7 +125,7 @@ services:
     image: mongo:6
     container_name: mongo-orch
     ports:
-      - "27017:27017"
+      - "27018:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: mongo
       MONGO_INITDB_ROOT_PASSWORD: root
