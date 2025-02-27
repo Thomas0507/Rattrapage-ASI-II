@@ -1,5 +1,6 @@
 import { Server as SocketIOServer } from 'socket.io';
 import Message from "../models/message";
+import message from '../models/message';
 
 export const initSocket = (server: any) => {
   const io = new SocketIOServer(server, {
@@ -16,7 +17,6 @@ export const initSocket = (server: any) => {
       console.log("Message received:", data);
       try {
         // Save the message to the database
-        // Assume data is a string and the sender information comes from the authenticated token
         await Message.create({
           content: data,
           //sender: socket.data.user.id, // Adjust according to the payload in your token
@@ -28,9 +28,10 @@ export const initSocket = (server: any) => {
       // Broadcast the message to all connected clients
       io.emit("message", {
         content: data,
-        //sender: socket.data.user.id,
+        //sender: socket.data.user.token,
         timestamp: new Date(),
       });
+      
     });
 
     socket.on('disconnect', () => {

@@ -42,12 +42,12 @@ const Conversation: React.FC = () => {
       // If you have a token or user id, pass it in auth data:
       const newSocket = io(SOCKET_SERVER_URL, {
         transports: ["websocket", "polling"],
-        auth: { token: user.token} //, userId: user.id  // adjust as per your auth object
+        auth: { token: user.token} //, userId: user.id  
       });
       setSocket(newSocket);
 
       newSocket.on("connect", () => {
-        console.log("Socket connected:") //, newSocket.id);
+        console.log("Socket connected:" , newSocket.id);
       });
 
       newSocket.on("message", (data: Message) => {
