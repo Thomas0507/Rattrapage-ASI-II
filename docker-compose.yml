@@ -69,16 +69,33 @@ services:
       ACTIVEMQ_WEBADMIN_USERNAME: "admin"
       ACTIVEMQ_WEBADMIN_PASSWORD: "asi2"
   mongodb:
-    image: mongo:6
-    container_name: mongodb
+    image: mongo
+    restart: always
     ports:
-      - "27017:27017"
+      - 27017:27017
+    command:
+      - --storageEngine
+      - wiredTiger
+      - --auth
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=root
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: asi-ii-mdb
     volumes:
-      - ./react-frontend/mongo-data:/data/db
-      - ./mongo-data:/data/db
+      - mongodb-data:/var/lib/mongodb-data
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8091:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+      ME_CONFIG_MONGODB_URL: mongodb://root:root@mongodb:27017/
+      ME_CONFIG_BASICAUTH: false
+      ME_CONFIG_MONGODB_SERVER: mongodb
 volumes:
   local_pgdata:
   pgadmin-data:
+  mongodb-data:
