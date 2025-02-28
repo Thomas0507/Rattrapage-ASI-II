@@ -47,30 +47,9 @@ export default function SummonPage() {
     }, []);
 
 
-
-
-
-
-// mock data
-//     const data = [new Banner(1, 'test', 'desc', 0, true, new Date(), new Date(), true, "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1623730/c961ac047294838bfe382bf193ade5c64b19e573/capsule_616x353.jpg?t=1737094038", [new Card
-//         (
-//             1, "Lamball", "A simple sheep trying his best", "https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_SheepBall_icon_normal.png", 1, 1, "Neutral"
-//         )
-//     ], [new Card(
-//         1, "Lamball2", "A simple sheep trying his best", "https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_SheepBall_icon_normal.png", 1, 1, "Neutral"
-//     )]),
-//     new Banner(2, 'test2', 'desc2', 0, true, new Date(), new Date(), true, "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1623730/c961ac047294838bfe382bf193ade5c64b19e573/capsule_616x353.jpg?t=1737094038", [new Card
-//         (
-//             1, "Lamball", "A simple sheep trying his best", "https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_SheepBall_icon_normal.png", 1, 1, "Neutral"
-//         )
-//     ], [new Card(
-//         1, "Lamball2", "A simple sheep trying his best", "https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_SheepBall_icon_normal.png", 1, 1, "Neutral"
-//     )])
-// ];
-
     if (isLoading) return <Loader />
     return (
-    <Container maxWidth="lg">
+    <Container className="component-padding" maxWidth="lg">
         <MobileStepper
       variant="dots"
       steps={data.length}

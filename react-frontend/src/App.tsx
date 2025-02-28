@@ -18,6 +18,7 @@ import AllCardPage from "./pages/app/cards/AllCardPage";
 import Logout from "./pages/auth/Logout";
 import Generator from "./pages/generator/Generator";
 import SummonPage from "./pages/app/summon/SummonPage";
+import { SummoningPage } from "./pages/app/summon/summoning/SummoningPage";
 
 function App({ }) {
 
@@ -43,8 +44,12 @@ function App({ }) {
         <Route path="cards" element={<AllCardPage/>}/>
         <Route path="card/:cardId" element={<CardDetailPage/>}/>
         <Route path="generate" element={<Generator/>}/>
-        <Route path="summon" element={<SummonPage/>}/>
+        <Route path="summon" element={<ProtectedLayout/>}>
+          <Route path="" element={<SummonPage/>}/>
+          <Route path="summoning/:bannerId" element={<SummoningPage/>}/>
+        </Route>
       </Route>
+
       <Route path="/profile" element={<ProtectedLayout/>}>
         <Route path="" element={<ProfilePage/>}></Route>
       </Route>

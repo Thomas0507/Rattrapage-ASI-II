@@ -3,6 +3,7 @@ import { Banner } from "../models/Banner"
 import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button } from "@mui/material"
 import { useState } from "react"
 import { ScouterComponent } from "./ScouterComponent"
+import { Link } from "react-router-dom"
 
 
 interface BannerCardProps {
@@ -17,12 +18,11 @@ const BannerCard = ({banner}: BannerCardProps) =>  {
 
 
   function handleScouter() {
-    console.log("Scouting!")
     setOpenModal(true);
   }
 
   function handleSummon() {
-    console.log("Summonning!")
+
   }
 
   function handleClose() {
@@ -51,10 +51,10 @@ const BannerCard = ({banner}: BannerCardProps) =>  {
           </Typography>
         </CardContent>
       <CardActions sx={{justifyContent: 'space-between'}}>
-        <Button size="small" color="primary" onClick={()=> handleSummon()}>
+        <Button component={Link} to={"/app/summon/summoning"+ "/" + banner.id} size="small" color="primary">
           {banner.cost}$ Summon! 
         </Button>
-        <Button size="small" color="primary" onClick={() => handleScouter()}>
+        <Button  size="small" color="primary" onClick={() => handleScouter()}>
           Scout what you can get!
         </Button>
       </CardActions>

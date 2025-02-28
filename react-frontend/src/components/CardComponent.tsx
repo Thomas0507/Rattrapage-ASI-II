@@ -6,11 +6,15 @@ import { Link } from "react-router-dom";
 interface CardProps {
     card: CardEntity,
     imageHeight?: number,
-    imageWidth?: number
+    imageWidth?: number,
+    hideShowDetails?: boolean
 }
 
-const CardComponent = ({card, imageHeight, imageWidth}: CardProps) => {
-
+const CardComponent = ({card, imageHeight, imageWidth, hideShowDetails}: CardProps) => {
+  if (hideShowDetails === undefined || hideShowDetails === null)
+  {
+    hideShowDetails = false;
+  }
     return (
         <Card sx={{ maxWidth: 345 }}>
       <CardMedia
@@ -27,7 +31,13 @@ const CardComponent = ({card, imageHeight, imageWidth}: CardProps) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button component={Link} to={"/app/card/" + card.id} size="small">See details</Button>
+      {
+        hideShowDetails ? (
+          <Button component={Link} to={"/app/card/" + card.id} size="small">See details</Button>
+        ) : (
+          <Button size="small">See details</Button>
+        )
+      }
       </CardActions>
     </Card>
     );
