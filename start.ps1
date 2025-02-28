@@ -1,4 +1,4 @@
-Push-Location .\common-module
-Start-Process mvn -ArgumentList 'clean', 'install'
-Pop-Location
-Start-Process docker -ArgumentList 'compose', 'up' , '--build'
+cd .\common-module
+mvn clean install
+cd ..
+docker compose up --build 
