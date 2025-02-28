@@ -26,34 +26,37 @@ class LogInForm {
   }
 }
 
-function Login () {
+
+
+function Login() {
+
   const { login } = useAuth();
 
-  async function publish(formData: FormData) {
+  function publish(formData: FormData) {
     const signUpForm = new LogInForm(formData.get('email') as string, formData.get('password') as string);
-    
-      // post to create an account;
-      fetch('http://localhost:8081/auth/login', {
-        method: 'POST',
-        headers: {
-          'Access-Control-Request-Method': 'POST',
-          'Origin': 'http://localhost:5173',
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          "username": signUpForm.username,
-          "password": signUpForm.password
-        })
+
+    // post to create an account;
+    fetch('http://localhost:8081/auth/login', {
+      method: 'POST',
+      headers: {
+        'Access-Control-Request-Method': 'POST',
+        'Origin': 'http://localhost:5173',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "username": signUpForm.username,
+        "password": signUpForm.password
       })
+    })
       .then(response => response.json())
       .then(async data => 
-        await login(data.token)
+        await login(data)
       )      
       .catch(err => console.log(err));
-      }
+  }
 
-    return (
+  return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div>
@@ -112,7 +115,7 @@ function Login () {
       <Box mt={8}>
       </Box>
     </Container>
-    )
+  )
 };
 
 export default Login;

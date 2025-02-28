@@ -7,7 +7,7 @@ export const ProtectedLayout = () => {
 
   if (!user) {
     // protection, if user not connected, return to home page
-    return <Navigate to="/" />;
+    return <Navigate to="/login" />;
   }
 
   return <Outlet/>
