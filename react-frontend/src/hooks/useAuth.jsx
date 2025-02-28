@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   
     // call this function when you want to authenticate the user
     const login = async (data) => {
-      setUser(data);
+      setUser(data.token);
       navigate("/profile");
     };
   

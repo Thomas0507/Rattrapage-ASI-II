@@ -16,6 +16,15 @@ public class ImageGenerationService
 
 	@JmsListener(destination = "service-image.queue")
 	public void receiveMessage(MessageRequest message) {
+		try
+		{
+			Thread.sleep(3000);
+		}
+		catch (InterruptedException e)
+		{
+			throw new RuntimeException(e);
+		}
+
 		Map<String, Object> responsePayload = Map.of("data", "Création d'une image pour " + message.getRequestId());
 		jmsTemplate.convertAndSend("response.queue", new MessageRequest(message.getRequestId(), message.getServiceId(), responsePayload));
 	}
