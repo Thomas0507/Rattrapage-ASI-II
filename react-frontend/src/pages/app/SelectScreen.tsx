@@ -84,7 +84,7 @@ function SelectScreen () {
                     </CardActions>
                 </Card>
             </Grid2>
-            {/* Game */}
+            {/* Generate Card */}
             <Grid2 size={6}>
                 <Card sx={{ minWidth: 275 }}>
                     <CardContent>
@@ -100,6 +100,24 @@ function SelectScreen () {
                     </CardContent>
                     <CardActions>
                         <Button size="small" component={Link} to={'/app/generate'}>Go</Button>
+                    </CardActions>
+                </Card>
+            </Grid2>
+            {/* Summon cards */}
+            <Grid2 size={6}>
+                <Card sx={{ minWidth: 275 }}>
+                    <CardContent>
+                        <Typography gutterBottom>
+                            Banners
+                        </Typography>
+                        <Typography variant="h5" component="div">
+                        </Typography>
+                        <Typography variant="body2">
+                            Get a random cards from one of our banners !
+                        </Typography>
+                    </CardContent>
+                    <CardActions>
+                        <Button size="small" component={Link} to={'/app/summon'}>Go</Button>
                     </CardActions>
                 </Card>
             </Grid2>
