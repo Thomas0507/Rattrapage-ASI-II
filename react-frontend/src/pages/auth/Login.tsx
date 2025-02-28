@@ -26,7 +26,12 @@ class LogInForm {
   }
 }
 
+
+
 function Login() {
+
+  const { login } = useAuth();
+
   function publish(formData: FormData) {
     const signUpForm = new LogInForm(formData.get('email') as string, formData.get('password') as string);
 
@@ -45,16 +50,10 @@ function Login() {
       })
     })
       .then(response => response.json())
-      .then(data => {
-        if (data.token) {
-          // Store the token in localStorage
-          localStorage.setItem('token', data.token);
-          // Redirect to home page or dashboard
-          window.location.href = '/';
-        }
-      });
-
-    console.log(signUpForm);
+      .then(async data => 
+        await login(data)
+      )      
+      .catch(err => console.log(err));
   }
 
   return (
