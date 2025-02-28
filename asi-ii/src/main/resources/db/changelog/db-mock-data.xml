@@ -2015,6 +2015,12 @@
             <column name="banner_entity_id">1</column>
             <column name="summonable_cards_id">17</column>
         </insert>
-
+    </changeSet>
+    <changeSet id="1740775557127-1" author="Thomas0507">
+        <insert tableName="collection">
+            <column name="id">2</column>
+            <column name="name">AI</column>
+            <column name="release_date">2025-02-24</column>
+        </insert>
     </changeSet>
 </databaseChangeLog>

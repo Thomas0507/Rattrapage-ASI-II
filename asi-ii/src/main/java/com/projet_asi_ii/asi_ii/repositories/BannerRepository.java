@@ -8,4 +8,5 @@ import java.util.List;
 public interface BannerRepository extends JpaRepository<BannerEntity, Integer> {
     public List<BannerEntity> findByIsActive(Boolean isActive);
 
+    BannerEntity findById(long bannerId);
 }

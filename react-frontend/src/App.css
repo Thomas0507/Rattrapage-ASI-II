@@ -9,10 +9,10 @@ html, body, #app, #app>div {
 
 body > #root {
     height: 100vh;
-  }
+}
 
-.header-wrapper {
-    margin-bottom: 3.5%;
+.component-padding {
+    padding: 5em;
 }
 
 
