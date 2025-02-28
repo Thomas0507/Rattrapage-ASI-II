@@ -84,6 +84,25 @@ function SelectScreen () {
                     </CardActions>
                 </Card>
             </Grid2>
+            {/* Game */}
+            <Grid2 size={6}>
+                <Card sx={{ minWidth: 275 }}>
+                    <CardContent>
+                        <Typography gutterBottom>
+                            Generate Card
+                        </Typography>
+                        <Typography variant="h5" component="div">
+                        </Typography>
+                        {/* <Typography sx={{mb: 1.5 }}>View all cards that you can get</Typography> */}
+                        <Typography variant="body2">
+                            Generate a card
+                        </Typography>
+                    </CardContent>
+                    <CardActions>
+                        <Button size="small" component={Link} to={'/app/generate'}>Go</Button>
+                    </CardActions>
+                </Card>
+            </Grid2>
         </Grid2>
     );
 };
