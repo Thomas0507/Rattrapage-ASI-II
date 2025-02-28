@@ -4,8 +4,7 @@ import BannerCard from "../../../components/BannerCard";
 import { Banner } from "../../../models/Banner";
 import { Card } from "../../../models/Card";
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import '../../../css/SummonPage.css'
 import { getOptionsByRequestType, RequestType } from "../../../hooks/RequestBuilder";
 import Loader from "../../Loader";
@@ -86,7 +85,7 @@ export default function SummonPage() {
       }
       backButton={
         <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-            <ArrowBackIosIcon/>
+            <KeyboardArrowLeftIcon/>
           Back
         </Button>
       }
