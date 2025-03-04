@@ -1,5 +1,6 @@
 package com.projet_asi_ii.asi_ii.controllers;
 
+import com.projet_asi_ii.asi_ii.Exceptions.BadEndpointException;
 import com.projet_asi_ii.asi_ii.dtos.BannerDto;
 import com.projet_asi_ii.asi_ii.dtos.CardDto;
 import com.projet_asi_ii.asi_ii.entities.UserEntity;
@@ -33,7 +34,7 @@ public class BannerController {
     }
 
     @GetMapping("summon/{bannerId}")
-    public ResponseEntity<List<CardDto>> summonOnABanner(@PathVariable(value = "bannerId") String bannerId) {
+    public ResponseEntity<List<CardDto>> summonOnABanner(@PathVariable(value = "bannerId") String bannerId) throws BadEndpointException {
         long id;
         try {
             id = Long.parseLong(bannerId);
@@ -42,11 +43,7 @@ public class BannerController {
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserEntity user = (UserEntity) authentication.getPrincipal();
-        if (this.bannerService.checkIfSummonIsLegal(user, id)) {
-            return ResponseEntity.ok(this.bannerService.summon(id));
-        } else {
-            return ResponseEntity.badRequest().build();
-        }
+        return ResponseEntity.ok(this.bannerService.summon(user, id));
     }
 
 }

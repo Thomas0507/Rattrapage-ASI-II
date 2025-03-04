@@ -13,11 +13,9 @@ import '@fontsource/roboto/700.css';
 import React from 'react';
 
 createRoot(document.getElementById('root') as HTMLElement).render(
-  <StrictMode>
       <BrowserRouter>
         <AuthProvider>
           <App />
         </AuthProvider>
       </BrowserRouter>
-  </StrictMode>,
 )

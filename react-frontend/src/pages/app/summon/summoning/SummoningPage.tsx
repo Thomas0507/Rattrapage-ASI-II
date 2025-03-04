@@ -24,7 +24,7 @@ export const SummoningPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`http://localhost:8081/banner/summon` + bannerId, getOptionsByRequestType(RequestType.GET, {}));
+                const response = await fetch(`http://localhost:8081/banner/summon/` + bannerId, getOptionsByRequestType(RequestType.GET, {}));
                 if (!response.ok) {
                     throw new Error(`Error: $(response.statusText)`);
                 }

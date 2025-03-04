@@ -12,6 +12,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -37,7 +38,7 @@ public class UserService
 		try {
 			userEntity = appUserRepository.save(userEntity);
 			playerEntity.setUser(userEntity);
-			playerEntity.setCards(Set.of(cardRepository.findById((long)1).get()));
+			playerEntity.setCards(List.of(cardRepository.findById((long)1).get()));
 			playerEntity.setCash(500);
 			playerRepository.save(playerEntity);
 		} catch (Exception e) {

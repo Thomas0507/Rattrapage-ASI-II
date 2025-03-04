@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -31,5 +30,5 @@ public class PlayerEntity {
     private int cash;
 
     @OneToMany
-    private Set<CardEntity> cards;
+    private List<CardEntity> cards;
 }
