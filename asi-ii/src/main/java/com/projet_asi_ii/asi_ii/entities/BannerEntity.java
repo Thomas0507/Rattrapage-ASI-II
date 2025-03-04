@@ -31,6 +31,9 @@ public class BannerEntity {
     private Date endDate;
     private Boolean isActive;
     private String imageUrl;
+
+    private float featuredDropRate;
+
     @OneToMany
     private List<CardEntity> summonableCards;
     @OneToMany

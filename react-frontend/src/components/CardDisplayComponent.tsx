@@ -10,7 +10,7 @@ interface CardDisplayProps {
 }
 
 export const CardDisplayComponent = ({card, onClick}: CardDisplayProps) => {
-    const cardBackSvgPath = "../../public/yugioh-back-card.svg";
+    const cardBackSvgPath = "../../../public/yugioh-back-card.svg";
 
     const [hidden, setHidden] = useState(true);
 
@@ -36,7 +36,7 @@ export const CardDisplayComponent = ({card, onClick}: CardDisplayProps) => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 1 }}
-                style={{ width: 200, height: 'auto' }}
+                style={{ width: 300, height: 'auto' }}
                 />
             ): (
                 <motion.div
@@ -47,9 +47,9 @@ export const CardDisplayComponent = ({card, onClick}: CardDisplayProps) => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 1 }}
-                style={{ width: 200, height: 'auto' }}
+                style={{ width: 300, height: 'auto' }}
                 >
-                <CardComponent card={card}/>
+                    <CardComponent card={card}/>
                 </motion.div>
             )}
 

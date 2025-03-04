@@ -83,15 +83,10 @@
         <createTable tableName="player_cards">
             <column name="player_entity_id"
                     type="BIGINT">
-                <constraints nullable="false"
-                             primaryKey="true"
-                             primaryKeyName="pk_player_cards"/>
+
             </column>
             <column name="cards_id"
                     type="BIGINT">
-                <constraints nullable="false"
-                             primaryKey="true"
-                             primaryKeyName="pk_player_cards"/>
             </column>
         </createTable>
     </changeSet>
@@ -268,6 +263,12 @@
     <changeSet id="1740761296781-1" author="Thomas0507">
         <addColumn tableName="banner">
             <column name="image_url" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="1741113428822-2" author="PC">
+        <addColumn tableName="banner">
+            <column name="featured_drop_rate" type="FLOAT"/>
         </addColumn>
     </changeSet>
 

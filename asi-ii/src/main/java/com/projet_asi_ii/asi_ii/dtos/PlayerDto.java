@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,7 +15,7 @@ public class PlayerDto {
 
     private long id;
     private String username;
-    private Set<CardDto> cards;
+    private List<CardDto> cards;
     private int cash;
 
 }

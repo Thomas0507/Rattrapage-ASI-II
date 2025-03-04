@@ -26,16 +26,16 @@ const CardComponent = ({card, imageHeight, imageWidth, hideShowDetails}: CardPro
         <Typography gutterBottom variant="h5" component="div">
           {card.name}
         </Typography>
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+      </CardContent>
+      <CardContent>
+        <Typography variant="body2" sx={{ color: 'text.secondary', height: '170px', overflow: 'scroll' }}>
             {card.description}
         </Typography>
       </CardContent>
       <CardActions>
       {
-        hideShowDetails ? (
+        hideShowDetails && (
           <Button component={Link} to={"/app/card/" + card.id} size="small">See details</Button>
-        ) : (
-          <Button size="small">See details</Button>
         )
       }
       </CardActions>
