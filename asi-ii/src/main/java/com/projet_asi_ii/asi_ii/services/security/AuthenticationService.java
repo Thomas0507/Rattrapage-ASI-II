@@ -14,19 +14,11 @@ public class AuthenticationService {
 	private AuthenticationManager authenticationManager;
 
 	public Authentication authenticate(UserRequest userRequest) {
-		try {
-			return authenticationManager.authenticate(
-					new UsernamePasswordAuthenticationToken(
-							userRequest.getUsername(),
-							userRequest.getPassword()
-					)
-			);
-		}
-		catch (AuthenticationException e)
-		{
-			System.out.println("Authentication failed: " + e.getMessage());
-		}
-
-		return null;
+		return authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(
+						userRequest.getUsername(),
+						userRequest.getPassword()
+				)
+		);
 	}
 }
