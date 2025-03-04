@@ -45,5 +45,11 @@
     <changeSet id="1740423624590-14" author="Thomas0507">
         <dropColumn columnName="type" tableName="card"/>
     </changeSet>
+    <changeSet id="1741119384088-1" author="Thomas0507">
+        <addColumn tableName="player">
+            <column name="is_beginner"
+                    type="BOOLEAN"/>
+        </addColumn>
+    </changeSet>
 
 </databaseChangeLog>

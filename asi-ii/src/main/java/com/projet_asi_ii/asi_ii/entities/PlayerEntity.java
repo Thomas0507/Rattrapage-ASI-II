@@ -29,6 +29,8 @@ public class PlayerEntity {
 
     private int cash;
 
+    private boolean isBeginner;
+
     @OneToMany
     private List<CardEntity> cards;
 }

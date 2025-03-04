@@ -2029,4 +2029,10 @@
             <where>id=1</where>
         </update>
     </changeSet>
+    <changeSet id="1741120856101-1" author="Thomas0507">
+        <update tableName="banner">
+            <column name="is_active">true</column>
+            <where>id=1</where>
+        </update>
+    </changeSet>
 </databaseChangeLog>

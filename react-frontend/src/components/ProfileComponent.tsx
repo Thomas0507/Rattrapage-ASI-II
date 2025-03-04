@@ -12,6 +12,7 @@ interface ProfileProps {
 }
 
 const ProfileComponent = ({player}: ProfileProps) => {
+    console.log(player);
     return (
         <Container fixed className="component-wrapper">
             <Typography variant="h3" className="center-text">
@@ -32,7 +33,7 @@ const ProfileComponent = ({player}: ProfileProps) => {
                     id="outlined-adornment-amount"
                     startAdornment={<InputAdornment position="start">$</InputAdornment>}
                     label="Cash"
-                    defaultValue={player.cash}
+                    value={player.cash}
                     disabled
                 />
                 </FormControl>
@@ -40,20 +41,21 @@ const ProfileComponent = ({player}: ProfileProps) => {
                 <Typography variant="h4" className="center-text">
                     My cards
                 </Typography>
+                <div style={{display: 'flex', justifyContent:'center', gap: '1em', flexWrap: 'wrap'}}>
+
 
                 {player.cards.length !== 0 ?
                     
                     player.cards.map(
                         (_card, _index) => (
-                            <Container fixed className="card-wrapper">
                                 <CardComponent card ={_card}
                                 />
-                            </Container>
                         )
                     )
                 :
                     <Typography className="center-text">You don't have any cards. Go to the market to generate or buy some!</Typography>
                 }
+                </div>
         </Container>
 
     );

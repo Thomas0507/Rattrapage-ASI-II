@@ -15,9 +15,9 @@ export const SummoningPage = () => {
 
     ];
     const [cardsDropped, setCardsDropped] = useState(cardsDroppedMock);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
-
+    const [errorMessage, setErrorMessage] = useState("");
     const path = useLocation().pathname.split("/");
     const bannerId = Number(path[path.length-1]);
 
@@ -26,13 +26,16 @@ export const SummoningPage = () => {
             try {
                 const response = await fetch(`http://localhost:8081/banner/summon/` + bannerId, getOptionsByRequestType(RequestType.GET, {}));
                 if (!response.ok) {
-                    throw new Error(`Error: $(response.statusText)`);
+                    setError(true);
+                    setErrorMessage(response.statusText);
+                    // throw new Error(`Error: $(response.statusText)`);
                 }
                 // todo: handle card not found
                 const result = await response.json();
                 setCardsDropped(result);
             } catch(err) {
-                setError(err.message)
+                setErrorMessage(err.message)
+                setError(true);
             } finally {
                 setLoading(false);
             }
@@ -47,7 +50,14 @@ export const SummoningPage = () => {
         loading ? (
             <Loader />
         ) : (
-            <SummonComponent droppedCards={cardsDropped}/>
+            <div>
+                {
+                    error ? (<span>{errorMessage}</span>) : (
+                        <SummonComponent droppedCards={cardsDropped}/>
+                    )
+                }
+
+            </div>
         )
     }
             </div>
