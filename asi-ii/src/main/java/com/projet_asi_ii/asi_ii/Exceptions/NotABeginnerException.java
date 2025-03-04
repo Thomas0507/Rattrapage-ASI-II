@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class NotABeginnerException extends GenericException {
-    public NotABeginnerException(String message, String errorReason, String errorCode) {
-        super(message, errorCode, errorReason);
+    public NotABeginnerException(String message, String errorReason) {
+        super(message, errorReason);
     }
 }
