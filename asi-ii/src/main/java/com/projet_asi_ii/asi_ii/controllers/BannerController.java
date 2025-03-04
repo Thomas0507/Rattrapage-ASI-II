@@ -1,6 +1,9 @@
 package com.projet_asi_ii.asi_ii.controllers;
 
 import com.projet_asi_ii.asi_ii.Exceptions.BadEndpointException;
+import com.projet_asi_ii.asi_ii.Exceptions.BannerHasEndedException;
+import com.projet_asi_ii.asi_ii.Exceptions.BannerNotActiveException;
+import com.projet_asi_ii.asi_ii.Exceptions.NotABeginnerException;
 import com.projet_asi_ii.asi_ii.dtos.BannerDto;
 import com.projet_asi_ii.asi_ii.dtos.CardDto;
 import com.projet_asi_ii.asi_ii.entities.UserEntity;
@@ -34,7 +37,7 @@ public class BannerController {
     }
 
     @GetMapping("summon/{bannerId}")
-    public ResponseEntity<List<CardDto>> summonOnABanner(@PathVariable(value = "bannerId") String bannerId) throws BadEndpointException {
+    public ResponseEntity<List<CardDto>> summonOnABanner(@PathVariable(value = "bannerId") String bannerId) throws BadEndpointException, BannerNotActiveException, NotABeginnerException, BannerHasEndedException {
         long id;
         try {
             id = Long.parseLong(bannerId);

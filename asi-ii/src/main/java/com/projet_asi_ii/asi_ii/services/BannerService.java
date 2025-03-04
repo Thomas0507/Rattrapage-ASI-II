@@ -1,6 +1,9 @@
 package com.projet_asi_ii.asi_ii.services;
 
 import com.projet_asi_ii.asi_ii.Exceptions.BadEndpointException;
+import com.projet_asi_ii.asi_ii.Exceptions.BannerHasEndedException;
+import com.projet_asi_ii.asi_ii.Exceptions.BannerNotActiveException;
+import com.projet_asi_ii.asi_ii.Exceptions.NotABeginnerException;
 import com.projet_asi_ii.asi_ii.dtos.BannerDto;
 import com.projet_asi_ii.asi_ii.dtos.CardDto;
 import com.projet_asi_ii.asi_ii.entities.BannerEntity;
@@ -49,13 +52,12 @@ public class BannerService {
     }
 
 
-    public List<CardDto> summon(UserEntity user, long id) throws BadEndpointException {
+    public List<CardDto> summon(UserEntity user, long id) throws BadEndpointException, BannerNotActiveException, BannerHasEndedException,NotABeginnerException {
         BannerEntity banner = bannerRepository.findById(id);
         PlayerEntity player = playerRepository.findByUserUsername(user.getUsername());
 
-        if (checkIfSummonIsLegal(player, banner)) {
-            throw new BadEndpointException("4001", "Summon is forbidden", "Player does not meet banner criterias");
-        }
+        checkIfSummonIsLegal(player, banner);
+
         List<CardDto> cardDtos = new ArrayList<>();
         List<CardEntity> cardsDropped = this.getRandomCardsFromBanner(banner);
         // forbid player from using free summon multiple time
@@ -72,22 +74,24 @@ public class BannerService {
     }
 
 
-    private boolean checkIfSummonIsLegal(PlayerEntity player, BannerEntity banner) {
+    private void checkIfSummonIsLegal(PlayerEntity player, BannerEntity banner) throws BadEndpointException, NotABeginnerException, BannerNotActiveException, BannerHasEndedException {
         // summon is legal if:
         // - player has enough money,
         // - the banner is active,
         // - its endDate is <= to currentDate
         // The player already summoned on the free portal
         if (player.getCash() - banner.getCost() < 0) {
-            return true;
+            throw new BannerNotActiveException("401", "Summon is forbidden", "You don't have enough cash");
         }
         if (!banner.getIsActive()) {
-            return true;
+            throw new BannerNotActiveException("401", "Summon is forbidden", "This banner is no longer active");
         }
         if (banner.getId() == 1 && !player.isBeginner()) {
-            return true;
+            throw new NotABeginnerException("401", "Summon is forbidden", "This player already used his free summon");
         }
-        return banner.getEndDate().before(Date.from(Instant.now()));
+        if (banner.getEndDate().before(Date.from(Instant.now()))) {
+            throw new BannerHasEndedException("401", "Summon is forbidden", "This banner has already ended");
+        };
     }
 
     private List<CardEntity> getRandomCardsFromBanner(BannerEntity banner) {
