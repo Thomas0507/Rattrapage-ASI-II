@@ -51,33 +51,43 @@ public class BannerService {
 
     public List<CardDto> summon(UserEntity user, long id) throws BadEndpointException {
         BannerEntity banner = bannerRepository.findById(id);
-        if (checkIfSummonIsLegal(user, banner)) {
+        PlayerEntity player = playerRepository.findByUserUsername(user.getUsername());
+
+        if (checkIfSummonIsLegal(player, banner)) {
             throw new BadEndpointException("4001", "Summon is forbidden", "Player does not meet banner criterias");
         }
         List<CardDto> cardDtos = new ArrayList<>();
         List<CardEntity> cardsDropped = this.getRandomCardsFromBanner(banner);
-        this.addCardsDroppedToPlayer(user, cardsDropped);
+        // forbid player from using free summon multiple time
+        if (banner.getId() == 1) {
+            player.setBeginner(false);
+        }
+        this.addCardsDroppedToPlayer(player, cardsDropped);
 
         for (CardEntity cardEntity : cardsDropped) {
             cardDtos.add(CardMapper.INSTANCE.toCardDto(cardEntity));
         }
+
         return cardDtos;
     }
 
 
-    private boolean checkIfSummonIsLegal(UserEntity user, BannerEntity banner) {
+    private boolean checkIfSummonIsLegal(PlayerEntity player, BannerEntity banner) {
         // summon is legal if:
         // - player has enough money,
         // - the banner is active,
         // - its endDate is <= to currentDate
-        PlayerEntity player = playerRepository.findByUserUsername(user.getUsername());
-        if (Math.abs(player.getCash() - banner.getCost()) < 0) {
-            return false;
+        // The player already summoned on the free portal
+        if (player.getCash() - banner.getCost() < 0) {
+            return true;
         }
         if (!banner.getIsActive()) {
-            return false;
+            return true;
         }
-        return !banner.getEndDate().before(Date.from(Instant.now()));
+        if (banner.getId() == 1 && !player.isBeginner()) {
+            return true;
+        }
+        return banner.getEndDate().before(Date.from(Instant.now()));
     }
 
     private List<CardEntity> getRandomCardsFromBanner(BannerEntity banner) {
@@ -88,7 +98,7 @@ public class BannerService {
         int cardToDrop = 5;
 
         if (banner.getGuaranteedSSR())  {
-            int randomIndex = this.getRandomNumber(0, cardsFeatured.size() - 1);
+            int randomIndex = this.getRandomNumber(0, cardsFeatured.size());
             cardsDropped.add(cardsFeatured.get(randomIndex));
             cardToDrop = 4;
         }
@@ -96,11 +106,11 @@ public class BannerService {
             int chance = getRandomNumber(0, 100);
             if ((float) chance < banner.getFeaturedDropRate()) {
                 // dropped a featured card, they all have an equal chance of being dropped
-                int indexOfFeaturedCard = getRandomNumber(0, cardsFeatured.size() - 1);
+                int indexOfFeaturedCard = getRandomNumber(0, cardsFeatured.size());
                 cardsDropped.add(cardsFeatured.get(indexOfFeaturedCard));
             } else {
                 // dropped a normal card, they all have an equal chance of being dropped
-                int indexOfSummonableCard = getRandomNumber(0, summonableCards.size() - 1);
+                int indexOfSummonableCard = getRandomNumber(0, summonableCards.size());
                 cardsDropped.add(summonableCards.get(indexOfSummonableCard));
             }
         }
@@ -111,8 +121,7 @@ public class BannerService {
         return (int) ((Math.random() * (max - min)) + min);
     }
 
-    private void addCardsDroppedToPlayer(UserEntity user, List<CardEntity> cardsDropped) {
-        PlayerEntity player = playerRepository.findByUserUsername(user.getUsername());
+    private void addCardsDroppedToPlayer(PlayerEntity player, List<CardEntity> cardsDropped) {
         player.setCards(Stream.concat(cardsDropped.stream(), player.getCards().stream()).collect(Collectors.toList()));
         playerRepository.save(player);
     }
