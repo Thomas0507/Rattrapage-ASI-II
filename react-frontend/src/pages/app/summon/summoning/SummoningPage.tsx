@@ -4,6 +4,7 @@ import { Card } from "../../../../models/Card";
 import Loader from "../../../Loader";
 import { getOptionsByRequestType, RequestType } from "../../../../hooks/RequestBuilder";
 import { useLocation } from "react-router-dom";
+import ErrorComponent from "../../../../components/ErrorComponent";
 export const SummoningPage = () => {
     // do an invocation =>
     const cardsDroppedMock: Card[] = [
@@ -26,15 +27,16 @@ export const SummoningPage = () => {
             try {
                 const response = await fetch(`http://localhost:8081/banner/summon/` + bannerId, getOptionsByRequestType(RequestType.GET, {}));
                 if (!response.ok) {
-                    setError(true);
-                    setErrorMessage(response.statusText);
-                    // throw new Error(`Error: $(response.statusText)`);
+                    return response.text().then( text => {
+                        setError(true);
+                        setErrorMessage(text);}
+                    );
                 }
                 // todo: handle card not found
                 const result = await response.json();
                 setCardsDropped(result);
             } catch(err) {
-                setErrorMessage(err.message)
+                setErrorMessage(err)
                 setError(true);
             } finally {
                 setLoading(false);
@@ -52,7 +54,7 @@ export const SummoningPage = () => {
         ) : (
             <div>
                 {
-                    error ? (<span>{errorMessage}</span>) : (
+                    error ? (<ErrorComponent message={errorMessage}/>) : (
                         <SummonComponent droppedCards={cardsDropped}/>
                     )
                 }
