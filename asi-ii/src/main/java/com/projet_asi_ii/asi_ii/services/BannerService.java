@@ -81,16 +81,16 @@ public class BannerService {
         // - its endDate is <= to currentDate
         // The player already summoned on the free portal
         if (player.getCash() - banner.getCost() < 0) {
-            throw new BannerNotActiveException("401", "Summon is forbidden", "You don't have enough cash");
+            throw new BannerNotActiveException("Summon is forbidden", "You don't have enough cash");
         }
         if (!banner.getIsActive()) {
-            throw new BannerNotActiveException("401", "Summon is forbidden", "This banner is no longer active");
+            throw new BannerNotActiveException("Summon is forbidden", "This banner is no longer active");
         }
         if (banner.getId() == 1 && !player.isBeginner()) {
-            throw new NotABeginnerException("401", "Summon is forbidden", "This player already used his free summon");
+            throw new NotABeginnerException("Summon is forbidden", "This player already used his free summon");
         }
         if (banner.getEndDate().before(Date.from(Instant.now()))) {
-            throw new BannerHasEndedException("401", "Summon is forbidden", "This banner has already ended");
+            throw new BannerHasEndedException("Summon is forbidden", "This banner has already ended");
         };
     }
 

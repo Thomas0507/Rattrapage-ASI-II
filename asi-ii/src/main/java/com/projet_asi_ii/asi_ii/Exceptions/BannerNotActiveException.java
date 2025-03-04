@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BannerNotActiveException extends GenericException {
-    public BannerNotActiveException(String message, String errorReason, String errorCode) {
-        super(message, errorCode, errorReason);
+    public BannerNotActiveException(String message, String errorReason) {
+        super(message, errorReason);
     }
 }

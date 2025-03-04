@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class NotEnoughMoneyException extends GenericException {
-    public NotEnoughMoneyException(String message, String errorReason, String errorCode) {
-        super(message, errorCode, errorReason);
+    public NotEnoughMoneyException(String message, String errorReason) {
+        super(message, errorReason);
     }
 }

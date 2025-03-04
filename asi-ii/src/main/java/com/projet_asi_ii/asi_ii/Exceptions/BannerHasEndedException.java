@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BannerHasEndedException extends GenericException {
-    public BannerHasEndedException(String message, String errorReason, String errorCode) {
-        super(message, errorCode, errorReason);
+    public BannerHasEndedException(String message, String errorReason) {
+        super(message, errorReason);
     }
 }

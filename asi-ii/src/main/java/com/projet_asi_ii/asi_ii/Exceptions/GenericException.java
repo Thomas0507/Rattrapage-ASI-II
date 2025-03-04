@@ -6,12 +6,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class GenericException extends Exception {
-    private String errorCode;
     private String errorReason;
     
-    public GenericException(String message, String errorCode, String errorReason) {
+    public GenericException(String message, String errorReason) {
       super(message);
-      this.errorCode = errorCode;
       this.errorReason = errorReason;
     }
 }
