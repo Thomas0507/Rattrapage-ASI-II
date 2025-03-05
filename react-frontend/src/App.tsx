@@ -44,6 +44,7 @@ function App({ }) {
         <Route path="cards" element={<AllCardPage/>}/>
         <Route path="card/:cardId" element={<CardDetailPage/>}/>
         <Route path="generate" element={<Generator/>}/>
+        <Route path="chat" element={<Conversation/>}/>
         <Route path="summon" element={<ProtectedLayout/>}>
           <Route path="" element={<SummonPage/>}/>
           <Route path="summoning/:bannerId" element={<SummoningPage/>}/>
