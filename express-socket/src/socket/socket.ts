@@ -9,6 +9,12 @@ interface Message {
   timestamp: EpochTimeStamp;
 }
 
+interface UserMap {
+  [key: string]: string; // Maps userId to socketId
+}
+
+const users: UserMap = {};
+
 export const initSocket = (server: any) => {
   const io = new SocketIOServer(server, {
     cors: {
@@ -16,9 +22,34 @@ export const initSocket = (server: any) => {
       methods: ["GET", "POST"],
     },
   });
+  
 
   io.on('connection', (socket) => {
-    console.log('Client connected:', socket.id);
+    // console.log('Client connected:', socket.id);
+
+    socket.on('join', (userId: string) => {
+      users[userId] = socket.id;
+      // console.log(`${userId} joined with socket ID: ${socket.id}`);
+    });
+
+    socket.on("private-message", ({ sender, receiver, message }) => {
+      const receiverSocketId = users[receiver];
+      if (receiverSocketId) {
+        io.to(receiverSocketId).emit("receive-message", { sender, message });
+      }
+    });
+
+    socket.on("disconnect", () => {
+      
+      for (const userId in users) {
+        if (users[userId] === socket.id) {
+          delete users[userId];
+          break;
+        }
+      }
+      console.log("User disconnected:", socket.id);
+    });
+
     socket.on("message", async (data: Message) => {
       const username: string = getuserNameFromToken(data.sender);
       console.log("Message received:", data, username);
@@ -42,9 +73,6 @@ export const initSocket = (server: any) => {
       
     });
 
-    socket.on('disconnect', () => {
-      console.log('Client disconnected:', socket.id);
-    });
   });
 
   return io;
