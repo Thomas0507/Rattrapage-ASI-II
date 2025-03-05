@@ -24,7 +24,7 @@ const socket = io(SOCKET_SERVER_URL, {
 interface Message {
   content: string;
   sender: string;
-  timestamp: string;
+  timestamp: EpochTimeStamp;
 }
 
 const Conversation: React.FC = () => {
@@ -42,7 +42,7 @@ const Conversation: React.FC = () => {
       // If you have a token or user id, pass it in auth data:
       const newSocket = io(SOCKET_SERVER_URL, {
         transports: ["websocket", "polling"],
-        auth: { token: user.token} //, userId: user.id  
+        auth: { token: user} //, userId: user.id  
       });
       setSocket(newSocket);
 
@@ -70,7 +70,11 @@ const Conversation: React.FC = () => {
   const sendMessage = () => {
     if (input.trim() && socket) {
       // Emit the message to the server
-      socket.emit("message", input);
+      socket.emit("message", {
+        content: input,
+        sender: user,
+        timestamp: Date.now()
+      } as Message);
       setInput("");
     }
   };
