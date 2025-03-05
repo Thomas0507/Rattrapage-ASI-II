@@ -75,13 +75,15 @@ public class TransactionService {
                     throw new UnknownTransactionTypeException("Unknown transaction type: " + transactionRequest.getTransactionType());
                
             } // end switch
-        } catch (UserNotFoundException | InsufficientCashException | UnknownTransactionTypeException e) {
-            throw e;
+
         } catch (Exception e) {
             throw new TransactionFailedException("Failed to create transaction: " + e.getMessage(), e);
+
 
         }
     }
 }
+
+
 
 
