@@ -34,31 +34,50 @@ public class TransactionService {
     }
 
     public TransactionDto createTransaction(TransactionRequest transactionRequest) {
-        PlayerEntity player = playerRepository.findByUserUsername(transactionRequest.getUsername());
-        if (player == null) {
-            // todo : user not found
-            return null;
+        try {
+            PlayerEntity player = playerRepository.findByUserUsername(transactionRequest.getUsername());
+            if (player == null) {
+                // todo : user not found
+                throw new UserNotFoundException("User not found: " + transactionRequest.getUsername());
+                //return null;
+            }
+            switch (transactionRequest.getTransactionType()) {
+                case BUY :
+                    // Check for enough cash
+                    if (player.getCash() - transactionRequest.getAmount() < 0) {
+                        throw new InsufficientCashException("Insufficient cash for BUY transaction.");
+                        //return null;
+                    }
+                    TransactionEntity transactionBuy = TransactionMapper.INSTANCE.toTransactionEntityFromRequest(transactionRequest);
+                    transactionBuy.setUserEntity(player.getUser());
+                    transactionBuy = transactionRepository.save(transactionBuy);
+
+                    // Deduct from player's cash
+                    player.setCash(player.getCash() - transactionBuy.getAmount());
+                    playerRepository.save(player);
+
+                    // Return DTO
+                    return TransactionMapper.INSTANCE.toTransactionDto(transactionBuy);
+                
+                case SELL :
+                    TransactionEntity transactionSell = TransactionMapper.INSTANCE.toTransactionEntityFromRequest(transactionRequest);
+                    transactionSell.setUserEntity(player.getUser());
+                    transactionSell = transactionRepository.save(transactionSell);
+
+                    // Increase player's cash
+                    player.setCash(player.getCash() + transactionSell.getAmount());
+                    playerRepository.save(player);
+                    
+                    return TransactionMapper.INSTANCE.toTransactionDto(transactionSell);
+                
+                default:
+                    throw new UnknownTransactionTypeException("Unknown transaction type: " + transactionRequest.getTransactionType());        }
+            }
+        } catch (UserNotFoundException | InsufficientCashException | UnknownTransactionTypeException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new TransactionFailedException("Failed to create transaction: " + e.getMessage(), e);
         }
-        switch (transactionRequest.getTransactionType()) {
-            case BUY :
-                if (player.getCash() - transactionRequest.getAmount() < 0) {
-                    return null;
-                }
-                TransactionEntity transactionBuy = TransactionMapper.INSTANCE.toTransactionEntityFromRequest(transactionRequest);
-                transactionBuy.setUserEntity(player.getUser());
-                transactionBuy = transactionRepository.save(transactionBuy);
-                player.setCash(player.getCash() - transactionBuy.getAmount());
-                playerRepository.save(player);
-                return TransactionMapper.INSTANCE.toTransactionDto(transactionBuy);
-            case SELL :
-                TransactionEntity transactionSell = TransactionMapper.INSTANCE.toTransactionEntityFromRequest(transactionRequest);
-                transactionSell.setUserEntity(player.getUser());
-                transactionSell = transactionRepository.save(transactionSell);
-                player.setCash(player.getCash() + transactionSell.getAmount());
-                playerRepository.save(player);
-                return TransactionMapper.INSTANCE.toTransactionDto(transactionSell);
-            default:
-                return null;
-        }
-    }
 }
+
+
