@@ -43,7 +43,6 @@ const ProfileComponent = ({player}: ProfileProps) => {
                 </Typography>
                 <div style={{display: 'flex', justifyContent:'center', gap: '1em', flexWrap: 'wrap'}}>
 
-
                 {player.cards.length !== 0 ?
                     
                     player.cards.map(

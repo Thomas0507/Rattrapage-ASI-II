@@ -35,7 +35,7 @@ public class CardEntity {
     private float dropRate;
     private int price;
 
-    // up to 5 stars rating
+    // up to 20s stars rating
     private int rarity;
 
     // DeckSet

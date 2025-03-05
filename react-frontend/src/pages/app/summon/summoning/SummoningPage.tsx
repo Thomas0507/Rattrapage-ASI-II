@@ -3,8 +3,10 @@ import { SummonComponent } from "../../../../components/SummonComponent"
 import { Card } from "../../../../models/Card";
 import Loader from "../../../Loader";
 import { getOptionsByRequestType, RequestType } from "../../../../hooks/RequestBuilder";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ErrorComponent from "../../../../components/ErrorComponent";
+import { Button } from "@mui/material";
+
 export const SummoningPage = () => {
     // do an invocation =>
     const cardsDroppedMock: Card[] = [
@@ -55,7 +57,10 @@ export const SummoningPage = () => {
             <div>
                 {
                     error ? (<ErrorComponent message={errorMessage}/>) : (
-                        <SummonComponent droppedCards={cardsDropped}/>
+                        <div>
+                            <SummonComponent droppedCards={cardsDropped}/>
+                        </div>
+
                     )
                 }
 

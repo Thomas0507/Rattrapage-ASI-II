@@ -1,9 +1,6 @@
 package com.projet_asi_ii.asi_ii.services;
 
-import com.projet_asi_ii.asi_ii.Exceptions.BadEndpointException;
-import com.projet_asi_ii.asi_ii.Exceptions.BannerHasEndedException;
-import com.projet_asi_ii.asi_ii.Exceptions.BannerNotActiveException;
-import com.projet_asi_ii.asi_ii.Exceptions.NotABeginnerException;
+import com.projet_asi_ii.asi_ii.Exceptions.*;
 import com.projet_asi_ii.asi_ii.dtos.BannerDto;
 import com.projet_asi_ii.asi_ii.dtos.CardDto;
 import com.projet_asi_ii.asi_ii.entities.BannerEntity;
@@ -37,8 +34,16 @@ public class BannerService {
         return this.convertBannerEntitiesToBannerDto(bannerEntities);
     }
 
-    public List<BannerDto> getAllActiveBanners() {
+    public List<BannerDto> getAllActiveBanners(UserEntity user) throws NotBannerFoundException {
+        PlayerEntity player = playerRepository.findByUserUsername(user.getUsername());
         List<BannerEntity> bannerEntities = this.bannerRepository.findByIsActive(true);
+        if (!player.isBeginner()) {
+            // remove free banner if player already used his free summon
+            bannerEntities.removeIf(b -> b.getId() == 1);
+        }
+        if (bannerEntities.isEmpty()) {
+            throw new NotBannerFoundException();
+        }
         return this.convertBannerEntitiesToBannerDto(bannerEntities);
     }
 
