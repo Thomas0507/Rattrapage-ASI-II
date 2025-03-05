@@ -15,23 +15,29 @@ export class Card {
 
     private _health: number;
 
+
     private _mainType: string;
 
     private _dropRate: number;
+
 
     private _rarity: number;
 
     private _collection: Collection;
 
-    constructor(id, name, description, image, attack, defense, type) {
+
+    constructor(id, name, description, image, attack, defense, health, mainType, dropRate, rarity, collection) {
         this._id = id;
         this._name = name;
         this._description = description;
         this._image = image;
         this._attack = attack;
         this._defense = defense;
-        this._mainType = type;
-
+        this._health = health;
+        this._mainType = mainType;
+        this._dropRate = dropRate
+        this._rarity = rarity;
+        this._collection = collection;
     }
 
     public get id(): number {
@@ -76,11 +82,39 @@ export class Card {
         this._defense = value;
     }
 
-    public get type(): string {
+    public get health(): number {
+        return this._health;
+    }
+    public set health(value: number) {
+        this._health = value;
+    }
+
+    public get mainType(): string {
         return this._mainType;
     }
 
-    public set type(value: string) {
+    public set mainType(value: string) {
         this._mainType = value;
     }
+
+    public get dropRate(): number {
+        return this._dropRate;
+    }
+    public set dropRate(value: number) {
+        this._dropRate = value;
+    }
+    public get rarity(): number {
+        return this._rarity;
+    }
+    public set rarity(value: number) {
+        this._rarity = value;
+    }
+
+    public get collection(): Collection {
+        return this._collection;
+    }
+    public set collection(value: Collection) {
+        this._collection = value;
+    }
+
 }

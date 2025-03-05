@@ -63,5 +63,11 @@ public class CustomExceptionHandler
 		return new ErrorDto(HttpStatus.UNAUTHORIZED.value(), e.getMessage(), e.getErrorReason());
 	}
 
+	@ExceptionHandler(NotBannerFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	public ErrorDto processNoBannerFound(NotBannerFoundException e) {
+		return new ErrorDto(HttpStatus.NOT_FOUND.value(), e.getMessage(), e.getErrorReason());
+	}
+
 
 }

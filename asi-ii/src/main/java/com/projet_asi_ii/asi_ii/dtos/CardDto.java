@@ -23,6 +23,7 @@ public class CardDto
     private CardTypeEnum secondaryType;
     private float dropRate;
     private int price;
+    private int rarity;
     private CollectionDto collection;
 
 }
