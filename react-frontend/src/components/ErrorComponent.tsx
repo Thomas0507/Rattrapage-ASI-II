@@ -14,8 +14,13 @@ interface Error {
 
 
 const ErrorComponent = ({message}: ErrorProps) => {
-
-    const jsonyfiedError: Error = JSON.parse(message);
+    let jsonyfiedError: Error;
+    try {
+        jsonyfiedError = JSON.parse(message);
+    } catch(err) {
+        console.log(err)
+        jsonyfiedError = { status: 500, message: "Error", reason:"Unknown Error"};
+    }
 
     return (
     <Alert severity="error">
