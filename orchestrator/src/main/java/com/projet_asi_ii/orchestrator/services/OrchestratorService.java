@@ -3,6 +3,7 @@ package com.projet_asi_ii.orchestrator.services;
 import com.projet_asi_ii.MessageRequest;
 import com.projet_asi_ii.orchestrator.entities.CardEntity;
 import com.projet_asi_ii.orchestrator.repositories.CardRepository;
+import com.projet_asi_ii.orchestrator.requests.PromptRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.jms.annotation.JmsListener;
@@ -23,7 +24,7 @@ public class OrchestratorService
 
 	private String bearerToken;
 
-	public void sendRequests(UUID requestId, String userToken) {
+	public void sendRequests(UUID requestId, String userToken, PromptRequest promptRequest) {
 		this.bearerToken = userToken;
 		cardRepository.save(new CardEntity(requestId, null, null));
 
@@ -36,7 +37,18 @@ public class OrchestratorService
 			String serviceId = entry.getKey();
 			String queueName = entry.getValue();
 
-			MessageRequest message = new MessageRequest(requestId.toString(), serviceId, null);
+			Map<String, Object> payload = new HashMap<>();
+			if (serviceId.equals("card-image"))
+			{
+				payload.put("prompt", promptRequest.getImagePrompt());
+			}
+			else if (serviceId.equals("card-prompt"))
+			{
+				payload.put("prompt", promptRequest.getDescriptionPrompt());
+			}
+
+
+			MessageRequest message = new MessageRequest(requestId.toString(), serviceId, payload);
 			jmsTemplate.convertAndSend(queueName, message);
 		}
 	}
