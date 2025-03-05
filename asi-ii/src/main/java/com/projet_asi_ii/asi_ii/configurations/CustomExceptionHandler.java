@@ -70,4 +70,28 @@ public class CustomExceptionHandler
 	}
 
 
+	@ExceptionHandler(UserNotFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	public ErrorDto processUserNotFound(UserNotFoundException e) {
+		return new ErrorDto(HttpStatus.NOT_FOUND.value(), e.getMessage(), e.getErrorReason());
+	}
+	
+	@ExceptionHandler(InsufficientCashException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ErrorDto processInsufficientCash(InsufficientCashException e) {
+		return new ErrorDto(HttpStatus.BAD_REQUEST.value(), e.getMessage(), e.getErrorReason());
+	}
+	
+	@ExceptionHandler(UnknownTransactionTypeException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ErrorDto processUnknownTransactionType(UnknownTransactionTypeException e) {
+		return new ErrorDto(HttpStatus.BAD_REQUEST.value(), e.getMessage(), e.getErrorReason());
+	}
+	
+	@ExceptionHandler(TransactionFailedException.class)
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	public ErrorDto processTransactionFailed(TransactionFailedException e) {
+		return new ErrorDto(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage(), e.getErrorReason());
+	}
+
 }
