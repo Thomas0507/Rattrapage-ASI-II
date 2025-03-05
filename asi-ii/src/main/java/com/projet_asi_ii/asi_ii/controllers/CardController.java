@@ -2,12 +2,10 @@ package com.projet_asi_ii.asi_ii.controllers;
 
 import com.projet_asi_ii.asi_ii.dtos.CardDto;
 import com.projet_asi_ii.asi_ii.dtos.GenCardDto;
+import com.projet_asi_ii.asi_ii.requests.PromptRequest;
 import com.projet_asi_ii.asi_ii.services.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -48,18 +46,19 @@ public class CardController {
         return ResponseEntity.ok(this.cardService.insertCards(cardsDto));
     }
 
-    @GetMapping("/generateCard")
-    public ResponseEntity<String> generateCard(@RequestHeader("Authorization") String bearerToken) {
+    @PostMapping("/generateCard")
+    public ResponseEntity<String> generateCard(@RequestHeader("Authorization") String bearerToken, @RequestBody PromptRequest promptRequest) {
         final String uri = "http://orchestrator:8088/orchestrator/generateCard";
 
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(bearerToken.replace("Bearer ", ""));
 
-        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
-
-        return restTemplate.exchange(uri, HttpMethod.GET, requestEntity, String.class);
+        HttpEntity<PromptRequest> requestEntity = new HttpEntity<>(promptRequest, headers);
+        String res = restTemplate.postForObject(uri, requestEntity, String.class);
+        return ResponseEntity.ok(res);
     }
 
     @CrossOrigin("http://localhost:8088")
