@@ -1,12 +1,11 @@
 package com.projet_asi_ii.asi_ii.services;
 
-import com.projet_asi_ii.asi_ii.Exceptions.InsufficientCashException;
-import com.projet_asi_ii.asi_ii.Exceptions.TransactionFailedException;
-import com.projet_asi_ii.asi_ii.Exceptions.UnknownTransactionTypeException;
-import com.projet_asi_ii.asi_ii.Exceptions.UserNotFoundException;
+import com.projet_asi_ii.asi_ii.dtos.CardDto;
 import com.projet_asi_ii.asi_ii.dtos.TransactionDto;
+import com.projet_asi_ii.asi_ii.entities.CardEntity;
 import com.projet_asi_ii.asi_ii.entities.PlayerEntity;
 import com.projet_asi_ii.asi_ii.entities.TransactionEntity;
+import com.projet_asi_ii.asi_ii.mappers.CardMapper;
 import com.projet_asi_ii.asi_ii.mappers.TransactionMapper;
 import com.projet_asi_ii.asi_ii.repositories.PlayerRepository;
 import com.projet_asi_ii.asi_ii.repositories.TransactionRepository;
@@ -72,7 +71,7 @@ public class TransactionService {
                     return TransactionMapper.INSTANCE.toTransactionDto(transactionSell);
                 
                 default:
-                    throw new UnknownTransactionTypeException("Unknown transaction type: " + transactionRequest.getTransactionType());
+                    throw new UnknownTransactionTypeException("Unknown transaction type: " + transactionRequest.getTransactionType());        
                
             } // end switch
         } catch (UserNotFoundException | InsufficientCashException | UnknownTransactionTypeException e) {
