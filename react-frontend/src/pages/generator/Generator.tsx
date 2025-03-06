@@ -35,8 +35,8 @@ export default function Generator() {
         try {
             const newCard = { image, description };
             console.log("newCard: ", newCard);
-            await generateCard("userId", image);
-
+            var a = await generateCard(image);
+            console.log(a);
             // toast.success("The generation of your card has started.");
 
             setImage("");

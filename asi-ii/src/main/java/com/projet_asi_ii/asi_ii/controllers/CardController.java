@@ -48,6 +48,9 @@ public class CardController {
 
     @PostMapping("/generateCard")
     public ResponseEntity<String> generateCard(@RequestHeader("Authorization") String bearerToken, @RequestBody PromptRequest promptRequest) {
+        System.out.println(promptRequest);
+        System.out.println(bearerToken);
+
         final String uri = "http://orchestrator:8088/orchestrator/generateCard";
 
         RestTemplate restTemplate = new RestTemplate();
