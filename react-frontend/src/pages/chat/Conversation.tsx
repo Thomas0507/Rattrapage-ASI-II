@@ -20,10 +20,7 @@ import { DrawerComponent } from "../../components/DrawerComponent";
 // Socket.IO server URL 
 const SOCKET_SERVER_URL = "http://localhost:3000";
 
-// Initialize Socket.IO connection.
-const socket = io(SOCKET_SERVER_URL, {
-  transports: ["websocket", "polling", "flashsocket"],
-});
+
 
 interface Message {
   content: string;
@@ -31,81 +28,55 @@ interface Message {
   timestamp: EpochTimeStamp;
 }
 
-interface PlayerDto {
+
+interface ConversationProps {
   username: string;
 }
 
-const Conversation: React.FC = () => {
-  const { user } = useAuth(); 
+const Conversation: React.FC<ConversationProps> = ({username}: ConversationProps) => {
+
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
-  const [socket, setSocket] = useState<any>(null);
+  const [isConnected, setIsConnected] = useState<boolean>(false);
+  // Initialize Socket.IO connection.
+  const socket = io(SOCKET_SERVER_URL, {
+    transports: ["websocket", "polling", "flashsocket"],
+    auth: { username: username } // username
+  });
 
-  const [userName, setUsername] = useState<string>("");
-  const [error, setError] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [errorMessage, setErrorMessage] = useState<string>("");
-  const [players, setPlayers] = useState<PlayerDto[]>([]);
   useEffect(() => {
-    // Only initialize the socket connection when user is present
-    if (user) {
-      //console.log("User ID:", user.id);
-      // If you have a token or user id, pass it in auth data:
-      
-      const fetchData = async () => {
-          try {
-              const response = await fetch(`http://localhost:8081/player`, getOptionsByRequestType(RequestType.GET, {}));
-              const responsePlayers = await fetch(`http://localhost:8081/player/all`, getOptionsByRequestType(RequestType.GET, {}));
-              if (!response.ok) {
-                return response.text().then( text => {
-                  setError(true);
-                  setErrorMessage(text);}
-                );
-              }
-              if (!responsePlayers.ok) {
-                return responsePlayers.text().then( text => {
-                  setError(true);
-                  setErrorMessage("");
-                });
-              }
-              const result = await response.json();
-              const playerResult = await responsePlayers.json();
-              setPlayers(playerResult);
-              setUsername(result.username);
-              newSocket.emit("join", result.username);
-          } catch(err) {
-              // setError(true)
-              // setErrorMessage("Error encountered")
-          } finally {
-              setLoading(false);
-          }
-      };
-      fetchData();
 
-      const newSocket = io(SOCKET_SERVER_URL, {
-        transports: ["websocket", "polling"],
-        auth: { username: userName } // username
-      });
-      setSocket(newSocket);
 
-      newSocket.on("connect", () => {
-        console.log("Socket connected:" , newSocket.id);
-      });
+      function onConnect() {
+        setIsConnected(true);
+      }
 
-      newSocket.on("message", (data: Message) => {
+      function onDisconnect() {
+        setIsConnected(false);
+      }
+      function onMessage(data: Message) {
         setMessages((prevMessages) => [...prevMessages, data]);
-      });
+      }
 
-      newSocket.on("receive-message", (data: Message) => {
+      function onReceiveMessage(data: Message) {
         setMessages((prev) => [...prev, data]);
-      });
 
+      }
+
+      socket.on('connect', onConnect);
+      socket.on('disconnect', onConnect);
+      socket.on('message', onMessage);
+      socket.on('receive-message', onReceiveMessage);
+    
       return () => {
-        newSocket.disconnect();
+        socket.off('connect', onConnect);
+        socket.off('disconnect', onDisconnect);
+        socket.off('message', onMessage);
+        socket.off('receive-message', onReceiveMessage)
       };
-    }
-  }, [user, players]);
+    
+  }, []);
 
   // Scroll to bottom when messages update
   useEffect(() => {
@@ -115,13 +86,13 @@ const Conversation: React.FC = () => {
   }, [messages]);
 
   // disconnect user on dismount
-  useEffect( () => () => socket.disconnect(), [] );
+  // useEffect( () => () => socket.disconnect(), [] );
   const sendMessage = () => {
     if (input.trim() && socket) {
       // Emit the message to the server
       socket.emit("message", {
         content: input,
-        sender: user,
+        sender: username,
         timestamp: Date.now()
       } as Message);
       setInput("");
@@ -136,16 +107,7 @@ const Conversation: React.FC = () => {
 
   return (
     <div>
-      <DrawerComponent players={players}/>
       <Container maxWidth="sm">
-        {
-          loading ? (<Loader/>) :
-          (
-            <div>
-              { 
-                error ? (<ErrorComponent message={errorMessage} />) :
-                (
-                <div>
                   <Container>
                   </Container> 
               <Typography variant="h4" component="h1" gutterBottom align="center">
@@ -190,13 +152,7 @@ const Conversation: React.FC = () => {
                 Send
               </Button>
             </Box>
-                  </div>
-                )
-              }
-          </div>
-          )
-        }
-
+       
       </Container>
     </div>
 
