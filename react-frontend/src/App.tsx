@@ -20,6 +20,9 @@ import Generator from "./pages/generator/Generator";
 import SummonPage from "./pages/app/summon/SummonPage";
 import { SummoningPage } from "./pages/app/summon/summoning/SummoningPage";
 
+import Buy from "./pages/transaction/Buy";
+import Sell from "./pages/transaction/Sell";
+
 function App({ }) {
 
   const { user } = useAuth();
@@ -49,6 +52,8 @@ function App({ }) {
           <Route path="" element={<SummonPage/>}/>
           <Route path="summoning/:bannerId" element={<SummoningPage/>}/>
         </Route>
+        <Route path="/buy" element={<Buy />} />
+        <Route path="/sell" element={<Sell />} />
       </Route>
 
       <Route path="/profile" element={<ProtectedLayout/>}>
