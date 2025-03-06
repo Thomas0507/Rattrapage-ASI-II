@@ -37,18 +37,7 @@ public class OrchestratorService
 			String serviceId = entry.getKey();
 			String queueName = entry.getValue();
 
-			Map<String, Object> payload = new HashMap<>();
-			if (serviceId.equals("card-image"))
-			{
-				payload.put("prompt", promptRequest.getImagePrompt());
-			}
-			else if (serviceId.equals("card-prompt"))
-			{
-				payload.put("prompt", promptRequest.getDescriptionPrompt());
-			}
-
-
-			MessageRequest message = new MessageRequest(requestId.toString(), serviceId, payload);
+			MessageRequest message = new MessageRequest(requestId.toString(), serviceId, Map.of("prompt", promptRequest.getPrompt()));
 			jmsTemplate.convertAndSend(queueName, message);
 		}
 	}
