@@ -19,6 +19,7 @@ import Logout from "./pages/auth/Logout";
 import Generator from "./pages/generator/Generator";
 import SummonPage from "./pages/app/summon/SummonPage";
 import { SummoningPage } from "./pages/app/summon/summoning/SummoningPage";
+import { ConversationPage } from "./pages/chat/ConversationPage";
 
 import Buy from "./pages/transaction/Buy";
 import Sell from "./pages/transaction/Sell";
@@ -43,11 +44,11 @@ function App({ }) {
       <Route path="/app" element={<ProtectedLayout/>}>
         <Route path="logout" element={<Logout/>}/>
         <Route path="main" element={<SelectScreen/>}/>
-        <Route path="conversation" element={<Conversation/>}/> 
+        <Route path="conversation"/> 
         <Route path="cards" element={<AllCardPage/>}/>
         <Route path="card/:cardId" element={<CardDetailPage/>}/>
         <Route path="generate" element={<Generator/>}/>
-        <Route path="chat" element={<Conversation/>}/>
+        <Route path="chat" element={<ConversationPage/>}/>
         <Route path="summon" element={<ProtectedLayout/>}>
           <Route path="" element={<SummonPage/>}/>
           <Route path="summoning/:bannerId" element={<SummoningPage/>}/>

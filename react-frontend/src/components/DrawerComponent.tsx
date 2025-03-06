@@ -11,6 +11,7 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 
+import { Home, Settings, Info } from "@mui/icons-material";
 
 interface PlayerDto {
     username: string;
@@ -22,31 +23,27 @@ interface DrawerProps {
 
 export const DrawerComponent = ({players}: DrawerProps) => {
 
-    const [open, setOpen] = React.useState(true);
-    console.log(players);
-    const toggleDrawer = (newOpen) => () => {
-      setOpen(newOpen);
-    };
-  
-    const DrawerList = (
-      <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
-        <List>
-          {players.map((text, index) => (
-            <ListItem key={index} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text.username} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Box>
-    );
-    return (
-    <Drawer open={open} onClose={toggleDrawer(false)}>
-        {DrawerList}
+  const drawerWidth = 60;
+
+  return (
+    <Drawer
+      variant="permanent"
+      sx={{
+        width: drawerWidth,
+        flexShrink: 0,
+        "& .MuiDrawer-paper": {
+          width: drawerWidth,
+          boxSizing: "border-box",
+        },
+      }}
+    >
+      <List>
+        {[{ text: "Home", icon: <Home /> }, { text: "Settings", icon: <Settings /> }, { text: "About", icon: <Info /> }].map((item, index) => (
+          <ListItem key={index} sx={{ display: "flex", justifyContent: "center" }}>
+            <ListItemIcon>{item.icon}</ListItemIcon>
+          </ListItem>
+        ))}
+      </List>
     </Drawer>
-    )
-}
+  );
+};
