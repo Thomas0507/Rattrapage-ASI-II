@@ -99,6 +99,7 @@ services:
   spring-card-prompt:
     depends_on:
       - activemq
+      - ollama
     build: ./card-prompt
     container_name: card-prompt
     ports:
@@ -131,9 +132,23 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: root
     volumes:
       - mongo_data:/data/db
+  ollama:
+    container_name: ollama-local
+    image: ollama/ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama:/root/.ollama
+    deploy:
+      resources:
+        limits:
+          memory: 4g
+          cpus: "2.0"
   
 volumes:
   local_pgdata:
   pgadmin-data:
   mongo_data:
   mongodb-data:
+  ollama:
