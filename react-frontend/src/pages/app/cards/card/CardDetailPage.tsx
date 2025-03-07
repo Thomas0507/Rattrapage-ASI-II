@@ -12,8 +12,8 @@ function CardDetailPage () {
     const path = useLocation().pathname.split("/");
     const cardId = Number(path[path.length-1]);
     
-    const mockCard = new Card(1, "Lamball", "A simple sheep trying his best", "https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_SheepBall_icon_normal.png", 1, 1, "Neutral");
-    const [card, setCard] = useState(mockCard);
+    const mockCard = new Card(1, "Lamball", "A simple sheep trying his best", "https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_SheepBall_icon_normal.png", 1, 1, "Neutral", "", 0, 0, null);
+    const [card, setCard] = useState<Card>(mockCard);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 

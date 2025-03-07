@@ -121,6 +121,24 @@ function SelectScreen () {
                     </CardActions>
                 </Card>
             </Grid2>
+            {/* Chat */}
+            <Grid2 size={6}>
+                <Card sx={{ minWidth: 275 }}>
+                    <CardContent>
+                        <Typography gutterBottom>
+                            Chat
+                        </Typography>
+                        <Typography variant="h5" component="div">
+                        </Typography>
+                        <Typography variant="body2">
+                            Chat with other connected users!
+                        </Typography>
+                    </CardContent>
+                    <CardActions>
+                        <Button size="small" component={Link} to={'/app/chat'}>Go</Button>
+                    </CardActions>
+                </Card>
+            </Grid2>
         </Grid2>
     );
 };

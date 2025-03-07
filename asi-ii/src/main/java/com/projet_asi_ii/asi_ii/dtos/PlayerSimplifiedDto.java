@@ -1,4 +1,4 @@
-package com.projet_asi_ii.orchestrator.requests;
+package com.projet_asi_ii.asi_ii.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PromptRequest
-{
-	String prompt;
+public class PlayerSimplifiedDto {
+    public String username;
 }
