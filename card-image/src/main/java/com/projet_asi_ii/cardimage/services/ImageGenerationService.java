@@ -29,17 +29,23 @@ public class ImageGenerationService {
         String imageUrl = null;
 
         try {
-            // Extract image prompt from the payload
-            String imagePrompt = extractImagePrompt(payload);
+            // Extract the prompt from the payload
+            String prompt = (String) payload.get("prompt");
+            // Map<String, Object> responsePayload = Map.of("data", response.getResult().getOutput().getText());
+
+            // Process the prompt (e.g., send to an image generation service)
+            System.out.println("Received image prompt: " + prompt);
 
             // Generate image using Neural Love API
-            imageUrl = generateImage(imagePrompt);
+            imageUrl = generateImage(prompt);
 
             // Create response payload with the image URL
             Map<String, Object> responsePayload = new HashMap<>();
             responsePayload.put("status", "success");
             responsePayload.put("url", imageUrl);  // Using "url" as the key for the image URL
             responsePayload.put("message", "Image generated successfully for request " + requestId);
+
+            System.out.println("Error generating image: " + responsePayload);
 
             // Send the response back to the response queue
             jmsTemplate.convertAndSend("response.queue",
@@ -60,27 +66,15 @@ public class ImageGenerationService {
     }
 
     /**
-     * Extract the image prompt from the message payload
-     */
-    private String extractImagePrompt(Map<String, Object> payload) {
-        if (payload == null || !payload.containsKey("prompt")) {
-            throw new IllegalArgumentException("Missing 'prompt' in message payload");
-        }
-        return payload.get("prompt").toString();
-    }
-
-    /**
      * Generate an image using Spring AI's OpenAI integration
      */
     private String generateImage(String prompt) throws Exception {
         // Create image options
         OpenAiImageOptions options = OpenAiImageOptions.builder()
-                .model("dall-e-3")
-                .quality("hd")
-                .N(1)  // Generate 1 image
-                .height(1024)
-                .width(1024)
-                .style("vivid")
+                .model("dall-e-2")  // Use DALL·E 2 (cheaper than DALL·E 3)
+                .N(1)  // 1 image
+                .height(512)  // Smaller size reduces cost
+                .width(512)
                 .build();
 
 
