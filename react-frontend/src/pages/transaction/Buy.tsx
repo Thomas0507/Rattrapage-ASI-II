@@ -1,79 +1,77 @@
-// src/pages/Buy.tsx
+import React, { useEffect, useState } from 'react';
+import { Container, Typography } from '@mui/material';
+import CardListComponent from '../../components/CardListComponent';
+import { getOptionsByRequestType, RequestType } from '../../hooks/RequestBuilder';
+import { Card } from '../../models/Card';
 
-import React from 'react';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
 
-// to be fixed
-function Buy() {
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+const Buy: React.FC = () => {
+  const [cards, setCards] = React.useState<Card[]>([]);
+  const [loading, setLoading] = React.useState<boolean>(true);
+  const [error, setError] = React.useState<string | null>(null);
 
-    const username = formData.get("username") as string;
-    const amount = Number(formData.get("amount"));
-
-    fetch("http://localhost:8081/transaction", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username,
-        amount,
-        transactionType: "BUY", // difference
-      }),
-    })
-      .then((response) => {
+  React.useEffect(() => {
+    const fetchCards = async () => {
+      try {
+        const response = await fetch('http://localhost:8081/cards', getOptionsByRequestType(RequestType.GET));
         if (!response.ok) {
-          throw new Error("Failed to create BUY transaction");
+          throw new Error(`Error fetching cards: ${response.statusText}`);
         }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("BUY transaction created:", data);
-      })
-      .catch((err) => {
-        console.error(err);
+        const data = await response.json();
+        setCards(data);
+      } catch (err: any) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCards();
+  }, []);
+
+  const handleBuy = async (cardId: number) => {
+    try {
+      const response = await fetch("http://localhost:8081/transaction", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cardId, transactionType: "BUY" }),
       });
+
+      if (!response.ok) {
+        throw new Error("Failed to create BUY transaction");
+      }
+
+      const result = await response.json();
+      console.log("BUY transaction created:", result);
+      alert(`Successfully bought card with ID: ${cardId}`);
+    } catch (err: any) {
+      console.error(err);
+      alert(`Transaction failed: ${err.message}`);
+    }
+  };
+
+  if (loading) {
+    return <p>Loading cards...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error}</p>;
   }
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Box mt={4}>
-        <Typography component="h1" variant="h5">
-          BUY
+    <div>
+      <Container component="main">
+        <Typography variant="h4" gutterBottom>
+          BUY Cards
         </Typography>
-        <form onSubmit={handleSubmit}>
-          <TextField
-            label="Username"
-            name="username"
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-          />
-          <TextField
-            label="Amount"
-            name="amount"
-            type="number"
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-          />
-          <Button type="submit" variant="contained" fullWidth color="primary">
-            Submit BUY
-          </Button>
-        </form>
-      </Box>
-    </Container>
+        <CardListComponent
+          cards={cards}
+          actionLabel="Buy"
+          onActionClick={handleBuy}
+        />
+      </Container>
+    </div>
   );
-}
+};
 
 export default Buy;
