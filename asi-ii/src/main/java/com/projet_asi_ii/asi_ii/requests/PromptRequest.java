@@ -11,7 +11,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PromptRequest
 {
-	String imagePrompt;
-
-	String descriptionPrompt;
+	String prompt;
 }
