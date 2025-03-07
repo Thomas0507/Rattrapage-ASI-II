@@ -1,31 +1,46 @@
 // src/pages/Buy.tsx
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
+import CardListComponent from "../../components/CardListComponent";
+import { getOptionsByRequestType, RequestType } from '../../hooks/RequestBuilder';
 
-// to be fixed
 function Buy() {
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+  const [cards, setCards] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    const username = formData.get("username") as string;
-    const amount = Number(formData.get("amount"));
+  useEffect(() => {
+    const fetchCards = async () => {
+      try {
+        const response = await fetch(`http://localhost:8081/cards`, getOptionsByRequestType(RequestType.GET));
+        if (!response.ok) {
+          throw new Error(`Failed to fetch cards: ${response.statusText}`);
+        }
+        const data = await response.json();
+        setCards(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
+    fetchCards();
+  }, []);
+
+  const handleBuy = (cardId: number) => {
     fetch("http://localhost:8081/transaction", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        username,
-        amount,
-        transactionType: "BUY", // difference
+        cardId,
+        transactionType: "BUY",
       }),
     })
       .then((response) => {
@@ -36,44 +51,28 @@ function Buy() {
       })
       .then((data) => {
         console.log("BUY transaction created:", data);
+        alert(`Transaction successful for card ${cardId}`);
       })
       .catch((err) => {
         console.error(err);
+        alert(`Transaction failed: ${err.message}`);
       });
-  }
+  };
+
+  if (loading) return <p>Loading cards...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
+    <Container component="main">
       <Box mt={4}>
         <Typography component="h1" variant="h5">
-          BUY
+          BUY Cards
         </Typography>
-        <form onSubmit={handleSubmit}>
-          <TextField
-            label="Username"
-            name="username"
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-          />
-          <TextField
-            label="Amount"
-            name="amount"
-            type="number"
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-          />
-          <Button type="submit" variant="contained" fullWidth color="primary">
-            Submit BUY
-          </Button>
-        </form>
+        <CardListComponent cards={cards} actionLabel="Buy" onActionClick={handleBuy} />
       </Box>
     </Container>
   );
 }
 
 export default Buy;
+
