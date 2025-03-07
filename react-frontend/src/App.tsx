@@ -23,6 +23,8 @@ import { ConversationPage } from "./pages/chat/ConversationPage";
 
 import Buy from "./pages/transaction/Buy";
 import Sell from "./pages/transaction/Sell";
+import { GamePage } from "./pages/game/GamePage";
+import { GameSessionPage } from "./pages/game/session/GameSessionPage";
 
 function App({ }) {
 
@@ -52,6 +54,10 @@ function App({ }) {
         <Route path="summon" element={<ProtectedLayout/>}>
           <Route path="" element={<SummonPage/>}/>
           <Route path="summoning/:bannerId" element={<SummoningPage/>}/>
+        </Route>
+        <Route path="game">
+          <Route path="" element={<GamePage/>}/>        
+          <Route path="session/:uuid" element={<GameSessionPage/>}/>
         </Route>
         <Route path="buy" element={<Buy />} />
         <Route path="sell" element={<Sell />} />

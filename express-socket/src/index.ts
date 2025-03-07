@@ -6,6 +6,7 @@ import http from "http";
 import Router from "./routes";
 import { initSocket } from './socket/socket';
 import mongoose from "mongoose";
+import cors from "cors";
 
 // configures dotenv to work in your application
 dotenv.config();
@@ -14,6 +15,8 @@ const PORT = process.env.PORT || 3000;
 
 const app: Application = express();
 
+
+
 // Middleware setup
 // json for request parsing
 app.use(express.json());
@@ -21,6 +24,8 @@ app.use(express.json());
 app.use(morgan("tiny"));
 //
 app.use(express.static("public"));
+
+app.use(cors())
 
 // Swagger docs
 app.use(
