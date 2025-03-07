@@ -12,53 +12,70 @@ import {
   Button,
 } from "@mui/material";
 import { useAuth } from "../../hooks/useAuth"; 
+import { getOptionsByRequestType, RequestType } from "../../hooks/RequestBuilder";
+import Loader from "../Loader";
+import ErrorComponent from "../../components/ErrorComponent";
+import { DrawerComponent } from "../../components/DrawerComponent";
 
 // Socket.IO server URL 
-const SOCKET_SERVER_URL = "http://localhost:3000";
+const SOCKET_SERVER_URL = "http://localhost:3000/chat";
 
-// Initialize Socket.IO connection.
-const socket = io(SOCKET_SERVER_URL, {
-  transports: ["websocket", "polling", "flashsocket"],
-});
+
 
 interface Message {
   content: string;
   sender: string;
-  timestamp: string;
+  timestamp: EpochTimeStamp;
 }
 
-const Conversation: React.FC = () => {
-  const { user } = useAuth(); 
+
+interface ConversationProps {
+  username: string;
+}
+
+const Conversation: React.FC<ConversationProps> = ({username}: ConversationProps) => {
+
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
-  const [socket, setSocket] = useState<any>(null);
-
+  const [isConnected, setIsConnected] = useState<boolean>(false);
+  // Initialize Socket.IO connection.
+  const socket = io(SOCKET_SERVER_URL, {
+    transports: ["websocket", "polling", "flashsocket"],
+    auth: { username: username } // username
+  });
 
   useEffect(() => {
-    // Only initialize the socket connection when user is present
-    if (user) {
-      //console.log("User ID:", user.id);
-      // If you have a token or user id, pass it in auth data:
-      const newSocket = io(SOCKET_SERVER_URL, {
-        transports: ["websocket", "polling"],
-        auth: { token: user.token} //, userId: user.id  
-      });
-      setSocket(newSocket);
 
-      newSocket.on("connect", () => {
-        console.log("Socket connected:" , newSocket.id);
-      });
 
-      newSocket.on("message", (data: Message) => {
+      function onConnect() {
+        setIsConnected(true);
+      }
+
+      function onDisconnect() {
+        setIsConnected(false);
+      }
+      function onMessage(data: Message) {
         setMessages((prevMessages) => [...prevMessages, data]);
-      });
+      }
 
+      function onReceiveMessage(data: Message) {
+        setMessages((prev) => [...prev, data]);
+      }
+
+      socket.on('connect', onConnect);
+      socket.on('disconnect', onConnect);
+      socket.on('message', onMessage);
+      socket.on('receive-message', onReceiveMessage);
+    
       return () => {
-        newSocket.disconnect();
+        socket.off('connect', onConnect);
+        socket.off('disconnect', onDisconnect);
+        socket.off('message', onMessage);
+        socket.off('receive-message', onReceiveMessage)
       };
-    }
-  }, [user]);
+    
+  }, []);
 
   // Scroll to bottom when messages update
   useEffect(() => {
@@ -67,10 +84,16 @@ const Conversation: React.FC = () => {
     }
   }, [messages]);
 
+  // disconnect user on dismount
+  // useEffect( () => () => socket.disconnect(), [] );
   const sendMessage = () => {
     if (input.trim() && socket) {
       // Emit the message to the server
-      socket.emit("message", input);
+      socket.emit("message", {
+        content: input,
+        sender: username,
+        timestamp: Date.now()
+      } as Message);
       setInput("");
     }
   };
@@ -82,50 +105,56 @@ const Conversation: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Typography variant="h4" component="h1" gutterBottom align="center">
-        Chat Conversation
-      </Typography>
-      <Paper
-        elevation={3}
-        sx={{
-          height: 400,
-          overflowY: "auto",
-          p: 2,
-          mb: 2,
-        }}
-      >
-        <List>
-          {messages.map((msg, index) => (
-            <ListItem key={index}>
-              <ListItemText
-                primary={`${msg.sender || "User"}: ${msg.content}`}
-                secondary={new Date(msg.timestamp).toLocaleTimeString()}
+    <div>
+      <Container maxWidth="sm">
+                  <Container>
+                  </Container> 
+              <Typography variant="h4" component="h1" gutterBottom align="center">
+              Chat Conversation
+            </Typography>
+            <Paper
+              elevation={3}
+              sx={{
+                height: 400,
+                overflowY: "auto",
+                p: 2,
+                mb: 2,
+              }}
+            >
+              <List>
+                {messages.map((msg, index) => (
+                  <ListItem key={index}>
+                    <ListItemText
+                      primary={`${msg.sender || "User"}: ${msg.content}`}
+                      secondary={new Date(msg.timestamp).toLocaleTimeString()}
+                    />
+                  </ListItem>
+                ))}
+                <div ref={messagesEndRef} />
+              </List>
+            </Paper>
+            <Box display="flex" alignItems="center">
+              <TextField
+                label="Type a message"
+                variant="outlined"
+                fullWidth
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyPress={handleKeyPress}
               />
-            </ListItem>
-          ))}
-          <div ref={messagesEndRef} />
-        </List>
-      </Paper>
-      <Box display="flex" alignItems="center">
-        <TextField
-          label="Type a message"
-          variant="outlined"
-          fullWidth
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyPress={handleKeyPress}
-        />
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={sendMessage}
-          sx={{ ml: 1 }}
-        >
-          Send
-        </Button>
-      </Box>
-    </Container>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={sendMessage}
+                sx={{ ml: 1 }}
+              >
+                Send
+              </Button>
+            </Box>
+       
+      </Container>
+    </div>
+
   );
 };
 
