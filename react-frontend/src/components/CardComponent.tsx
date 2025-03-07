@@ -41,6 +41,9 @@ const CardComponent = ({card, imageHeight, imageWidth, hideShowDetails}: CardPro
         <Typography variant="body2" sx={{ color: 'text.secondary', height: '170px', overflow: 'scroll' }}>
             {card.description}
         </Typography>
+        <Typography variant="h6" color="primary" sx={{ marginTop: 1 }}>
+                        Price: {card.price} 💰
+        </Typography>
       </CardContent>
       <CardActions>
       {
