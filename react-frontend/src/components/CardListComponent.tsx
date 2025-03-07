@@ -3,17 +3,13 @@ import { Card } from "../models/Card";
 import { Container, Typography } from "@mui/material";
 import CardComponent from "./CardComponent";
 import { useSearchParams } from "react-router-dom";
-import { Button } from "@mui/material";
-
 
 interface CardListProps {
-    cards: Card[];
-    actionLabel?: string; // optionnel
-    onActionClick?: (cardId: number) => void; // optionnel
+    cards: Card[]
 }
 
 
-const CardListComponent = ({cards, actionLabel, onActionClick}: CardListProps) => {
+const CardListComponent = ({cards}: CardListProps) => {
 
     return (
         <div className="card-wrapper">
@@ -25,15 +21,6 @@ const CardListComponent = ({cards, actionLabel, onActionClick}: CardListProps) =
                             <div className="card-wrapper">
                                 <CardComponent key={_index} card ={_card} imageHeight={140}
                                 />
-                                {actionLabel && onActionClick && (
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={() => onActionClick(_card.id)}
-                                    >
-                                        {actionLabel}
-                                    </Button>
-                                    )}
                             </div>
                         )
                     )
