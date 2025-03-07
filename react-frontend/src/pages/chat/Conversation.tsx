@@ -18,7 +18,7 @@ import ErrorComponent from "../../components/ErrorComponent";
 import { DrawerComponent } from "../../components/DrawerComponent";
 
 // Socket.IO server URL 
-const SOCKET_SERVER_URL = "http://localhost:3000";
+const SOCKET_SERVER_URL = "http://localhost:3000/chat";
 
 
 
@@ -61,7 +61,6 @@ const Conversation: React.FC<ConversationProps> = ({username}: ConversationProps
 
       function onReceiveMessage(data: Message) {
         setMessages((prev) => [...prev, data]);
-
       }
 
       socket.on('connect', onConnect);

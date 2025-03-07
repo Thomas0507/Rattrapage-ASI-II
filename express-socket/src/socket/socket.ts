@@ -19,12 +19,14 @@ export const initSocket = (server: any) => {
   const io = new SocketIOServer(server, {
     cors: {
       origin: "*",
-      methods: ["GET", "POST"],
+      methods: ["GET", "POST", "PUT", "DELETE"],
     },
   });
   
-
-  io.on('connection', (socket) => {
+  // chat namespace =>
+  const chatNamespace = io.of("/chat");
+  
+  chatNamespace.on('connection', (socket) => {
     // console.log('Client connected:', socket.id);
 
     socket.on('join', (userId: string) => {
@@ -35,7 +37,7 @@ export const initSocket = (server: any) => {
     socket.on("private-message", ({ sender, receiver, message }) => {
       const receiverSocketId = users[receiver];
       if (receiverSocketId) {
-        io.to(receiverSocketId).emit("receive-message", { sender, message });
+        socket.to(receiverSocketId).emit("receive-message", { sender, message });
       }
     });
 
@@ -51,7 +53,8 @@ export const initSocket = (server: any) => {
     });
 
     socket.on("message", async (data: Message) => {
-      const username: string = getuserNameFromToken(data.sender);
+      // const username: string = getuserNameFromToken(data.sender);
+      const username = data.sender;
       console.log("Message received:", data, username);
       try {
  
@@ -65,7 +68,7 @@ export const initSocket = (server: any) => {
         console.error("Error saving message:", error);
       }
       // Broadcast the message to all connected clients
-      io.emit("message", {
+      chatNamespace.emit("message", {
         content: data.content,
         sender: username,
         timestamp: data.timestamp,
@@ -74,6 +77,5 @@ export const initSocket = (server: any) => {
     });
 
   });
-
-  return io;
+  return chatNamespace;
 };

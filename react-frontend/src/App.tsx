@@ -53,8 +53,8 @@ function App({ }) {
           <Route path="" element={<SummonPage/>}/>
           <Route path="summoning/:bannerId" element={<SummoningPage/>}/>
         </Route>
-        <Route path="/buy" element={<Buy />} />
-        <Route path="/sell" element={<Sell />} />
+        <Route path="buy" element={<Buy />} />
+        <Route path="sell" element={<Sell />} />
       </Route>
 
       <Route path="/profile" element={<ProtectedLayout/>}>
