@@ -1,11 +1,20 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, createContext, useContext} from "react"
 import ProfileComponent from "../../components/ProfileComponent"
 import { Player } from "../../models/Player"
 import { Card } from "../../models/Card";
 import { getOptionsByRequestType, RequestType } from "../../hooks/RequestBuilder";
+import { useAuth } from "../../hooks/useAuth"; 
+
+
+const ProfileContext = createContext(null);
+
+
+export const useProfile = () => {
+    return useContext(ProfileContext);
+};
 
 function ProfilePage () {
-
+    const { user } = useAuth();
     const [player, setPlayer] = useState(new Player(0, '', [], 0));
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -33,7 +42,7 @@ function ProfilePage () {
                 }
             };
             fetchData();
-        }, [])
+        }, [user])
 
     return (
     <div>

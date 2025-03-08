@@ -6,6 +6,8 @@ import com.projet_asi_ii.asi_ii.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.projet_asi_ii.asi_ii.services.security.JwtService;
+
 
 import java.util.List;
 
@@ -16,6 +18,9 @@ public class TransactionController {
     @Autowired
     TransactionService transactionService;
 
+    @Autowired
+	private JwtService jwtService;
+
     @GetMapping
     public ResponseEntity<List<TransactionDto>> getTransaction(@RequestParam String username) {
 
@@ -23,7 +28,17 @@ public class TransactionController {
     }
 
     @PostMapping
-    public ResponseEntity<TransactionDto> createTransaction(@RequestBody TransactionRequest transactionRequest) {
+    public ResponseEntity<TransactionDto> createTransaction(
+            @RequestHeader("Authorization") String bearerToken, 
+            @RequestBody TransactionRequest transactionRequest) {
+
+        String token = bearerToken.replace("Bearer ", "");
+
+        String username = jwtService.extractUsername(token); 
+
+        transactionRequest.setUsername(username);
+
         return ResponseEntity.ok(this.transactionService.createTransaction(transactionRequest));
-    }
+    }   
+
 }
