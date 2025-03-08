@@ -51,14 +51,17 @@ public class OrchestratorService
 			switch (message.getServiceId())
 			{
 				case "card-image":
+					System.out.println("card-image");
 					finalCard.setImage(message.getPayload().get("data").toString());
 					cardRepository.save(finalCard);
 					break;
 				case "card-prompt":
+					System.out.println("card-prompt");
 					finalCard.setPrompt(message.getPayload().get("data").toString());
 					cardRepository.save(finalCard);
 					break;
 				default:
+					System.out.println("card-prompt");
 					break;
 			}
 

@@ -61,12 +61,6 @@ public class CardController {
         System.out.println(promptRequest.toString());
         System.out.println(bearerToken);
 
-        if (promptRequest.getImagePrompt() == null || promptRequest.getImagePrompt().isEmpty()) {
-            return ResponseEntity.badRequest().body("Image prompt cannot be empty");
-        }
-        if (promptRequest.getDescriptionPrompt() == null || promptRequest.getDescriptionPrompt().isEmpty()) {
-            return ResponseEntity.badRequest().body("Description prompt cannot be empty");
-        }
 
         final String uri = "http://orchestrator:8088/orchestrator/generateCard";
 
@@ -79,7 +73,6 @@ public class CardController {
         HttpEntity<PromptRequest> requestEntity = new HttpEntity<>(promptRequest, headers);
 
         String res = restTemplate.postForObject(uri, requestEntity, String.class);
-        System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCC generateCard"+ res);
         return ResponseEntity.ok(res);
     }
 
@@ -91,12 +84,12 @@ public class CardController {
 
         CollectionDto col = collectionService.getCollectionByName("AI");
 
-        CardDto test = new CardDto();
-        test.setImage(genCardDto.getImage());
-        test.setDescription(genCardDto.getPrompt());
-        test.setCollection(col);
+        CardDto cardDto = new CardDto();
+        cardDto.setImage(genCardDto.getImage());
+        cardDto.setDescription(genCardDto.getPrompt());
+        cardDto.setCollection(col);
 
-        this.cardService.insertCards(List.of(test));
+        this.cardService.insertCards(List.of(cardDto));
 
         return ResponseEntity.ok().build();
     }
