@@ -36,6 +36,14 @@ public class TransactionService {
 
     public TransactionDto createTransaction(TransactionRequest transactionRequest) {
         try {
+
+            // Vérifier que `username` est bien rempli (éviter null)
+            if (transactionRequest.getUsername() == null || transactionRequest.getUsername().isEmpty()) {
+                throw new IllegalArgumentException("Username is required");
+            }
+
+            System.out.println("Username from JWT: " + transactionRequest.getUsername());
+
             PlayerEntity player = playerRepository.findByUserUsername(transactionRequest.getUsername());
             if (player == null) {
                 // todo : user not found
@@ -54,7 +62,9 @@ public class TransactionService {
                     transactionBuy = transactionRepository.save(transactionBuy);
 
                     // Deduct from player's cash
+                    System.out.println("transactionBuy.getAmount() : " + transactionBuy.getAmount()); 
                     player.setCash(player.getCash() - transactionBuy.getAmount());
+                    
                     playerRepository.save(player);
 
                     // Return DTO
