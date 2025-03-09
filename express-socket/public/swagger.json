@@ -18,6 +18,90 @@
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"SessionResponse": {
+				"properties": {
+					"uuid": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"uuid"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ErrorResponse": {
+				"properties": {
+					"status": {
+						"type": "number",
+						"format": "double"
+					},
+					"message": {
+						"type": "string"
+					},
+					"reason": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"status",
+					"message",
+					"reason"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"GameSessionDto": {
+				"properties": {
+					"sessionId": {
+						"type": "string"
+					},
+					"roomName": {
+						"type": "string"
+					},
+					"capacity": {
+						"type": "number",
+						"format": "double"
+					},
+					"currentNbPlayers": {
+						"type": "number",
+						"format": "double"
+					},
+					"status": {
+						"type": "string"
+					},
+					"players": {
+						"items": {},
+						"type": "array"
+					}
+				},
+				"required": [
+					"sessionId",
+					"roomName",
+					"capacity",
+					"currentNbPlayers",
+					"status",
+					"players"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"JoinSessionResponse": {
+				"properties": {
+					"errorResponse": {
+						"$ref": "#/components/schemas/ErrorResponse"
+					},
+					"gameSessionDto": {
+						"$ref": "#/components/schemas/GameSessionDto"
+					}
+				},
+				"required": [
+					"errorResponse",
+					"gameSessionDto"
+				],
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {}
@@ -51,6 +135,53 @@
 				},
 				"security": [],
 				"parameters": []
+			}
+		},
+		"/game/session": {
+			"get": {
+				"operationId": "GetSessionId",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SessionResponse"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/game/joinSession/{id}": {
+			"get": {
+				"operationId": "JoinSession",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/JoinSessionResponse"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		}
 	},

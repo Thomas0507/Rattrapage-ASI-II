@@ -45,7 +45,7 @@ export const GamePage = () => {
 
     const handleJoin = () => {
         if (!joinDisabled) {
-            window.location.href += "session/" + uuid;  
+            window.location.href += "/session/" + uuid;  
         }
     }
 
@@ -54,7 +54,7 @@ export const GamePage = () => {
     }
 
     const createRoom = async() => {
-        await fetch("http://localhost:3000/ping",getOptionsByRequestType(RequestType.GET)).then(async (response: Response) => {
+        await fetch("http://localhost:3000/game/session",getOptionsByRequestType(RequestType.GET)).then(async (response: Response) => {
             if (!response.ok) {
                 return response.text().then( text => {
                     setErrorMessage(text);
@@ -63,14 +63,13 @@ export const GamePage = () => {
             }
             const uuidObjectResponse: Uuidresponse = await response.json();
             // redirect to the created session => 
-            window.location.href += "session/" + uuidObjectResponse.uuid;
+            window.location.href += "/session/" + uuidObjectResponse.uuid;
             
         }).catch(err => {
             setErrorMessage("Error when creating a room");
             setState({...state, open: true});
-            console.log(err);
         }).finally(() => {
-            console.log("end")
+            
         });
         
         
