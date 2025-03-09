@@ -3,7 +3,12 @@ import {v4 as uuidv4} from 'uuid';
 import GameSessionService from '../services/GameSessionService';
 import { GameSession } from "../models/GameSession";
 
-interface ErrorResponse {
+export interface JoinSessionResponse {
+  errorResponse: ErrorResponse;
+  gameSessionDto: GameSessionDto;
+}
+
+export interface ErrorResponse {
   status: number;
   message: string;
   reason: string
@@ -13,7 +18,7 @@ interface SessionResponse {
     uuid: string;
 }
 
-interface GameSessionDto {
+export interface GameSessionDto {
     sessionId: string,
     roomName: string,
     capacity: number,
@@ -36,12 +41,15 @@ export default class GameController {
     };
   }
   @Get("/joinSession/:id")
-  public async joinSession(id: string): Promise<GameSessionDto | ErrorResponse> {
-    let response: GameSessionDto | ErrorResponse;
+  public async joinSession(id: string): Promise<JoinSessionResponse> {
+    let response: JoinSessionResponse = {
+      gameSessionDto: null,
+      errorResponse: null
+    }
     await GameSessionService.getRoomById(id).then((res) => {
       if (res === null) {
         // Not Found
-        response =
+        response.errorResponse =
         {
           status: 404,
           message: "Could not find game session",
@@ -52,7 +60,7 @@ export default class GameController {
       }
       // If other test must be done, insert it there (e.g, session is inactive)
       const resAsObject = res.toJSON();
-      response = {
+      response.gameSessionDto = {
           sessionId: resAsObject.sessionId,
           roomName: resAsObject.roomName,
           capacity: resAsObject.capacity,
@@ -62,7 +70,7 @@ export default class GameController {
         };
     }).catch(err => {
       // Error Mongo
-      response =
+      response.errorResponse =
       {
         status: 500,
         message: "Internal server error",

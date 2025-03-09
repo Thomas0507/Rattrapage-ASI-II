@@ -6,8 +6,6 @@ import Loader from "../../Loader";
 import { Player } from "../../../models/Player";
 import { GameComponent } from "./JoinGameSession";
 
-
-
 export const GameSessionPage = () => {
 
     const [loading, setLoading] = useState<boolean>(true);

@@ -95,11 +95,13 @@ export const initSocket = (server: any) => {
   const gameNamespace = io.of("/game");
 
   gameNamespace.on('connection', async (socket) => {
-    console.log(`A player connecter: ${socket.id}`);
+    console.log(`A player connected: ${socket.id}`);
 
     socket.on('joinGame', async ({gameSessionId, username}: joinGameSession) => {
-      let gameSession = await GameSessionEntity.findOne({gameSessionId});
+      console.log(`gameSessionId received: ${gameSessionId}, \nusername received: ${username}\n`);
 
+      let gameSession = await GameSessionEntity.findOne({"sessionId": gameSessionId});
+      console.log(`gamession in db: ${gameSession}`);
       if (!gameSession) {
         console.log("gameSession not found!");
         socket.emit("session-not-found", {status: 404, error: 'Game session not found'} as SocketError);
@@ -113,11 +115,18 @@ export const initSocket = (server: any) => {
 
       if (!gameSession?.players.find(player => player.playerName === username)) {
         gameSession.players.push({playerId: socket.id, playerName: username, status: 'connected'});
-        await gameSession.save();
+        gameSession.currentNbPlayers += 1;
+        try {
+          await gameSession.save();
+        } catch (err) {
+          console.log(`error when triying to save gameSession: ${err.message}`);
+        }
       }
       socket.join(gameSession.sessionId);
       console.log(`${username} joined game ${gameSessionId}`)
+      // Too much player etc ...
 
+      // 
       gameNamespace.to(gameSessionId).emit('playerJoined', { gameSessionId, username});
       socket.emit('gameState', gameSession);
     });
