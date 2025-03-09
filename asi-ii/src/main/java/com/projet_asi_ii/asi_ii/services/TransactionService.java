@@ -115,7 +115,7 @@ public class TransactionService {
                     TransactionEntity transactionSell = TransactionMapper.INSTANCE.toTransactionEntityFromRequest(transactionRequest);
                     transactionSell.setUserEntity(player.getUser());
                     transactionSell = transactionRepository.save(transactionSell);
-                    
+
                     
                     return TransactionMapper.INSTANCE.toTransactionDto(transactionSell);
                 

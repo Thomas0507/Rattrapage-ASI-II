@@ -1,62 +1,14 @@
-import React from "react";
-import { Button, Container, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { Button, Container, Typography, TextField, Box } from "@mui/material";
 import { useProfile } from "../../pages/profile/ProfilePage";
 import { useAuth } from "../../hooks/useAuth"; 
+import CardComponent from "../../components/CardComponent"; 
+import { useSell } from "../../hooks/useSell";
 
 const Sell: React.FC = () => {
-    const { player, setPlayer } = useProfile(); // ✅ Accès aux cartes du joueur
-    const { user } = useAuth(); // ✅ Récupérer le token utilisateur
+    const { player, setPlayer } = useProfile(); // Accès aux cartes du joueur
+    const { handleSell, handlePriceChange, prices } = useSell();
 
-    const handleSell = async (cardId: number) => {
-        try {
-            const response = await fetch("http://localhost:8081/transaction", {
-                method: "POST",
-                headers: { 
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${user}` // ✅ Token utilisateur
-                },
-                body: JSON.stringify({
-                    cards: [{ id: cardId }], // ✅ Envoyer la carte vendue sous forme de tableau
-                    amount: 50,  // 🔹 Prix temporaire (peut être dynamique selon la carte)
-                    transactionType: "SELL",
-                }),
-            });
-
-            if (!response.ok) {
-                throw new Error(await response.text());
-            }
-
-            alert("Vente réussie !");
-
-            // ✅ Mettre à jour le profil après la vente
-            await updatePlayerData();
-
-        } catch (err) {
-            console.error("Erreur lors de la vente :", err);
-            alert(`Vente échouée: ${err.message}`);
-        }
-    };
-
-    // ✅ Fonction pour mettre à jour les données du joueur après une vente
-    const updatePlayerData = async () => {
-        try {
-            const response = await fetch("http://localhost:8081/player", {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${user}`,
-                },
-            });
-
-            if (!response.ok) {
-                throw new Error("Impossible de récupérer les données du joueur.");
-            }
-
-            const updatedPlayer = await response.json();
-            setPlayer(updatedPlayer); // ✅ Mettre à jour le contexte avec les nouvelles cartes
-        } catch (err) {
-            console.error("Erreur mise à jour du joueur:", err);
-        }
-    };
 
     return (
         <Container>
@@ -64,8 +16,16 @@ const Sell: React.FC = () => {
             <div style={{ display: 'flex', gap: '1em', flexWrap: 'wrap' }}>
                 {player.cards.length > 0 ? (
                     player.cards.map((_card) => (
-                        <div key={_card.id}>
-                            <Typography variant="h6">{_card.name}</Typography>
+                        <Box key={_card.id} sx={{ textAlign: "center", padding: 2, border: "1px solid #ccc", borderRadius: 2 }}>
+                            <CardComponent card={_card} />
+                            <TextField
+                                label="Enter Price"
+                                type="number"
+                                variant="outlined"
+                                sx={{ marginTop: 1, marginBottom: 1 }}
+                                value={prices[_card.id] || ""}
+                                onChange={(e) => handlePriceChange(_card.id, Number(e.target.value))}
+                            />
                             <Button 
                                 variant="contained" 
                                 color="secondary" 
@@ -74,7 +34,7 @@ const Sell: React.FC = () => {
                             >
                                 Sell
                             </Button>
-                        </div>
+                        </Box>
                     ))
                 ) : (
                     <Typography>You have no cards to sell.</Typography>
