@@ -3,9 +3,12 @@ import Conversation from "./Conversation"
 import { getOptionsByRequestType, RequestType } from "../../hooks/RequestBuilder";
 import Loader from "../Loader";
 import ErrorComponent from "../../components/ErrorComponent";
-import { Box, Typography } from "@mui/material";
+import { Box, IconButton, Tooltip, Typography } from "@mui/material";
 import { Player } from "../../models/Player";
 import { PlayerDisplay } from "../../components/PlayerDisplay";
+import { PlayerChat } from "../../models/interface/PlayerChat";
+import ChatIcon from '@mui/icons-material/Chat';
+import { PrivateConversation } from "./PrivateConversation";
 
 export const ConversationPage = () => {
 
@@ -15,6 +18,9 @@ export const ConversationPage = () => {
     const [loading, setLoading] = useState<Boolean>(true);
     const [error, setError] = useState<Boolean>(false);
     const [errorMessage, setErrorMessage] = useState<any>("");
+
+    const [privateConvOn, setPrivateConvOn] = useState<boolean>(false);
+    const [otherPlayer, setOtherPlayer] = useState<string>("");
 
     const retrievePlayerUsernames = (playerUsernames: string[]) => {
         // console.log(playerUsernames);
@@ -26,6 +32,18 @@ export const ConversationPage = () => {
         return p ? true : false;
     }
 
+    const handlePlayerClick = (player: PlayerChat) =>{
+        console.log("bizarre", player, privateConvOn);
+        if (username !== player.username) {
+            setPrivateConvOn(true);
+            setOtherPlayer(player.username);
+        } 
+
+    }
+
+    const goBackToNormal = () => {
+        setPrivateConvOn(false);
+    }
 
     useEffect(() => {
               const fetchData = async () => {
@@ -82,12 +100,25 @@ export const ConversationPage = () => {
                                 }}
                             >            
                                 <Typography>List of players</Typography>
+                                <Tooltip title="Chat with every connected player" arrow>
+                                <IconButton sx={{
+                                    fontSize: "20px",
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    justifyContent: "space-evenly",
+                                    color: "black"
+                                }}
+                                onClick={() => {goBackToNormal()}}>
+                                    Global chat
+                                    <ChatIcon sx={{color:"blue"}}
+                                    />
+                                </IconButton>
+                                </Tooltip>
                                 {
                                     players && (
                                         players.map(
                                         (_player, _index) => (
-                                            <PlayerDisplay key={_index} player = {{username: _player.username, connected: isPlayerConnected(_player)}}
-                                        />
+                                            <PlayerDisplay key={_index} player={{ username: _player.username, connected: isPlayerConnected(_player) }} clickOnPlayer={handlePlayerClick}                                        />
                                     ))
                                     )
                                 }
@@ -101,7 +132,13 @@ export const ConversationPage = () => {
                                 padding: 2,
                                 }}
                             >
-                                <Conversation username={username} sendConnectedPlayer={retrievePlayerUsernames}/>
+                                {
+                                    privateConvOn ? (<PrivateConversation username={username} receiver={otherPlayer} sendConnectedPlayer={retrievePlayerUsernames}/>) : (
+
+                                   <Conversation username={username} sendConnectedPlayer={retrievePlayerUsernames}/>
+
+                                    )
+                                }
                             </Box>
                         </Box>
                     )

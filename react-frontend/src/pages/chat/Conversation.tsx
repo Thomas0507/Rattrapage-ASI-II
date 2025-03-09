@@ -71,7 +71,6 @@ const Conversation: React.FC<ConversationProps> = ({username, sendConnectedPlaye
         playerUsernames.push(element);
       }  
     });
-    console.log(playerUsernames);
     sendConnectedPlayer(playerUsernames);    
   }
 
@@ -84,7 +83,7 @@ const Conversation: React.FC<ConversationProps> = ({username, sendConnectedPlaye
     if (socketRef.current === null) {
       socketRef.current = io(SOCKET_SERVER_URL, { transports: ["websocket"] , auth: {username}, reconnectionDelay: 2000});
       socketRef.current.on('connect', onConnect);
-      socketRef.current.on('disconnect', onConnect);
+      socketRef.current.on('disconnect', onDisconnect);
       socketRef.current.on('message', onMessage);
       socketRef.current.on('receive-message', onReceiveMessage);
       socketRef.current.on('player-list', onPlayerList);

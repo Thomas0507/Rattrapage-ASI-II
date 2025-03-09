@@ -1,19 +1,38 @@
-import { Icon, Typography } from "@mui/material";
+import { Box, Icon, Tooltip, Typography } from "@mui/material";
 import React from "react";
 import { Player } from "../models/Player";
 import { PlayerChat } from "../models/interface/PlayerChat";
 import CircleIcon from '@mui/icons-material/Circle';
 import { motion } from "framer-motion";
+import ChatIcon from '@mui/icons-material/Chat';
 
 interface PlayerDisplayProps {
     player: PlayerChat;
+    clickOnPlayer: (player: PlayerChat) => void
 }
 
-export const PlayerDisplay = ({player}: PlayerDisplayProps) => {
+export const PlayerDisplay = ({player, clickOnPlayer}: PlayerDisplayProps) => {
+    
+const handleClick = () => {
+    clickOnPlayer(player);
+}
+function getChatIconTooltip() {
+    return "Chat with " + player.username;
+}
+
     return (
         <div>
-            <div style={{display: 'flex', justifyContent: 'space-between', backgroundColor: "lightgrey", padding: "0.5em", alignItems: "center", borderRadius: "4px"}}>
-            <Typography align="center">{player.username}</Typography>
+            <Box style={{display: 'flex', justifyContent: 'space-between', backgroundColor: "lightgrey", padding: "0.5em", alignItems: "center", borderRadius: "4px"}}
+            sx={{
+                cursor: "pointer",  // Changes cursor on hover
+            }}
+            onClick={handleClick}>
+            <Typography component="span"
+            sx={{textAlign: "left", width: "100%"}}
+            align="center">{player.username}</Typography>
+            <Tooltip title={getChatIconTooltip()}>
+                <ChatIcon/>
+            </Tooltip>
             {
                 player.connected ? 
                 (
@@ -36,7 +55,7 @@ export const PlayerDisplay = ({player}: PlayerDisplayProps) => {
                     </motion.div>
                 )
             }
-            </div>
+            </Box>
         </div>
     );
 }
