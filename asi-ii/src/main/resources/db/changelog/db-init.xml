@@ -142,12 +142,7 @@
                              constraintName="uc_player_user_username"
                              tableName="player"/>
     </changeSet>
-    <changeSet id="1740392125931-11"
-               author="Thomas0507">
-        <addUniqueConstraint columnNames="cards_id"
-                             constraintName="uc_transaction_cards_cards"
-                             tableName="transaction_cards"/>
-    </changeSet>
+
     <changeSet id="1740392125931-12"
                author="Thomas0507">
         <addForeignKeyConstraint baseColumnNames="user_username"

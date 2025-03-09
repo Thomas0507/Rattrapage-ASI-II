@@ -59,5 +59,10 @@
                         newDataType="VARCHAR(1024)"
                         tableName="card"/>
     </changeSet>
+    <changeSet id="1741553773516-1" author="Thomas0507">
+        <addColumn tableName="card">
+            <column name="resell_price" type="number"/>
+        </addColumn>
+    </changeSet>
 
 </databaseChangeLog>

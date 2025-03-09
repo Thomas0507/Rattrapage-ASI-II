@@ -24,6 +24,7 @@ public class CardDto
     private float dropRate;
     private int price;
     private int rarity;
+    private int resellPrice;
     private CollectionDto collection;
 
 }
