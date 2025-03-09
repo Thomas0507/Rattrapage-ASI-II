@@ -21,11 +21,8 @@ interface SocketError {
   error : string;
 }
 
-interface UserMap {
-  [key: string]: string; // Maps userId to socketId
-}
 
-const users: UserMap = {};
+const users: string[] = [];
 
 export const initSocket = (server: any) => {
   
@@ -41,10 +38,12 @@ export const initSocket = (server: any) => {
   
   chatNamespace.on('connection', (socket) => {
     // console.log('Client connected:', socket.id);
+    if (!users.find(el => el === socket.handshake.auth.username)) {
+      users.push(socket.handshake.auth.username);
+    }
 
     socket.on('join', (userId: string) => {
-      users[userId] = socket.id;
-      // console.log(`${userId} joined with socket ID: ${socket.id}`);
+      // ?
     });
 
     socket.on("private-message", ({ sender, receiver, message }) => {
@@ -54,15 +53,23 @@ export const initSocket = (server: any) => {
       }
     });
 
+    socket.on("send-all-players", (scoket) => {
+      chatNamespace.emit("player-list", users);
+    });
+
+
+
+
     socket.on("disconnect", () => {
       
-      for (const userId in users) {
-        if (users[userId] === socket.id) {
-          delete users[userId];
+      for (let i = 0; i < users.length; i++) {
+        if (users[i] === socket.handshake.auth.username) {
+          delete users[i];
           break;
         }
       }
       console.log("User disconnected:", socket.id);
+      chatNamespace.emit("player-list", users);
     });
 
     socket.on("message", async (data: Message) => {

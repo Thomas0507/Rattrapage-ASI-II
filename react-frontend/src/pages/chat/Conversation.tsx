@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import io from "socket.io-client";
+import io, { Socket } from "socket.io-client";
 import {
   Container,
   Box,
@@ -16,6 +16,7 @@ import { getOptionsByRequestType, RequestType } from "../../hooks/RequestBuilder
 import Loader from "../Loader";
 import ErrorComponent from "../../components/ErrorComponent";
 import { DrawerComponent } from "../../components/DrawerComponent";
+import { Player } from "../../models/Player";
 
 // Socket.IO server URL 
 const SOCKET_SERVER_URL = "http://localhost:3000/chat";
@@ -31,50 +32,82 @@ interface Message {
 
 interface ConversationProps {
   username: string;
+  sendConnectedPlayer: (playerUsernames: string[]) => void
+}
+interface PlayerSent {
+  usernames: string[]
 }
 
-const Conversation: React.FC<ConversationProps> = ({username}: ConversationProps) => {
+
+const Conversation: React.FC<ConversationProps> = ({username, sendConnectedPlayer}: ConversationProps) => {
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const [isConnected, setIsConnected] = useState<boolean>(false);
   // Initialize Socket.IO connection.
-  const socket = io(SOCKET_SERVER_URL, {
-    transports: ["websocket", "polling", "flashsocket"],
-    auth: { username: username } // username
-  });
+  // const socket = io(SOCKET_SERVER_URL, {
+  //   transports: ["websocket", "polling", "flashsocket"],
+  //   auth: { username: username }, // username,
+  //   autoConnect: false
+  // });
+
+  const socketRef = useRef<Socket>(null)
+
+  function onConnect() {
+    setIsConnected(true);
+    console.log("connected");
+  }
+  function onDisconnect() {
+    setIsConnected(false);
+  }
+  function onMessage(data: Message) {
+    setMessages((prevMessages) => [...prevMessages, data]);
+  }
+  function onPlayerList(data: string[]) {
+    const playerUsernames: string[] = [];
+    data.forEach(element => {
+      if (element) {
+        playerUsernames.push(element);
+      }  
+    });
+    console.log(playerUsernames);
+    sendConnectedPlayer(playerUsernames);    
+  }
+
+  function onReceiveMessage(data: Message) {
+    setMessages((prev) => [...prev, data]);
+  }
 
   useEffect(() => {
 
+    if (socketRef.current === null) {
+      socketRef.current = io(SOCKET_SERVER_URL, { transports: ["websocket"] , auth: {username}, reconnectionDelay: 2000});
+      socketRef.current.on('connect', onConnect);
+      socketRef.current.on('disconnect', onConnect);
+      socketRef.current.on('message', onMessage);
+      socketRef.current.on('receive-message', onReceiveMessage);
+      socketRef.current.on('player-list', onPlayerList);
+    }
 
-      function onConnect() {
-        setIsConnected(true);
-      }
+    if (socketRef.current !== null) {
+      console.log("event emitted");
+      socketRef.current.emit("send-all-players");
+    }
 
-      function onDisconnect() {
-        setIsConnected(false);
-      }
-      function onMessage(data: Message) {
-        setMessages((prevMessages) => [...prevMessages, data]);
-      }
-
-      function onReceiveMessage(data: Message) {
-        setMessages((prev) => [...prev, data]);
-      }
-
-      socket.on('connect', onConnect);
-      socket.on('disconnect', onConnect);
-      socket.on('message', onMessage);
-      socket.on('receive-message', onReceiveMessage);
+      
     
       return () => {
-        socket.off('connect', onConnect);
-        socket.off('disconnect', onDisconnect);
-        socket.off('message', onMessage);
-        socket.off('receive-message', onReceiveMessage)
+        if (socketRef.current !== null) {
+          socketRef.current.off('connect', onConnect);
+          socketRef.current.off('disconnect', onDisconnect);
+          socketRef.current.off('message', onMessage);
+          socketRef.current.off('receive-message', onReceiveMessage);
+          socketRef.current.off('player-list', onPlayerList);
+          socketRef.current.disconnect();
+        }
       };
-    
+
   }, []);
 
   // Scroll to bottom when messages update
@@ -87,9 +120,9 @@ const Conversation: React.FC<ConversationProps> = ({username}: ConversationProps
   // disconnect user on dismount
   // useEffect( () => () => socket.disconnect(), [] );
   const sendMessage = () => {
-    if (input.trim() && socket) {
+    if (input.trim() && socketRef.current) {
       // Emit the message to the server
-      socket.emit("message", {
+      socketRef.current.emit("message", {
         content: input,
         sender: username,
         timestamp: Date.now()

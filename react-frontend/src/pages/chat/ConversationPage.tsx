@@ -3,14 +3,29 @@ import Conversation from "./Conversation"
 import { getOptionsByRequestType, RequestType } from "../../hooks/RequestBuilder";
 import Loader from "../Loader";
 import ErrorComponent from "../../components/ErrorComponent";
+import { Box, Typography } from "@mui/material";
+import { Player } from "../../models/Player";
+import { PlayerDisplay } from "../../components/PlayerDisplay";
 
 export const ConversationPage = () => {
 
-    const [players, setPlayers] = useState<any[]>([]);
+    const [players, setPlayers] = useState<Player[]>([]);
+    const [connectedUsername, setConnectedUsername] = useState<string[]>([]);
     const [username, setUsername] = useState<string>("");
     const [loading, setLoading] = useState<Boolean>(true);
     const [error, setError] = useState<Boolean>(false);
     const [errorMessage, setErrorMessage] = useState<any>("");
+
+    const retrievePlayerUsernames = (playerUsernames: string[]) => {
+        // console.log(playerUsernames);
+        setConnectedUsername(playerUsernames);
+    }
+
+    const isPlayerConnected = (player: Player): boolean => {
+        const p = connectedUsername.find(p => p === player.username);
+        return p ? true : false;
+    }
+
 
     useEffect(() => {
               const fetchData = async () => {
@@ -54,7 +69,41 @@ export const ConversationPage = () => {
                     (
                         // todo: add player list =>
                         // todo: add navigation to private chat
-                        <Conversation username={username}/>
+                        <Box display="flex"  height={"80vh"}>
+                            {/* Sidebar */}
+                            <Box
+                                sx={{
+                                width: 200, // Fixed width
+                                backgroundColor: "#f0f0f0",
+                                padding: 2,
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: 1,
+                                }}
+                            >            
+                                <Typography>List of players</Typography>
+                                {
+                                    players && (
+                                        players.map(
+                                        (_player, _index) => (
+                                            <PlayerDisplay key={_index} player = {{username: _player.username, connected: isPlayerConnected(_player)}}
+                                        />
+                                    ))
+                                    )
+                                }
+                            </Box>
+
+                            {/* Main Content */}
+                            <Box
+                                sx={{
+                                flex: 1, // Takes up remaining space
+                                backgroundColor: "#fff",
+                                padding: 2,
+                                }}
+                            >
+                                <Conversation username={username} sendConnectedPlayer={retrievePlayerUsernames}/>
+                            </Box>
+                        </Box>
                     )
                 }
             </div>
