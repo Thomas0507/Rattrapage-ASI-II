@@ -10,17 +10,18 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 // import { makeStyles } from '@mui/material/styles';
 import Container from '@mui/material/Container';
-import { Snackbar, SnackbarOrigin } from '@mui/material';
+import SnackbarError from '../../components/ErrorSnackbar';
+import SnackbarValidation from '../../components/SnackbarValidation';
 
 
-
-
-class LogInForm {
+class SignUpForm {
   _username: string;
   _password: string;
-  constructor(username, password) {
+  _email: string;
+  constructor(username: string, password: string, email: string) {
     this._username = username || '';
     this._password = password || '';
+    this._email = email || '';
   }
   public get username() {
     return this._username;
@@ -28,52 +29,79 @@ class LogInForm {
   public get password() {
     return this._password;
   }
+
+  public get email() {
+    return this._email;
+  }
 }
 
-interface State extends SnackbarOrigin {
-  open: boolean;
+function checkPassword(str: string)
+{
+    let re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    return re.test(str);
+}
+
+function checkEmail(str: string)
+{
+    let re = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
+    return re.test(str);
 }
 
 function Register () {
-  
-  const handleClose = () => {
-    setState({ ...state, open: false });
-  };
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
-  const [state, setState] = useState<State>({
-    open: false,
-    vertical: 'top',
-    horizontal: 'center',
-  });
-  const { vertical, horizontal, open } = state;
+  const [errorOpen, setErrorOpen] = useState<boolean>(false);
+  const [validationOpen, setValidationOpen] = useState<boolean>(false);
 
+  function publish(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
 
-  function publish(formData: FormData) {
-    const signUpForm = new LogInForm(formData.get('email'), formData.get('password'));
+    const formData = new FormData(event.currentTarget);
+    const signUpForm = new SignUpForm(
+      formData.get('username')?.toString() || '', 
+      formData.get('password')?.toString() || '', 
+      formData.get('email')?.toString() || '',
+    );
+
+    if (!checkEmail(signUpForm.email)) {
+      setErrorMessage('{ "status": 400, "message": "Bad format", "reason": "Your email is invalid"}');
+      setErrorOpen(true);
+      return;
+    }
     
-      // post to create an account;
-      fetch('http://localhost:8081/auth/signup', {
-        method: 'POST',
-        headers: {
-          'Access-Control-Request-Method': 'POST',
-          'Origin': 'http://localhost:5173',
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          "username": signUpForm.username,
-          "password": signUpForm.password
-        })
-      }).then(res => {
-        setState({ open: true,
-          vertical: 'top',
-          horizontal: 'center',
-        });
-      }).catch(err => {
-        console.log(err)
-      }).finally(() => {
+    if (!checkPassword(signUpForm.password)) {
+      setErrorMessage('{ "status": 400, "message": "Bad format", "reason": "Your password must have at least 8 characters including one lowercase, one uppercase, one number and one special character"}');
+      setErrorOpen(true);
+      return;
+    }
 
+    // post to create an account;
+    fetch('http://localhost:8081/auth/signup', {
+      method: 'POST',
+      headers: {
+        'Access-Control-Request-Method': 'POST',
+        'Origin': 'http://localhost:5173',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "username": signUpForm.username,
+        "password": signUpForm.password,
+        "email": signUpForm.email,
       })
+    }).then(response => {
+      if (!response.ok) {
+        return response.text().then( text => {
+          setErrorMessage(text);
+          setErrorOpen(true);
+        });
+      }
+      setValidationOpen(true);
+    }).catch(err => {
+      console.log(err)
+    }).finally(() => {
+
+    })
     
   }
     return (
@@ -83,17 +111,27 @@ function Register () {
         <Typography component="h1" variant="h5">
           Create an account
         </Typography>
-        <form action={publish}>
+        <form onSubmit={publish}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
+            autoFocus
+          />
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label="Email"
             name="email"
             autoComplete="email"
-            autoFocus
           />
           <TextField
             variant="outlined"
@@ -120,7 +158,7 @@ function Register () {
             </Grid>
             <Grid item>
               <Link href="/login" variant="body2">
-                {"Have an account aldready? Log in"}
+                {"Have an account already? Log in"}
               </Link>
             </Grid>
           </Grid>
@@ -128,16 +166,15 @@ function Register () {
       </div>
       <Box mt={8}>
       </Box>
-      <Snackbar
-        anchorOrigin={{ vertical, horizontal }}
-        open={open}
-        message="I love snacks"
-        key={vertical + horizontal}
-        action={
-          <Button onClick={handleClose} color="primary" size="small">
-            Ok
-          </Button>
-        }
+      <SnackbarError
+        open={errorOpen}
+        setOpen={setErrorOpen}
+        message={errorMessage}
+      />
+      <SnackbarValidation
+        open={validationOpen}
+        setOpen={setValidationOpen}
+        message={"Signed up successfully!"}
       />
     </Container>
     )

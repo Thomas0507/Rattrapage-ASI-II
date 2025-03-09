@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -10,6 +10,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useAuth } from '../../hooks/useAuth';
+import SnackbarError from '../../components/ErrorSnackbar';
 
 class LogInForm {
   _username: string;
@@ -32,8 +33,12 @@ function Login() {
 
   const { login } = useAuth();
 
+  const [errorMessage, setErrorMessage] = useState<string>("");
+
+  const [errorOpen, setErrorOpen] = useState<boolean>(false);
+
   function publish(formData: FormData) {
-    const signUpForm = new LogInForm(formData.get('email') as string, formData.get('password') as string);
+    const signUpForm = new LogInForm(formData.get('username') as string, formData.get('password') as string);
 
     // post to create an account;
     fetch('http://localhost:8081/auth/login', {
@@ -49,11 +54,25 @@ function Login() {
         "password": signUpForm.password
       })
     })
-      .then(response => response.json())
-      .then(async data => 
-        await login(data)
-      )      
-      .catch(err => console.log(err));
+    .then(response => {
+      if (!response.ok) {
+        response.text().then( text => {
+          setErrorMessage(text);
+          setErrorOpen(true);
+        });
+        return;
+      } 
+      return response.json();
+    })
+    .then(async data => {
+      if (data) {
+        await login(data);
+      }
+    })      
+    .catch(err => {
+      setErrorMessage(err);
+      setErrorOpen(true);
+    });
   }
 
   return (
@@ -69,10 +88,10 @@ function Login() {
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
             autoFocus
           />
           <TextField
@@ -114,6 +133,11 @@ function Login() {
       </div>
       <Box mt={8}>
       </Box>
+      <SnackbarError
+        open={errorOpen}
+        setOpen={setErrorOpen}
+        message={errorMessage}
+      />
     </Container>
   )
 };

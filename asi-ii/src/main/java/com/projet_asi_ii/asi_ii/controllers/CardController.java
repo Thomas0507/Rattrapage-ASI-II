@@ -62,8 +62,6 @@ public class CardController {
 
     @PostMapping("/generateCard")
     public ResponseEntity<String> generateCard(@RequestHeader("Authorization") String bearerToken, @RequestBody PromptRequest promptRequest) {
-        System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCC generateCard");
-
         System.out.println(promptRequest.toString());
         System.out.println(bearerToken);
 
@@ -100,6 +98,7 @@ public class CardController {
         cardDto.setHealth(100);
         cardDto.setDropRate(0);
         cardDto.setRarity(0);
+        cardDto.setResellPrice(500);
 
         this.cardService.insertCards(List.of(cardDto));
 
