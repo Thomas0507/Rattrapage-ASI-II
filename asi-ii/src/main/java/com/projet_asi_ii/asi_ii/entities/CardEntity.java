@@ -7,8 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Collection;
-
 @Entity
 @Getter
 @Setter
@@ -17,9 +15,7 @@ import java.util.Collection;
 @Table(name = "card")
 public class CardEntity {
     @Id
-    @GeneratedValue(
-            strategy= GenerationType.IDENTITY
-    )
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     private String name;
     @Column(length = 1024)

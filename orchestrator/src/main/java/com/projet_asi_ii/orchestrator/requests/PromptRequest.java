@@ -11,5 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PromptRequest
 {
+	String name;
+
 	String prompt;
 }

@@ -18,6 +18,7 @@ public class CardEntity
 {
 	@Id
 	private UUID cardId;
+	private String name;
 	private String image;
 	private String prompt;
 }

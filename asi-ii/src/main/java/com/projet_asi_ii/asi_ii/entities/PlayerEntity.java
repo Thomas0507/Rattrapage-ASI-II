@@ -17,10 +17,7 @@ import java.util.List;
 public class PlayerEntity {
 
     @Id
-    @GeneratedValue(
-            strategy= GenerationType.AUTO,
-            generator="native"
-    )
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)

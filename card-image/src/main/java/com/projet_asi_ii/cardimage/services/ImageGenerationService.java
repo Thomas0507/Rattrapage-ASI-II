@@ -66,15 +66,15 @@ public class ImageGenerationService {
     private String generateImage(String prompt) throws Exception {
         // Create image options
         OpenAiImageOptions options = OpenAiImageOptions.builder()
-                .model("dall-e-2")  // Use DALL·E 2 (cheaper than DALL·E 3)
+                .model("dall-e-3")
                 .N(1)  // 1 image
-                .height(512)  // Smaller size reduces cost
-                .width(512)
+                .height(1024)  // Smaller size reduces cost
+                .width(1024)
                 .build();
 
 
         // Create image prompt with options
-        ImagePrompt imagePrompt = new ImagePrompt(prompt, options);
+        ImagePrompt imagePrompt = new ImagePrompt("in a comic style eerie setting " + prompt, options);
 
         // Generate image
         ImageResponse response = openAiImageModel.call(imagePrompt);

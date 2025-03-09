@@ -14,15 +14,15 @@ export default function Generator() {
 
 
     const [loading, setLoading] = useState(false);
-    const [image, setImage] = useState("");
-    const [description, setDescription] = useState("");
+    const [name, setName] = useState("");
+    const [prompt, setPrompt] = useState("");
     const [termsAccepted, setTermsAccepted] = useState(false);
     const [error, setError] = useState("");
 
     async function submit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        if (!image || !description || !termsAccepted) {
+        if (!name || !prompt || !termsAccepted) {
             setError(
                 "Please fill in all fields and accept the terms and conditions.",
             );
@@ -33,14 +33,14 @@ export default function Generator() {
         setLoading(true);
 
         try {
-            const newCard = { image, description };
+            const newCard = { name, prompt };
             console.log("newCard: ", newCard);
-            var a = await generateCard(image);
+            let a = await generateCard(name, prompt);
             console.log(a);
             // toast.success("The generation of your card has started.");
 
-            setImage("");
-            setDescription("");
+            setName("");
+            setPrompt("");
             setTermsAccepted(false);
         } catch {
             // toast.success("An error occured, try again later.");
@@ -66,22 +66,22 @@ export default function Generator() {
                         rows={2}
                         maxRows={4}
                         fullWidth
-                        label="Image prompt"
+                        label="Card Name"
                         variant="outlined"
                         margin="normal"
-                        value={image}
-                        onChange={(e) => setImage(e.target.value)}
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                     />
                     <TextField
-                        fullWidth
                         multiline
                         rows={2}
                         maxRows={4}
-                        label="Description prompt"
+                        fullWidth
+                        label="Prompt"
                         variant="outlined"
                         margin="normal"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
+                        value={prompt}
+                        onChange={(e) => setPrompt(e.target.value)}
                     />
                     <Box>
                         <input

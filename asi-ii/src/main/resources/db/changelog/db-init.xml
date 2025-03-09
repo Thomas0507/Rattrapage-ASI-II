@@ -15,7 +15,8 @@
                author="Thomas0507">
         <createTable tableName="app_user">
             <column name="id"
-                    type="BIGINT">
+                    type="BIGINT"
+                    autoIncrement="true">
                 <constraints nullable="false"
                              primaryKey="true"
                              primaryKeyName="pk_app_user"/>
@@ -36,7 +37,8 @@
                author="Thomas0507">
         <createTable tableName="card">
             <column name="id"
-                    type="BIGINT">
+                    type="BIGINT"
+                    autoIncrement="true">
                 <constraints nullable="false"
                              primaryKey="true"
                              primaryKeyName="pk_card"/>
@@ -63,7 +65,8 @@
                author="Thomas0507">
         <createTable tableName="player">
             <column name="id"
-                    type="BIGINT">
+                    type="BIGINT"
+                    autoIncrement="true">
                 <constraints nullable="false"
                              primaryKey="true"
                              primaryKeyName="pk_player"/>
@@ -94,7 +97,8 @@
                author="Thomas0507">
         <createTable tableName="transaction">
             <column name="id"
-                    type="BIGINT">
+                    type="BIGINT"
+                    autoIncrement="true">
                 <constraints nullable="false"
                              primaryKey="true"
                              primaryKeyName="pk_transaction"/>
@@ -191,12 +195,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="transaction"/>
     </changeSet>
-    <changeSet id="1740760168032-1" author="PC">
-        <createSequence incrementBy="50" sequenceName="native" startValue="1"/>
-    </changeSet>
     <changeSet id="1740760168032-2" author="PC">
         <createTable tableName="banner">
-            <column name="id" type="BIGINT">
+            <column name="id"
+                    type="BIGINT"
+                    autoIncrement="true">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_banner"/>
             </column>
             <column name="title" type="VARCHAR(255)"/>

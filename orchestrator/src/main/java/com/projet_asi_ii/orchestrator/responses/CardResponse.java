@@ -9,6 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CardResponse
 {
+	private String name;
 	private String image;
 	private String prompt;
 }
