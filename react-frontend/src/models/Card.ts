@@ -27,8 +27,11 @@ export class Card {
     
     private _price: number;
 
+    private _resellPrice: number;
 
-    constructor(id, name, description, image, attack, defense, health, mainType, dropRate, rarity, collection, price) {
+
+
+    constructor(id, name, description, image, attack, defense, health, mainType, dropRate, rarity, collection, price, resellPrice) {
         this._id = id;
         this._name = name;
         this._description = description;
@@ -41,6 +44,7 @@ export class Card {
         this._rarity = rarity;
         this._collection = collection;
         this._price = price;
+        this._resellPrice = resellPrice;
     }
 
     public get id(): number {
@@ -126,6 +130,13 @@ export class Card {
 
     public set price(value: number) {
         this._price = value;
+    }
+
+    public get resellPrice(): number {
+        return this._resellPrice;
+    }
+    public set resellPrice(value: number) {
+        this._resellPrice = value;
     }
     
 }

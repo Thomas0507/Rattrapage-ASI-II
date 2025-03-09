@@ -35,7 +35,7 @@ public class CardEntity {
     private CardTypeEnum secondaryType;
     private float dropRate;
     private int price;
-
+    private int resellPrice;
     // up to 20s stars rating
     private int rarity;
 

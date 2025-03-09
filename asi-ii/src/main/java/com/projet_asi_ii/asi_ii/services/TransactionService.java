@@ -42,6 +42,7 @@ public class TransactionService {
             if (player == null) {
                 throw new UserNotFoundException("User not found: " + transactionRequest.getUsername());
             }
+            List<CardEntity> cardsInDb = new ArrayList<>();
 
             switch (transactionRequest.getTransactionType()) {
                 case BUY :
@@ -49,7 +50,6 @@ public class TransactionService {
                     if (player.getCash() - transactionRequest.getAmount() < 0) {
                         throw new InsufficientCashException("Insufficient cash for BUY transaction.");
                     }
-                    List<CardEntity> cardsInDb = new ArrayList<>();
                     transactionRequest.getCards().forEach(cardDto -> {
                         Optional<CardEntity> card = cardRepository.findById(cardDto.getId());
                         card.ifPresent(cardsInDb::add);
@@ -74,12 +74,23 @@ public class TransactionService {
                     return TransactionMapper.INSTANCE.toTransactionDto(transactionBuy);
                 
                 case SELL :
+
+                    transactionRequest.getCards().forEach(cardDto -> {
+                        Optional<CardEntity> card = cardRepository.findById(cardDto.getId());
+                        card.ifPresent(cardsInDb::add);
+                    });
+                    if (cardsInDb.isEmpty() || cardsInDb.size() != transactionRequest.getCards().size()) {
+                        throw new CardNotFoundException("Card not found", "Received " + transactionRequest.getCards().size() + "cards but only " + cardsInDb.size() + " found for purchase.");
+                    }
+
                     TransactionEntity transactionSell = TransactionMapper.INSTANCE.toTransactionEntityFromRequest(transactionRequest);
                     transactionSell.setUserEntity(player.getUser());
+                    transactionSell.setType(transactionRequest.getTransactionType());
                     transactionSell = transactionRepository.save(transactionSell);
 
-                    // Increase player's cash
+                    // Increase player's cash - one card at a time
                     player.setCash(player.getCash() + transactionSell.getAmount());
+                    player.getCards().removeAll(cardsInDb);
                     playerRepository.save(player);
                     
                     return TransactionMapper.INSTANCE.toTransactionDto(transactionSell);

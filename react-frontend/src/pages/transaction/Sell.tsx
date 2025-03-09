@@ -1,78 +1,120 @@
-// src/pages/Sell.tsx
+import React, { useEffect, useState } from 'react';
+import { Container, Typography } from '@mui/material';
+import CardListComponent from '../../components/CardListComponent';
+import { getOptionsByRequestType, RequestType } from '../../hooks/RequestBuilder';
+import { Card } from '../../models/Card';
+import { useAuth } from "../../hooks/useAuth"; 
+import ErrorComponent from '../../components/ErrorComponent';
+import Loader from '../Loader';
+import SnackbarError from '../../components/ErrorSnackbar';
+import { CardModelToCardDto } from '../../models/mapper/CardMapper';
+import SnackbarValidation from '../../components/SnackbarValidation';
+import { Player } from '../../models/Player';
 
-import React from 'react';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
+interface SimplifiedPlayer {
+  username: string;
+  cash: number;
+}
 
-function Sell() {
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+const Sell: React.FC = () => {
+  const [cards, setCards] = useState<Card[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  
+  const [isProcessing, setIsProcessing] = useState<boolean>(false); 
 
-    const username = formData.get("username") as string;
-    const amount = Number(formData.get("amount"));
+  const [userCash, setUserCash] = useState<number>(0);
 
-    fetch("http://localhost:8081/transaction", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username,
-        amount,
-        transactionType: "SELL", // difference
-      }),
-    })
-      .then((response) => {
+  const [errorOpen, setErrorOpen] = useState<boolean>(false);
+  const [validationOpen, setValidationOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    fetchPlayerInfo();
+  }, []);
+
+  const fetchPlayerInfo = async () => {
+    try {
+        const response = await fetch(`http://localhost:8081/player`, getOptionsByRequestType(RequestType.GET, {}) )
         if (!response.ok) {
-          throw new Error("Failed to create SELL transaction");
+            throw new Error(`Error: $(response.statusText)`);
         }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("SELL transaction created:", data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+        const result: Player = await response.json();
+        setCards(result.cards);
+        setUserCash(result.cash);
+    } catch(err) {
+        setError(err.message)
+    } finally {
+        setLoading(false);
+    }
+};
+
+
+
+
+  const handleSell = async (card: Card) => {
+    setIsProcessing(true);
+      // setLoading(true);
+      await fetch("http://localhost:8081/transaction", getOptionsByRequestType(RequestType.POST, {
+        cards: [CardModelToCardDto(card)],
+        amount: card.resellPrice, 
+        transactionType: "SELL",
+      })).then(response => {
+        if (!response.ok) {
+          return response.text().then( text => {
+            // setError(true);
+            setErrorMessage(text);
+            setErrorOpen(true);
+          });
+      }
+      // transaction OK
+      setValidationOpen(true);
+      fetchPlayerInfo();
+      }).catch(err => {
+        console.log(err);
+      }).finally(() => {
+        setIsProcessing(false);
+      });  
+  };
+  
+
+  if (loading) {
+    return <Loader/>;
+  }
+
+  if (error) {
+    return <ErrorComponent message={errorMessage}/>;
   }
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Box mt={4}>
-        <Typography component="h1" variant="h5">
-          SELL
+    <div>
+      <Container component="main" sx={{marginTop:"2em", maxWidth: '1600px!important'}}>
+        <Typography variant="h4" gutterBottom sx={{
+          position: "sticky", 
+          top: 0,
+          backgroundColor: "white"
+        }}>
+          Buy Cards \ You have <span>{userCash} $</span>
         </Typography>
-        <form onSubmit={handleSubmit}>
-          <TextField
-            label="Username"
-            name="username"
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-          />
-          <TextField
-            label="Amount"
-            name="amount"
-            type="number"
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-          />
-          <Button type="submit" variant="contained" fullWidth color="secondary">
-            Submit SELL
-          </Button>
-        </form>
-      </Box>
-    </Container>
+        <CardListComponent
+          cards={cards}
+          actionLabel="Sell"
+          onActionClick={handleSell}
+          disabled={isProcessing}
+        />
+      <SnackbarError
+        open={errorOpen}
+        setOpen={setErrorOpen}
+        message={errorMessage}
+      />
+      <SnackbarValidation
+        open={validationOpen}
+        setOpen={setValidationOpen}
+        message={"Transaction done!"}
+      />
+      </Container>
+    </div>
   );
-}
+};
 
 export default Sell;
