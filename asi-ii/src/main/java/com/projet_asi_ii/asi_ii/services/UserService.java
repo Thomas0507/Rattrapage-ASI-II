@@ -40,6 +40,7 @@ public class UserService
 			playerEntity.setUser(userEntity);
 			playerEntity.setCards(List.of(cardRepository.findById((long)1).get()));
 			playerEntity.setCash(5000);
+			playerEntity.setBeginner(true);
 			playerRepository.save(playerEntity);
 		} catch (Exception e) {
 			e.printStackTrace();

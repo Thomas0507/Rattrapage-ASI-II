@@ -43,7 +43,7 @@ const CardComponent = ({card, imageHeight, imageWidth, hideShowDetails, disabled
             {card.description}
         </Typography>
         <Typography variant="h6" color="primary" sx={{ marginTop: 1 }}>
-                        Price: {card.price} 💰
+                        Price: {card.price} 💰 Sell price: {card.resellPrice} 💰
         </Typography>
       </CardContent>
       <CardActions>
