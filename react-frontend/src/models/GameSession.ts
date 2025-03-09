@@ -13,12 +13,12 @@ export class GameSession {
     
     private _status: string;
 
-    constructor(sessionId: string, roomName: string, capacity: number, currentNbPlayers: number, players: PlayerModel[], status?: string) {
-        this._sessionId = sessionId
-        this._roomName = roomName
-        this._capacity = capacity
-        this._currentNbPlayers = currentNbPlayers
-        this._players = players
+    constructor(sessionId?: string, roomName?: string, capacity?: number, currentNbPlayers?: number, players?: PlayerModel[], status?: string) {
+        this._sessionId = sessionId || ''
+        this._roomName = roomName || ''
+        this._capacity = capacity || 0
+        this._currentNbPlayers = currentNbPlayers || 0
+        this._players = players || []
         this._status = status || 'waiting';
     }
     // Getter & Setter => 

@@ -100,11 +100,18 @@ export const initSocket = (server: any) => {
     socket.on('joinGame', async ({gameSessionId, username}: joinGameSession) => {
       let gameSession = await GameSessionEntity.findOne({gameSessionId});
 
-      if (gameSession) {
+      if (!gameSession) {
         console.log("gameSession not found!");
         socket.emit("session-not-found", {status: 404, error: 'Game session not found'} as SocketError);
+        return
       }
-      if (!gameSession.players.find(player => player.playerName === username)) {
+
+      if (!gameSession?.players) {
+        console.log("instanciate empty players array");
+        gameSession.players = [];
+      }
+
+      if (!gameSession?.players.find(player => player.playerName === username)) {
         gameSession.players.push({playerId: socket.id, playerName: username, status: 'connected'});
         await gameSession.save();
       }
