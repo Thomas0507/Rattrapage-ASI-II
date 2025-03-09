@@ -45,7 +45,7 @@ export const GamePage = () => {
 
     const handleJoin = () => {
         if (!joinDisabled) {
-            window.location.href += "session/" + uuid;  
+            window.location.href += "/session/" + uuid;  
         }
     }
 
