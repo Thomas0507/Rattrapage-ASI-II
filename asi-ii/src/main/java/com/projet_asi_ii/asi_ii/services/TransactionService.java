@@ -5,9 +5,11 @@ import com.projet_asi_ii.asi_ii.Exceptions.TransactionFailedException;
 import com.projet_asi_ii.asi_ii.Exceptions.UnknownTransactionTypeException;
 import com.projet_asi_ii.asi_ii.Exceptions.UserNotFoundException;
 import com.projet_asi_ii.asi_ii.dtos.TransactionDto;
+import com.projet_asi_ii.asi_ii.entities.CardEntity;
 import com.projet_asi_ii.asi_ii.entities.PlayerEntity;
 import com.projet_asi_ii.asi_ii.entities.TransactionEntity;
 import com.projet_asi_ii.asi_ii.mappers.TransactionMapper;
+import com.projet_asi_ii.asi_ii.repositories.CardRepository;
 import com.projet_asi_ii.asi_ii.repositories.PlayerRepository;
 import com.projet_asi_ii.asi_ii.repositories.TransactionRepository;
 import com.projet_asi_ii.asi_ii.requests.TransactionRequest;
@@ -21,6 +23,9 @@ public class TransactionService {
 
     @Autowired
     TransactionRepository transactionRepository;
+
+    @Autowired
+    CardRepository cardRepository;
 
     @Autowired
     PlayerRepository playerRepository;
@@ -44,9 +49,11 @@ public class TransactionService {
 
             System.out.println("Username from JWT: " + transactionRequest.getUsername());
 
+            // Récupérer le premier ID de carte de l'ensemble
+            Long cardId = transactionRequest.getCards().iterator().next().getId();
+
             PlayerEntity player = playerRepository.findByUserUsername(transactionRequest.getUsername());
             if (player == null) {
-                // todo : user not found
                 throw new UserNotFoundException("User not found: " + transactionRequest.getUsername());
                 //return null;
             }
@@ -57,17 +64,29 @@ public class TransactionService {
                         throw new InsufficientCashException("Insufficient cash for BUY transaction.");
                         //return null;
                     }
+
+                    Optional<CardEntity> optionalCard = cardRepository.findById(cardId);
+                    if (optionalCard.isEmpty()) {
+                        throw new IllegalArgumentException("Card not found with id: " + cardId);
+                    }
+                    CardEntity boughtCard = optionalCard.get();
+
+                    // Ajouter la carte à la liste du joueur
+                    if (!player.getCards().contains(boughtCard)) {
+                        player.getCards().add(boughtCard);
+                    }
+
+                    // Mettre à jour l'argent du joueur
+                    player.setCash(player.getCash() - transactionRequest.getAmount());
+
+                    // Sauvegarder le joueur avec la carte ajoutée
+                    playerRepository.save(player);
+
+                    // Créer et sauvegarder la transaction
                     TransactionEntity transactionBuy = TransactionMapper.INSTANCE.toTransactionEntityFromRequest(transactionRequest);
                     transactionBuy.setUserEntity(player.getUser());
                     transactionBuy = transactionRepository.save(transactionBuy);
 
-                    // Deduct from player's cash
-                    System.out.println("transactionBuy.getAmount() : " + transactionBuy.getAmount()); 
-                    player.setCash(player.getCash() - transactionBuy.getAmount());
-                    
-                    playerRepository.save(player);
-
-                    // Return DTO
                     return TransactionMapper.INSTANCE.toTransactionDto(transactionBuy);
                 
                 case SELL :

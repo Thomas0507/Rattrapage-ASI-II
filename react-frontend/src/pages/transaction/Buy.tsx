@@ -4,10 +4,12 @@ import CardListComponent from '../../components/CardListComponent';
 import { getOptionsByRequestType, RequestType } from '../../hooks/RequestBuilder';
 import { Card } from '../../models/Card';
 import { useAuth } from "../../hooks/useAuth"; 
+import { useProfile } from "../../pages/profile/ProfilePage"; 
 
 
 const Buy: React.FC = () => {
   const { user } = useAuth();
+  const { setPlayer } = useProfile()
   const [cards, setCards] = React.useState<Card[]>([]);
   const [loading, setLoading] = React.useState<boolean>(true);
   const [error, setError] = React.useState<string | null>(null);
@@ -50,6 +52,21 @@ const Buy: React.FC = () => {
     }
   };
 
+
+  // Fonction pour mettre à jour le joueur après l'achat
+  const updatePlayerData = async () => {
+    try {
+        const response = await fetch("http://localhost:8081/player", getOptionsByRequestType(RequestType.GET));
+        if (!response.ok) {
+            throw new Error("Impossible de récupérer les données du joueur.");
+        }
+        const updatedPlayer = await response.json();
+        setPlayer(updatedPlayer); // Met à jour le contexte du profil avec les nouvelles cartes
+    } catch (err) {
+        console.error("Erreur mise à jour du joueur:", err);
+    }
+  };
+
   const handleBuy = async (cardId: number) => {
     if (!user) {
       alert("Veuillez vous connecter avant d'acheter.");
@@ -88,7 +105,7 @@ const Buy: React.FC = () => {
           "Authorization": `Bearer ${user}`
         },
         body: JSON.stringify({
-          cardId: cardId,
+          cards: [{ id: cardId }], 
           amount: price, 
           transactionType: "BUY",
         }),
@@ -101,6 +118,9 @@ const Buy: React.FC = () => {
   
       console.log("Transaction réussie !");
       alert(`Achat réussi pour la carte ${cardId}`);
+
+        // Mettre à jour les cartes du joueur après achat
+        await updatePlayerData();
 
       
     } catch (err: any) {
@@ -133,5 +153,8 @@ const Buy: React.FC = () => {
     </div>
   );
 };
+
+
+
 
 export default Buy;

@@ -12,8 +12,9 @@ function CardDetailPage () {
     const path = useLocation().pathname.split("/");
     const cardId = Number(path[path.length-1]);
     
-    const mockCard = new Card(1, "Lamball", "A simple sheep trying his best", "https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_SheepBall_icon_normal.png", 1, 1, "Neutral");
-    const [card, setCard] = useState(mockCard);
+    //const mockCard = new Card(1, "Lamball", "A simple sheep trying his best", "https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_SheepBall_icon_normal.png", 1, 1, "Neutral");
+    //const [card, setCard] = useState(mockCard);
+    const [card, setCard] = useState<Card | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -21,11 +22,20 @@ function CardDetailPage () {
         const fetchData = async () => {
             try {
                 const response = await fetch(`http://localhost:8081/cards/` + cardId, getOptionsByRequestType(RequestType.GET, {}) )
-                if (!response.ok) {
-                    throw new Error(`Error: $(response.statusText)`);
-                }
-                // todo: handle card not found
                 const result = await response.json();
+
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        throw new Error("Carte non trouvée");
+                    } else {
+                        throw new Error(`Erreur: ${response.statusText}`);
+                    }
+                }
+
+                if (!result || !result.id) {
+                    throw new Error("Aucune carte valide trouvée");
+                }
+                
                 setCard(result);
             } catch(err) {
                 setError(err.message)
@@ -34,11 +44,13 @@ function CardDetailPage () {
             }
         };
         fetchData();
-    }, [])
+    }, [cardId])
 
 
     if (loading) return <p> loading</p> 
     if (error) return <p>Error: {error}</p>
+    if (!card) return <p>Aucune carte trouvée.</p>;
+
     return (
 
     <div>
