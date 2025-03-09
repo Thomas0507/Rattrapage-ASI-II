@@ -1,19 +1,20 @@
 package com.projet_asi_ii.asi_ii.services;
 
-import com.projet_asi_ii.asi_ii.Exceptions.InsufficientCashException;
-import com.projet_asi_ii.asi_ii.Exceptions.TransactionFailedException;
-import com.projet_asi_ii.asi_ii.Exceptions.UnknownTransactionTypeException;
-import com.projet_asi_ii.asi_ii.Exceptions.UserNotFoundException;
+import com.projet_asi_ii.asi_ii.Exceptions.*;
 import com.projet_asi_ii.asi_ii.dtos.TransactionDto;
+import com.projet_asi_ii.asi_ii.entities.CardEntity;
 import com.projet_asi_ii.asi_ii.entities.PlayerEntity;
 import com.projet_asi_ii.asi_ii.entities.TransactionEntity;
+import com.projet_asi_ii.asi_ii.mappers.CardMapper;
 import com.projet_asi_ii.asi_ii.mappers.TransactionMapper;
+import com.projet_asi_ii.asi_ii.repositories.CardRepository;
 import com.projet_asi_ii.asi_ii.repositories.PlayerRepository;
 import com.projet_asi_ii.asi_ii.repositories.TransactionRepository;
 import com.projet_asi_ii.asi_ii.requests.TransactionRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.smartcardio.CardNotPresentException;
 import java.util.*;
 
 @Service
@@ -24,6 +25,8 @@ public class TransactionService {
 
     @Autowired
     PlayerRepository playerRepository;
+    @Autowired
+    private CardRepository cardRepository;
 
     public List<TransactionDto> getTransactionByUsername(String username) {
         Collection<TransactionEntity> transactions = transactionRepository.findByUserEntityUsername(username);
@@ -34,39 +37,39 @@ public class TransactionService {
         return transactionsDto;
     }
 
-    public TransactionDto createTransaction(TransactionRequest transactionRequest) {
-        try {
-
-            // Vérifier que `username` est bien rempli (éviter null)
-            if (transactionRequest.getUsername() == null || transactionRequest.getUsername().isEmpty()) {
-                throw new IllegalArgumentException("Username is required");
-            }
-
-            System.out.println("Username from JWT: " + transactionRequest.getUsername());
-
+    public TransactionDto createTransaction(TransactionRequest transactionRequest) throws CardNotFoundException, UserNotFoundException, InsufficientCashException, UnknownTransactionTypeException {
             PlayerEntity player = playerRepository.findByUserUsername(transactionRequest.getUsername());
             if (player == null) {
-                // todo : user not found
                 throw new UserNotFoundException("User not found: " + transactionRequest.getUsername());
-                //return null;
             }
+
             switch (transactionRequest.getTransactionType()) {
                 case BUY :
                     // Check for enough cash
                     if (player.getCash() - transactionRequest.getAmount() < 0) {
                         throw new InsufficientCashException("Insufficient cash for BUY transaction.");
-                        //return null;
                     }
+                    List<CardEntity> cardsInDb = new ArrayList<>();
+                    transactionRequest.getCards().forEach(cardDto -> {
+                        Optional<CardEntity> card = cardRepository.findById(cardDto.getId());
+                        card.ifPresent(cardsInDb::add);
+                    });
+                    if (cardsInDb.isEmpty() || cardsInDb.size() != transactionRequest.getCards().size()) {
+                        throw new CardNotFoundException("Card not found", "Received " + transactionRequest.getCards().size() + "cards but only " + cardsInDb.size() + " found for purchase.");
+                    }
+                    // transaction Request is OK
+                    // Create empty transaction ->
                     TransactionEntity transactionBuy = TransactionMapper.INSTANCE.toTransactionEntityFromRequest(transactionRequest);
                     transactionBuy.setUserEntity(player.getUser());
-                    transactionBuy = transactionRepository.save(transactionBuy);
+                    transactionBuy.setType(transactionRequest.getTransactionType());
 
-                    // Deduct from player's cash
-                    System.out.println("transactionBuy.getAmount() : " + transactionBuy.getAmount()); 
+                    // modify player infos
                     player.setCash(player.getCash() - transactionBuy.getAmount());
-                    
+                    player.getCards().addAll(cardsInDb);
                     playerRepository.save(player);
 
+                    // save transaction
+                    transactionBuy = transactionRepository.save(transactionBuy);
                     // Return DTO
                     return TransactionMapper.INSTANCE.toTransactionDto(transactionBuy);
                 
@@ -83,14 +86,7 @@ public class TransactionService {
                 
                 default:
                     throw new UnknownTransactionTypeException("Unknown transaction type: " + transactionRequest.getTransactionType());
-               
-            } // end switch
-
-        } catch (Exception e) {
-            throw new TransactionFailedException("Failed to create transaction: " + e.getMessage(), e);
-
-
-        }
+            }
     }
 }
 

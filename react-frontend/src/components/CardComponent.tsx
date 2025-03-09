@@ -10,10 +10,11 @@ interface CardProps {
     card: CardEntity,
     imageHeight?: number,
     imageWidth?: number,
-    hideShowDetails?: boolean
+    hideShowDetails?: boolean,
+    disabled?: boolean
 }
 
-const CardComponent = ({card, imageHeight, imageWidth, hideShowDetails}: CardProps) => {
+const CardComponent = ({card, imageHeight, imageWidth, hideShowDetails, disabled}: CardProps) => {
   if (hideShowDetails === undefined || hideShowDetails === null)
   {
     hideShowDetails = false;
@@ -48,7 +49,7 @@ const CardComponent = ({card, imageHeight, imageWidth, hideShowDetails}: CardPro
       <CardActions>
       {
         !hideShowDetails && (
-          <Button component={Link} to={"/app/card/" + card.id} size="small">See details</Button>
+          <Button disabled={disabled} component={Link} to={"/app/card/" + card.id} size="small">See details</Button>
         )
       }
       </CardActions>

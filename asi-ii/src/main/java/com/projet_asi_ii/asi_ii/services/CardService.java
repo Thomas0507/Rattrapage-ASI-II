@@ -1,5 +1,6 @@
 package com.projet_asi_ii.asi_ii.services;
 
+import com.projet_asi_ii.asi_ii.Exceptions.NoBuyableCardsFoundException;
 import com.projet_asi_ii.asi_ii.dtos.CardDto;
 import com.projet_asi_ii.asi_ii.entities.CardEntity;
 import com.projet_asi_ii.asi_ii.mappers.CardMapper;
@@ -67,4 +68,18 @@ public class CardService {
         return Math.toIntExact(this.cardRepository.count());
     }
 
+    public List<CardDto> getBuyableCards() throws NoBuyableCardsFoundException {
+        List<CardEntity> cards = this.cardRepository.findAll();
+        List<CardDto> cardDtos = new ArrayList<>();
+        cards.forEach(cardEntity ->
+        {
+            if (cardEntity.getRarity() <= 6) {
+                cardDtos.add(CardMapper.INSTANCE.toCardDto(cardEntity));
+            }
+        });
+        if (cardDtos.size() == 0) {
+            throw new NoBuyableCardsFoundException("No buyable cards found", "Come back later");
+        }
+        return cardDtos;
+    }
 }

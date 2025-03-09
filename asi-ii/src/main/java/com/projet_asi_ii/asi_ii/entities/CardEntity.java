@@ -18,8 +18,7 @@ import java.util.Collection;
 public class CardEntity {
     @Id
     @GeneratedValue(
-            strategy= GenerationType.AUTO,
-            generator="native"
+            strategy= GenerationType.IDENTITY
     )
     private Long id;
     private String name;

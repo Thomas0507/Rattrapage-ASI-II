@@ -1,26 +1,43 @@
-import { Snackbar, Alert, SnackbarOrigin } from "@mui/material";
-import React, { useState } from "react";
+import React, { SyntheticEvent } from "react";
+import Snackbar, { SnackbarCloseReason } from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 
-interface ErrorSnackbarProps {
-    openState: boolean,
-    errorMessage: string
+interface ErrorMessage {
+  status: number,
+  message: string,
+  reason: string;
 }
 
-export const ErrorSnackbar = ({openState, errorMessage}: ErrorSnackbarProps) => {
 
-      const [open, setOpen] = useState<boolean>(openState);
-      const handleClose = () => {
-      setOpen(false);
-    }  
 
-    return (
-        <Snackbar
-        autoHideDuration={6000}
-        open={open}
-        ><Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-            {errorMessage}
-        </Alert>
+const SnackbarError = ({ open, setOpen, message, duration = 3000 }) => {
+  const handleClose = (_: Event | SyntheticEvent<any, Event>, reason?: SnackbarCloseReason) => {
+    if (reason === "clickaway") return;
+    setOpen(false);
+  };
+  let parsedMessage: ErrorMessage;
+  try {
+    parsedMessage = JSON.parse(message);
+  } catch(err) {
+    parsedMessage = { status: 500, message: 'Unknown error', reason: 'No informations were given. Contact a sysAdmin'}
+  }
+
+  return (
+    <Snackbar
+      open={open}
+      autoHideDuration={duration}
+      onClose={handleClose}
+      sx={{ width: "80vw" }}
+      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+    >
+      <Alert onClose={handleClose} severity="error" variant="filled"
+        sx={{ fontSize: "1.2rem", padding: "16px" }}>
+            <span>{parsedMessage.status} - {parsedMessage.message}: </span>
+        {parsedMessage.reason || "An unexpected error occurred!"}
+      </Alert>
     </Snackbar>
-    )
-}
+  );
+};
+
+export default SnackbarError;

@@ -1,5 +1,6 @@
 package com.projet_asi_ii.asi_ii.controllers;
 
+import com.projet_asi_ii.asi_ii.Exceptions.NoBuyableCardsFoundException;
 import com.projet_asi_ii.asi_ii.dtos.CardDto;
 import com.projet_asi_ii.asi_ii.dtos.CollectionDto;
 import com.projet_asi_ii.asi_ii.dtos.GenCardDto;
@@ -37,6 +38,11 @@ public class CardController {
             pageSize = Integer.parseInt(size);
         }
         return ResponseEntity.ok(this.cardService.getCardsWithRange(pageNumber, pageSize));
+    }
+
+    @GetMapping("/buyableCards")
+    public ResponseEntity<List<CardDto>> getBuyableCards() throws NoBuyableCardsFoundException {
+        return ResponseEntity.ok(this.cardService.getBuyableCards());
     }
 
     @GetMapping("{cardId}")

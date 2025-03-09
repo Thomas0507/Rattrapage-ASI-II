@@ -5,7 +5,6 @@ import com.projet_asi_ii.asi_ii.dtos.ErrorDto;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -94,4 +93,21 @@ public class CustomExceptionHandler
 		return new ErrorDto(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage(), e.getErrorReason());
 	}
 
+	@ExceptionHandler(CardNotFoundException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ErrorDto processCardTransactionNotFound(CardNotFoundException e) {
+		return new ErrorDto(HttpStatus.BAD_REQUEST.value(), e.getMessage(), e.getErrorReason());
+	}
+
+	@ExceptionHandler(PlayerNotFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	public ErrorDto processPlayerNotFound(PlayerNotFoundException e) {
+		return new ErrorDto(HttpStatus.NOT_FOUND.value(), e.getMessage(), e.getErrorReason());
+	}
+
+	@ExceptionHandler(NoBuyableCardsFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	public ErrorDto processNoBuyableCardsFound(NoBuyableCardsFoundException e) {
+		return new ErrorDto(HttpStatus.NOT_FOUND.value(), e.getMessage(), e.getErrorReason());
+	}
 }

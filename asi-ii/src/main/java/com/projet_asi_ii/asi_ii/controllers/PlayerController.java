@@ -1,5 +1,6 @@
 package com.projet_asi_ii.asi_ii.controllers;
 
+import com.projet_asi_ii.asi_ii.Exceptions.PlayerNotFoundException;
 import com.projet_asi_ii.asi_ii.dtos.PlayerDto;
 import com.projet_asi_ii.asi_ii.dtos.PlayerSimplifiedDto;
 import com.projet_asi_ii.asi_ii.dtos.TransactionDto;
@@ -31,6 +32,12 @@ public class PlayerController {
     @GetMapping("/all")
     public ResponseEntity<List<PlayerSimplifiedDto>> getPlayers() {
         return ResponseEntity.ok(this.playerService.getPlayers());
+    }
+    @GetMapping("/cash")
+    public ResponseEntity<PlayerDto> getCash() throws PlayerNotFoundException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserEntity uE = (UserEntity) authentication.getPrincipal();
+        return ResponseEntity.ok(this.playerService.getPlayerCash(uE.getUsername()));
     }
 
 

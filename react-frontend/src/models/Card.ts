@@ -127,5 +127,5 @@ export class Card {
     public set price(value: number) {
         this._price = value;
     }
-
+    
 }
