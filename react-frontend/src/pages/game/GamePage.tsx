@@ -68,9 +68,8 @@ export const GamePage = () => {
         }).catch(err => {
             setErrorMessage("Error when creating a room");
             setState({...state, open: true});
-            console.log(err);
         }).finally(() => {
-            console.log("end")
+            
         });
         
         

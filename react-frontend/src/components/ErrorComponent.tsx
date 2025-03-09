@@ -19,7 +19,7 @@ const ErrorComponent = ({message}: ErrorProps) => {
         jsonyfiedError = JSON.parse(message);
     } catch(err) {
         console.log(err)
-        jsonyfiedError = { status: 500, message: "Error", reason:"Unknown Error"};
+        jsonyfiedError = { status: 500, message: "Error", reason:"Unknown Error - The error could not be parsed"};
     }
 
     return (

@@ -18,4 +18,12 @@ router.get("/game/session", function (req: Request, res: Response, next: NextFun
   res.send(response);
 });
 
+router.get("/game/join-session/:id", async function (req: Request, res: Response, next: NextFunction) {
+  const id = req.params.id;
+  const controller = new GameController();
+  const response = await controller.joinSession(id);
+
+  res.send(response);
+});
+
 export default router;
