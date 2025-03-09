@@ -3,7 +3,7 @@ import { Player } from "../models/Player";
 import { Button, Container, FormControl, InputAdornment, InputLabel, OutlinedInput, TextField, Typography } from "@mui/material";
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import CardComponent from "./CardComponent";
-
+import { Link } from "react-router-dom";
 import "../css/ProfileComponent.css";
 
 
@@ -12,6 +12,7 @@ interface ProfileProps {
 }
 
 const ProfileComponent = ({player}: ProfileProps) => {
+    
     console.log(player);
     return (
         <Container fixed className="component-wrapper">
@@ -41,6 +42,11 @@ const ProfileComponent = ({player}: ProfileProps) => {
                 <Typography variant="h4" className="center-text">
                     My cards
                 </Typography>
+                <Link to="/app/sell">
+                    <Button variant="contained" color="primary">
+                        Sell Your Cards
+                    </Button>
+                </Link>
                 <div style={{display: 'flex', justifyContent:'center', gap: '1em', flexWrap: 'wrap'}}>
 
                 {player.cards.length !== 0 ?

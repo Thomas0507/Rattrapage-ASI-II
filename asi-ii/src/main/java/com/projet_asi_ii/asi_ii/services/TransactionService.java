@@ -74,13 +74,32 @@ public class TransactionService {
                     return TransactionMapper.INSTANCE.toTransactionDto(transactionBuy);
                 
                 case SELL :
+
+                    if (transactionRequest.getCards() == null || transactionRequest.getCards().isEmpty()) {
+                        throw new IllegalArgumentException("No cards provided in the transaction request.");
+                    }
+
+                    Long cardIdToSell = transactionRequest.getCards().iterator().next().getId();
+                    Optional<CardEntity> optionalCardToSell = cardRepository.findById(cardIdToSell);
+                    if (optionalCardToSell.isEmpty()) {
+                        throw new IllegalArgumentException("Card not found with id: " + cardIdToSell);
+                    }
+                    CardEntity cardToSell = optionalCardToSell.get();
+
+                    if (!player.getCards().contains(cardToSell)) {
+                        throw new IllegalArgumentException("This card does not belong to the player.");
+                    }
+
+                    // Supprimer la carte de la liste du joueur
+                    player.getCards().removeIf(card -> card.getId().equals(cardIdToSell));
+
+                    player.setCash(player.getCash() + transactionRequest.getAmount());
+                    playerRepository.save(player);
+
                     TransactionEntity transactionSell = TransactionMapper.INSTANCE.toTransactionEntityFromRequest(transactionRequest);
                     transactionSell.setUserEntity(player.getUser());
                     transactionSell = transactionRepository.save(transactionSell);
-
-                    // Increase player's cash
-                    player.setCash(player.getCash() + transactionSell.getAmount());
-                    playerRepository.save(player);
+                    
                     
                     return TransactionMapper.INSTANCE.toTransactionDto(transactionSell);
                 

@@ -1,78 +1,87 @@
-// src/pages/Sell.tsx
+import React from "react";
+import { Button, Container, Typography } from "@mui/material";
+import { useProfile } from "../../pages/profile/ProfilePage";
+import { useAuth } from "../../hooks/useAuth"; 
 
-import React from 'react';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
+const Sell: React.FC = () => {
+    const { player, setPlayer } = useProfile(); // ✅ Accès aux cartes du joueur
+    const { user } = useAuth(); // ✅ Récupérer le token utilisateur
 
-function Sell() {
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+    const handleSell = async (cardId: number) => {
+        try {
+            const response = await fetch("http://localhost:8081/transaction", {
+                method: "POST",
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${user}` // ✅ Token utilisateur
+                },
+                body: JSON.stringify({
+                    cards: [{ id: cardId }], // ✅ Envoyer la carte vendue sous forme de tableau
+                    amount: 50,  // 🔹 Prix temporaire (peut être dynamique selon la carte)
+                    transactionType: "SELL",
+                }),
+            });
 
-    const username = formData.get("username") as string;
-    const amount = Number(formData.get("amount"));
+            if (!response.ok) {
+                throw new Error(await response.text());
+            }
 
-    fetch("http://localhost:8081/transaction", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username,
-        amount,
-        transactionType: "SELL", // difference
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to create SELL transaction");
+            alert("Vente réussie !");
+
+            // ✅ Mettre à jour le profil après la vente
+            await updatePlayerData();
+
+        } catch (err) {
+            console.error("Erreur lors de la vente :", err);
+            alert(`Vente échouée: ${err.message}`);
         }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("SELL transaction created:", data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }
+    };
 
-  return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Box mt={4}>
-        <Typography component="h1" variant="h5">
-          SELL
-        </Typography>
-        <form onSubmit={handleSubmit}>
-          <TextField
-            label="Username"
-            name="username"
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-          />
-          <TextField
-            label="Amount"
-            name="amount"
-            type="number"
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-          />
-          <Button type="submit" variant="contained" fullWidth color="secondary">
-            Submit SELL
-          </Button>
-        </form>
-      </Box>
-    </Container>
-  );
-}
+    // ✅ Fonction pour mettre à jour les données du joueur après une vente
+    const updatePlayerData = async () => {
+        try {
+            const response = await fetch("http://localhost:8081/player", {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${user}`,
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error("Impossible de récupérer les données du joueur.");
+            }
+
+            const updatedPlayer = await response.json();
+            setPlayer(updatedPlayer); // ✅ Mettre à jour le contexte avec les nouvelles cartes
+        } catch (err) {
+            console.error("Erreur mise à jour du joueur:", err);
+        }
+    };
+
+    return (
+        <Container>
+            <Typography variant="h4">Sell Your Cards</Typography>
+            <div style={{ display: 'flex', gap: '1em', flexWrap: 'wrap' }}>
+                {player.cards.length > 0 ? (
+                    player.cards.map((_card) => (
+                        <div key={_card.id}>
+                            <Typography variant="h6">{_card.name}</Typography>
+                            <Button 
+                                variant="contained" 
+                                color="secondary" 
+                                onClick={() => handleSell(_card.id)}
+                                sx={{ marginTop: 1 }}
+                            >
+                                Sell
+                            </Button>
+                        </div>
+                    ))
+                ) : (
+                    <Typography>You have no cards to sell.</Typography>
+                )}
+            </div>
+        </Container>
+    );
+};
 
 export default Sell;
