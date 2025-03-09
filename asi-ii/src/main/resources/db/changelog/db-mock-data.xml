@@ -20,6 +20,7 @@
             <column name="price">1000</column>
             <column name="rarity">1</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Cattiva</column>
@@ -33,6 +34,7 @@
             <column name="price">1000</column>
             <column name="rarity">1</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Chikipi</column>
@@ -46,6 +48,7 @@
             <column name="price">1000</column>
             <column name="rarity">1</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Lifmunk</column>
@@ -59,6 +62,7 @@
             <column name="price">1010</column>
             <column name="rarity">1</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Foxparks</column>
@@ -72,6 +76,7 @@
             <column name="price">1040</column>
             <column name="rarity">1</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Fuack</column>
@@ -85,6 +90,7 @@
             <column name="price">1120</column>
             <column name="rarity">1</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Sparkit</column>
@@ -98,6 +104,7 @@
             <column name="price">1030</column>
             <column name="rarity">1</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Tanzee</column>
@@ -111,6 +118,7 @@
             <column name="price">1280</column>
             <column name="rarity">1</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Rooby</column>
@@ -124,6 +132,7 @@
             <column name="price">2950</column>
             <column name="rarity">2</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Pengullet</column>
@@ -137,6 +146,7 @@
             <column name="price">1080</column>
             <column name="rarity">1</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Penking</column>
@@ -150,6 +160,7 @@
             <column name="price">5410</column>
             <column name="rarity">6</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Jolthog</column>
@@ -163,6 +174,7 @@
             <column name="price">1060</column>
             <column name="rarity">1</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Gumoss</column>
@@ -176,6 +188,7 @@
             <column name="price">1310</column>
             <column name="rarity">1</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Vixy</column>
@@ -189,6 +202,7 @@
             <column name="price">1000</column>
             <column name="rarity">2</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Hoocrates</column>
@@ -202,6 +216,7 @@
             <column name="price">1050</column>
             <column name="rarity">1</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Teafant</column>
@@ -215,6 +230,7 @@
             <column name="price">1000</column>
             <column name="rarity">1</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Depresso</column>
@@ -228,6 +244,7 @@
             <column name="price">1050</column>
             <column name="rarity">1</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Cremis</column>
@@ -241,6 +258,7 @@
             <column name="price">1420</column>
             <column name="rarity">1</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Daedream</column>
@@ -254,6 +272,7 @@
             <column name="price">1330</column>
             <column name="rarity">1</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Rushoar</column>
@@ -267,6 +286,7 @@
             <column name="price">1680</column>
             <column name="rarity">1</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Nox</column>
@@ -280,6 +300,7 @@
             <column name="price">1480</column>
             <column name="rarity">6</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Fuddler</column>
@@ -293,6 +314,7 @@
             <column name="price">1360</column>
             <column name="rarity">1</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Killamari</column>
@@ -306,6 +328,7 @@
             <column name="price">1200</column>
             <column name="rarity">1</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Mau</column>
@@ -319,6 +342,7 @@
             <column name="price">1000</column>
             <column name="rarity">1</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Celaray</column>
@@ -332,6 +356,7 @@
             <column name="price">2860</column>
             <column name="rarity">3</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Direhowl</column>
@@ -345,6 +370,7 @@
             <column name="price">1920</column>
             <column name="rarity">2</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Tocotoco</column>
@@ -358,6 +384,7 @@
             <column name="price">1090</column>
             <column name="rarity">1</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Flopie</column>
@@ -371,6 +398,7 @@
             <column name="price">1220</column>
             <column name="rarity">1</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Mozzarina</column>
@@ -384,6 +412,7 @@
             <column name="price">2620</column>
             <column name="rarity">2</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Bristla</column>
@@ -397,6 +426,7 @@
             <column name="price">1140</column>
             <column name="rarity">1</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Gobfin</column>
@@ -410,6 +440,7 @@
             <column name="price">1840</column>
             <column name="rarity">2</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Hangyu</column>
@@ -423,6 +454,7 @@
             <column name="price">1020</column>
             <column name="rarity">1</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Mossanda</column>
@@ -436,6 +468,7 @@
             <column name="price">6200</column>
             <column name="rarity">6</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Woolipop</column>
@@ -449,6 +482,7 @@
             <column name="price">1450</column>
             <column name="rarity">3</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Caprity</column>
@@ -462,6 +496,7 @@
             <column name="price">2510</column>
             <column name="rarity">3</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Melpaca</column>
@@ -475,6 +510,7 @@
             <column name="price">2740</column>
             <column name="rarity">3</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Eikthyrdeer</column>
@@ -488,6 +524,7 @@
             <column name="price">2620</column>
             <column name="rarity">4</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Nitewing</column>
@@ -501,6 +538,7 @@
             <column name="price">6300</column>
             <column name="rarity">3</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Ribbuny</column>
@@ -514,6 +552,7 @@
             <column name="price">1160</column>
             <column name="rarity">1</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Incineram</column>
@@ -527,6 +566,7 @@
             <column name="price">4780</column>
             <column name="rarity">4</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Cinnamoth</column>
@@ -540,6 +580,7 @@
             <column name="price">5700</column>
             <column name="rarity">4</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Arsox</column>
@@ -553,6 +594,7 @@
             <column name="price">3520</column>
             <column name="rarity">4</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Dumud</column>
@@ -566,6 +608,7 @@
             <column name="price">4690</column>
             <column name="rarity">4</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Cawgnito</column>
@@ -579,6 +622,7 @@
             <column name="price">1840</column>
             <column name="rarity">3</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Leezpunk</column>
@@ -592,6 +636,7 @@
             <column name="price">1720</column>
             <column name="rarity">2</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Loupmoon</column>
@@ -605,6 +650,7 @@
             <column name="price">2400</column>
             <column name="rarity">3</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Galeclaw</column>
@@ -618,6 +664,7 @@
             <column name="price">2010</column>
             <column name="rarity">2</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Robinquill</column>
@@ -631,6 +678,7 @@
             <column name="price">2050</column>
             <column name="rarity">5</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Gorirat</column>
@@ -644,6 +692,7 @@
             <column name="price">2010</column>
             <column name="rarity">5</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Beegarde</column>
@@ -657,6 +706,7 @@
             <column name="price">1880</column>
             <column name="rarity">4</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Elizabee</column>
@@ -670,6 +720,7 @@
             <column name="price">6830</column>
             <column name="rarity">8</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Grintale</column>
@@ -683,6 +734,7 @@
             <column name="price">5510</column>
             <column name="rarity">6</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Swee</column>
@@ -696,6 +748,7 @@
             <column name="price">1180</column>
             <column name="rarity">1</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Sweepa</column>
@@ -709,6 +762,7 @@
             <column name="price">6400</column>
             <column name="rarity">6</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Chillet</column>
@@ -722,6 +776,7 @@
             <column name="price">3450</column>
             <column name="rarity">4</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Univolt</column>
@@ -735,6 +790,7 @@
             <column name="price">4280</column>
             <column name="rarity">5</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Foxcicle</column>
@@ -748,6 +804,7 @@
             <column name="price">3730</column>
             <column name="rarity">5</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Pyrin</column>
@@ -761,6 +818,7 @@
             <column name="price">6720</column>
             <column name="rarity">6</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Reindrix</column>
@@ -774,6 +832,7 @@
             <column name="price">2800</column>
             <column name="rarity">4</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Rayhound</column>
@@ -787,6 +846,7 @@
             <column name="price">3880</column>
             <column name="rarity">5</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Kitsun</column>
@@ -800,6 +860,7 @@
             <column name="price">3170</column>
             <column name="rarity">6</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Dazzi</column>
@@ -813,6 +874,7 @@
             <column name="price">1390</column>
             <column name="rarity">2</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Lunaris</column>
@@ -826,6 +888,7 @@
             <column name="price">1760</column>
             <column name="rarity">6</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Dinossom</column>
@@ -839,6 +902,7 @@
             <column name="price">3240</column>
             <column name="rarity">6</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Surfent</column>
@@ -852,6 +916,7 @@
             <column name="price">5050</column>
             <column name="rarity">4</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Maraith</column>
@@ -865,6 +930,7 @@
             <column name="price">1570</column>
             <column name="rarity">6</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Digtoise</column>
@@ -878,6 +944,7 @@
             <column name="price">2980</column>
             <column name="rarity">5</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Tombat</column>
@@ -891,6 +958,7 @@
             <column name="price">3810</column>
             <column name="rarity">5</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Lovander</column>
@@ -904,6 +972,7 @@
             <column name="price">2450</column>
             <column name="rarity">5</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Flambelle</column>
@@ -917,6 +986,7 @@
             <column name="price">2500</column>
             <column name="rarity">1</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Vanwyrm</column>
@@ -930,6 +1000,7 @@
             <column name="price">4360</column>
             <column name="rarity">4</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Bushi</column>
@@ -943,6 +1014,7 @@
             <column name="price">4520</column>
             <column name="rarity">7</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Beakon</column>
@@ -956,6 +1028,7 @@
             <column name="price">7490</column>
             <column name="rarity">6</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Ragnahawk</column>
@@ -969,6 +1042,7 @@
             <column name="price">6720</column>
             <column name="rarity">7</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Katress</column>
@@ -982,6 +1056,7 @@
             <column name="price">4120</column>
             <column name="rarity">6</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Wixen</column>
@@ -995,6 +1070,7 @@
             <column name="price">1540</column>
             <column name="rarity">6</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Verdash</column>
@@ -1008,6 +1084,7 @@
             <column name="price">2200</column>
             <column name="rarity">8</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Vaelet</column>
@@ -1021,6 +1098,7 @@
             <column name="price">1960</column>
             <column name="rarity">8</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Sibelyx</column>
@@ -1034,6 +1112,7 @@
             <column name="price">5900</column>
             <column name="rarity">7</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Elphidran</column>
@@ -1047,6 +1126,7 @@
             <column name="price">5230</column>
             <column name="rarity">7</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Kelpsea</column>
@@ -1060,6 +1140,7 @@
             <column name="price">1260</column>
             <column name="rarity">1</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Azurobe</column>
@@ -1073,6 +1154,7 @@
             <column name="price">5600</column>
             <column name="rarity">7</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Cryolinx</column>
@@ -1086,6 +1168,7 @@
             <column name="price">8440</column>
             <column name="rarity">7</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Blazehowl</column>
@@ -1099,6 +1182,7 @@
             <column name="price">4040</column>
             <column name="rarity">7</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Relaxaurus</column>
@@ -1112,6 +1196,7 @@
             <column name="price">10240</column>
             <column name="rarity">8</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Broncherry</column>
@@ -1125,6 +1210,7 @@
             <column name="price">2920</column>
             <column name="rarity">7</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Petallia</column>
@@ -1138,6 +1224,7 @@
             <column name="price">3590</column>
             <column name="rarity">8</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Reptyro</column>
@@ -1151,6 +1238,7 @@
             <column name="price">6940</column>
             <column name="rarity">6</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Kingpaca</column>
@@ -1164,6 +1252,7 @@
             <column name="price">5800</column>
             <column name="rarity">8</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Mammorest</column>
@@ -1177,6 +1266,7 @@
             <column name="price">9450</column>
             <column name="rarity">8</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Wumpo</column>
@@ -1190,6 +1280,7 @@
             <column name="price">5900</column>
             <column name="rarity">7</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Warsect</column>
@@ -1203,6 +1294,7 @@
             <column name="price">6830</column>
             <column name="rarity">8</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Fenglope</column>
@@ -1216,6 +1308,7 @@
             <column name="price">2250</column>
             <column name="rarity">3</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Felbat</column>
@@ -1229,6 +1322,7 @@
             <column name="price">2100</column>
             <column name="rarity">6</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Quivern</column>
@@ -1242,6 +1336,7 @@
             <column name="price">6830</column>
             <column name="rarity">7</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Blazamut</column>
@@ -1255,6 +1350,7 @@
             <column name="price">10520</column>
             <column name="rarity">9</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Helzephyr</column>
@@ -1268,6 +1364,7 @@
             <column name="price">7840</column>
             <column name="rarity">7</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Astegon</column>
@@ -1281,6 +1378,7 @@
             <column name="price">8200</column>
             <column name="rarity">9</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Menasting</column>
@@ -1294,6 +1392,7 @@
             <column name="price">7050</column>
             <column name="rarity">9</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Anubis</column>
@@ -1307,6 +1406,7 @@
             <column name="price">4960</column>
             <column name="rarity">10</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Jormuntide</column>
@@ -1320,6 +1420,7 @@
             <column name="price">9320</column>
             <column name="rarity">8</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Suzaku</column>
@@ -1333,6 +1434,7 @@
             <column name="price">9840</column>
             <column name="rarity">8</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Grizzbolt</column>
@@ -1346,6 +1448,7 @@
             <column name="price">7720</column>
             <column name="rarity">8</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Lyleen</column>
@@ -1359,6 +1462,7 @@
             <column name="price">7160</column>
             <column name="rarity">9</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Faleris</column>
@@ -1372,6 +1476,7 @@
             <column name="price">6720</column>
             <column name="rarity">9</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Orserk</column>
@@ -1385,6 +1490,7 @@
             <column name="price">8320</column>
             <column name="rarity">9</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Shadowbeak</column>
@@ -1398,6 +1504,7 @@
             <column name="price">9060</column>
             <column name="rarity">10</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Paladius</column>
@@ -1411,6 +1518,7 @@
             <column name="price">8810</column>
             <column name="rarity">20</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Necromus</column>
@@ -1424,6 +1532,7 @@
             <column name="price">8930</column>
             <column name="rarity">20</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Frostallion</column>
@@ -1437,6 +1546,7 @@
             <column name="price">8440</column>
             <column name="rarity">20</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Jetragon</column>
@@ -1450,6 +1560,7 @@
             <column name="price">8680</column>
             <column name="rarity">20</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Jolthog Cryst</column>
@@ -1463,6 +1574,7 @@
             <column name="price">1070</column>
             <column name="rarity">2</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Mau Cryst</column>
@@ -1476,6 +1588,7 @@
             <column name="price">1010</column>
             <column name="rarity">2</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Gobfin Ignis</column>
@@ -1489,6 +1602,7 @@
             <column name="price">1800</column>
             <column name="rarity">3</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Hangyu Cryst</column>
@@ -1502,6 +1616,7 @@
             <column name="price">1020</column>
             <column name="rarity">2</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Mossanda Lux</column>
@@ -1515,6 +1630,7 @@
             <column name="price">6610</column>
             <column name="rarity">7</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Eikthyrdeer Terra</column>
@@ -1528,6 +1644,7 @@
             <column name="price">2680</column>
             <column name="rarity">6</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Incineram Noct</column>
@@ -1541,6 +1658,7 @@
             <column name="price">4870</column>
             <column name="rarity">5</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Leezpunk Ignis</column>
@@ -1554,6 +1672,7 @@
             <column name="price">1640</column>
             <column name="rarity">3</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Robinquill Terra</column>
@@ -1567,6 +1686,7 @@
             <column name="price">2150</column>
             <column name="rarity">6</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Pyrin Noct</column>
@@ -1580,6 +1700,7 @@
             <column name="price">7270</column>
             <column name="rarity">7</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Dinossom Lux</column>
@@ -1593,6 +1714,7 @@
             <column name="price">3380</column>
             <column name="rarity">7</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Surfent Terra</column>
@@ -1606,6 +1728,7 @@
             <column name="price">5140</column>
             <column name="rarity">5</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Vanwyrm Cryst</column>
@@ -1619,6 +1742,7 @@
             <column name="price">4610</column>
             <column name="rarity">5</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Elphidran Aqua</column>
@@ -1632,6 +1756,7 @@
             <column name="price">5320</column>
             <column name="rarity">8</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Kelpsea Ignis</column>
@@ -1645,6 +1770,7 @@
             <column name="price">1240</column>
             <column name="rarity">2</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Blazehowl Noct</column>
@@ -1658,6 +1784,7 @@
             <column name="price">4360</column>
             <column name="rarity">8</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Relaxaurus Lux</column>
@@ -1671,6 +1798,7 @@
             <column name="price">10380</column>
             <column name="rarity">9</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Broncherry Aqua</column>
@@ -1684,6 +1812,7 @@
             <column name="price">3110</column>
             <column name="rarity">8</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Reptyro Cryst</column>
@@ -1697,6 +1826,7 @@
             <column name="price">7380</column>
             <column name="rarity">7</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Kingpaca Cryst</column>
@@ -1710,6 +1840,7 @@
             <column name="price">6100</column>
             <column name="rarity">9</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Mammorest Cryst</column>
@@ -1723,6 +1854,7 @@
             <column name="price">9580</column>
             <column name="rarity">9</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Wumpo Botan</column>
@@ -1736,6 +1868,7 @@
             <column name="price">5700</column>
             <column name="rarity">8</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Jormuntide Ignis</column>
@@ -1749,6 +1882,7 @@
             <column name="price">9500</column>
             <column name="rarity">9</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Suzaku Aqua</column>
@@ -1762,6 +1896,7 @@
             <column name="price">10110</column>
             <column name="rarity">9</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Lyleen Noct</column>
@@ -1775,6 +1910,7 @@
             <column name="price">7610</column>
             <column name="rarity">10</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         <insert tableName="card">
             <column name="name">Frostallion Noct</column>
@@ -1788,11 +1924,11 @@
             <column name="price">8560</column>
             <column name="rarity">20</column>
             <column name="collection_entity_id">1</column>
+            <column name="resell_price">500</column>
         </insert>
         
 
-
-
+        
     </changeSet>
     <changeSet id="1740761374888-1" author="Thomas0507">
         <insert tableName="banner">
