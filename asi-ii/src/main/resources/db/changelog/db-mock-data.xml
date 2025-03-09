@@ -9,7 +9,6 @@
             <column name="release_date">2025-02-24</column>
         </insert>
         <insert tableName="card">
-            <column name="id">1</column>
             <column name="name">Lamball</column>
             <column name="description">A walk up a hill tends to end with this Pal tumbling back down. This causes it to become dizzy and unable to move, making it easy to capture and kill. As a result, this pal has tumbled down to the very bottom of the food chain itself.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_SheepBall_icon_normal.png</column>
@@ -23,7 +22,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">2</column>
             <column name="name">Cattiva</column>
             <column name="description">At a glance it appears full of confidence, but it is in fact weak and cowardly. Being toyed with by a Cattiva is in many ways the greatest of disgraces.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_PinkCat_icon_normal.png</column>
@@ -37,7 +35,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">3</column>
             <column name="name">Chikipi</column>
             <column name="description">Extremely weak and far too delicious. It is one of the weakest Pal alongside Lamball. No matter how many are hunted, they just keep appearing.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_ChickenPal_icon_normal.png</column>
@@ -51,7 +48,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">4</column>
             <column name="name">Lifmunk</column>
             <column name="description">Intelligent as a five to sever-year-old human child. It makes a wonderful partner, but there have been more than a few cases where they've killed their master after learning to use weapons.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Carbunclo_icon_normal.png</column>
@@ -65,7 +61,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">5</column>
             <column name="name">Foxparks</column>
             <column name="description">It is unskilled at controlling fire from the moment it is born and tends to choke on the flames it breathes unintentionally. Foxparks sneezes are one of the leading causes of forest fires.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Kitsunebi_icon_normal.png</column>
@@ -79,7 +74,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">6</column>
             <column name="name">Fuack</column>
             <column name="description">Using its own body water, this Pal can create waves anywhere. It body surfs when in a hurry, but the resulting speed often ends in a fatal collision.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_BluePlatypus_icon_normal.png</column>
@@ -93,7 +87,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">7</column>
             <column name="name">Sparkit</column>
             <column name="description">During the dry season, this Pal is always on the verge of blowing a fuse, Sparks can fly with even the slightest provocation even amongst allies.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_ElecCat_icon_normal.png</column>
@@ -107,7 +100,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">8</column>
             <column name="name">Tanzee</column>
             <column name="description">Long ago, this Pal used long objects like tree branches as weapons. After coming into contact with humans, however, it found something much more effective: guns.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Monkey_icon_normal.png</column>
@@ -121,7 +113,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">9</column>
             <column name="name">Rooby</column>
             <column name="description">Wild Rooby surprisingly never get sick. Eating one piece of charcoal a day, made by burning a branch, is the secret to its eternal health.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_FlameBambi_icon_normal.png</column>
@@ -135,7 +126,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">10</column>
             <column name="name">Pengullet</column>
             <column name="description">The feathers of this Pal have all but disappeared, but sadly, its desire to fly has remained as strong as ever. Even now, it tries to fly again in any way it can.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Penguin_icon_normal.png</column>
@@ -149,7 +139,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">11</column>
             <column name="name">Penking</column>
             <column name="description">Surprisingly, it is unrelated to Pengullet. Ever wanting to be the center of attention, this Pal will strut its stuff for any onlookers.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_CaptainPenguin_icon_normal.png</column>
@@ -163,7 +152,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">12</column>
             <column name="name">Jolthog</column>
             <column name="description">Releases the electricity stored in it's body when under attack, producing a shock that can be over 10 million volts. If thrown, it can even be more lethal than any conventional heavy weaponry.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Hedgehog_icon_normal.png</column>
@@ -177,7 +165,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">13</column>
             <column name="name">Gumoss</column>
             <column name="description">A strange Pal with a body resembling tree sap. It gradually loses strength if it has nothing to cover its body with, eventually rotting away.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_PlantSlime_icon_normal.png</column>
@@ -191,7 +178,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">14</column>
             <column name="name">Vixy</column>
             <column name="description">The idol of Palpagos Island. If you bully a Vixy, you best be prepared to become enemies with the whole world.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_CuteFox_icon_normal.png</column>
@@ -205,7 +191,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">15</column>
             <column name="name">Hoocrates</column>
             <column name="description">Often lost in thought, it sometimes finds it difficult to sleep. "I think, therefore I am."</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_WizardOwl_icon_normal.png</column>
@@ -219,7 +204,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">16</column>
             <column name="name">Teafant</column>
             <column name="description">Large amounts of water pour from what is thought to be its nose, though some say that it is, in fact, just snot. This has sparked a fierce debate among Pal scholars.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Ganesha_icon_normal.png</column>
@@ -233,7 +217,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">17</column>
             <column name="name">Depresso</column>
             <column name="description">It has few friends because of the perpetually grouchy look on its face, but it is in fact kindhearted. Some have seen it feeding Vixy who have strayed from their pack.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_NegativeKoala_icon_normal.png</column>
@@ -247,7 +230,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">18</column>
             <column name="name">Cremis</column>
             <column name="description">Compared to Lamball, it has finer wool and a temperament more suited for domestication. However, it has historically been kept as a pet. Cuteness is considered a virtue.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_WoolFox_icon_normal.png</column>
@@ -261,7 +243,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">19</column>
             <column name="name">Daedream</column>
             <column name="description">It puts those it is interested in to sleep and shows them an endless stream of happy dreams. Those who fall under its spell are never to wake until death takes them.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_DreamDemon_icon_normal.png</column>
@@ -275,7 +256,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">20</column>
             <column name="name">Rushoar</column>
             <column name="description">Being extremely aggressive Pal, it often picks fights before gauging its opponent's strength. Though small, its powerful charge can even send boulders flying.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Boar_icon_normal.png</column>
@@ -289,7 +269,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">21</column>
             <column name="name">Nox</column>
             <column name="description">If you find Nox hair in your bedding, you should leave it where it lays and leave immediately. Picking it up is a one-way-ticket to a never ending night.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_NightFox_icon_normal.png</column>
@@ -303,7 +282,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">22</column>
             <column name="name">Fuddler</column>
             <column name="description">Its large claws boast of diamond-like hardness. However, sharpening these claws consumes most of its energy, leading it to sometimes spending entire days doing nothing else.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_CuteMole_icon_normal.png</column>
@@ -317,7 +295,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">23</column>
             <column name="name">Killamari</column>
             <column name="description">It wraps itself around an enemy's head, sucking out their insides. Pal mummies are occasionally found, but these are in fact Killamari victims.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_NegativeOctopus_icon_normal.png</column>
@@ -331,7 +308,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">24</column>
             <column name="name">Mau</column>
             <column name="description">Its hard tail does not deteriorate even when cut off. Some believed these severed tails to be good luck, but for the innumerable Mau who were poached as a result, they were anything but.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Bastet_icon_normal.png</column>
@@ -345,7 +321,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">25</column>
             <column name="name">Celaray</column>
             <column name="description">Riding the wind, this Pal travels where it pleases. Should it find a partner along the way, the encounter will mark its journey's end.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_FlyingManta_icon_normal.png</column>
@@ -359,7 +334,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">26</column>
             <column name="name">Direhowl</column>
             <column name="description">Long ago Direhowl would hunt alongside humans but over the years this bond faded.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Garm_icon_normal.png</column>
@@ -373,7 +347,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">27</column>
             <column name="name">Tocotoco</column>
             <column name="description">A frightening Pal that produces exploding eggs. It often fires these eggs from its rear end as a weapon, but when spent the Pal itself explodes.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_ColorfulBird_icon_normal.png</column>
@@ -387,7 +360,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">28</column>
             <column name="name">Flopie</column>
             <column name="description">It prefers places that have an abundance of vegetation, but hay fever has apparently become a problem for Flopie as of late.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_FlowerRabbit_icon_normal.png</column>
@@ -401,7 +373,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">29</column>
             <column name="name">Mozzarina</column>
             <column name="description">Milk pours from this Pal like water from an open faucet, regardless of its gender. It's truly a mystery of life, although this mystery may be better left unsolved.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_CowPal_icon_normal.png</column>
@@ -415,7 +386,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">30</column>
             <column name="name">Bristla</column>
             <column name="description">This prickly Pal's thorns are highly poisonous. It is friendly with Cinnamoth and only smiles when Cinnamoth is drinking its nectar.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_LittleBriarRose_icon_normal.png</column>
@@ -429,7 +399,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">31</column>
             <column name="name">Gobfin</column>
             <column name="description">Long ago, it was a large and powerful aquatic Pal. As food became scarce it evolved to live on land. Since walking requires much energy, it gradually became smaller and is now a small and puny Pal.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_SharkKid_icon_normal.png</column>
@@ -443,7 +412,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">32</column>
             <column name="name">Hangyu</column>
             <column name="description">Its gigantic arms can rip apart even iron. As a particularly cruel form of execution, serious criminals would be strung up in a public square, and a Hangyu would rip off the skin from their bones.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_WindChimes_icon_normal.png</column>
@@ -457,7 +425,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">33</column>
             <column name="name">Mossanda</column>
             <column name="description">A Pal so powerful it's hard to believe. In one experiment, this Pal tore through 3,000 sheets of paper at once! It's only by some miracle that this Pal isn't a meat-eater.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_GrassPanda_icon_normal.png</column>
@@ -471,7 +438,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">34</column>
             <column name="name">Woolipop</column>
             <column name="description">Its entire body is 18,000 times sweeter than sugar. Carnivorous Pals lured by its scent will find themselves overwhelmed by sweetness and even pass out should they take a bite of this Pal.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_SweetsSheep_icon_normal.png</column>
@@ -485,7 +451,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">35</column>
             <column name="name">Caprity</column>
             <column name="description">The shrub on this pal's back produces berries as long as it is properly fed. It offers these berries to potential mates, and if the flavor is to their liking, romance blossoms.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_BerryGoat_icon_normal.png</column>
@@ -499,7 +464,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">36</column>
             <column name="name">Melpaca</column>
             <column name="description">Don't be fooled by its fluffy appearance. A hypersonic kick from one of its long legs may send you flying to the other side of the world.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Alpaca_icon_normal.png</column>
@@ -513,7 +477,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">37</column>
             <column name="name">Eikthyrdeer</column>
             <column name="description">The one who possesses the most impressive antlers becomes the leader of the herd. If their antlers are broken, they become depressed and leave the herd never to be seen again.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Deer_icon_normal.png</column>
@@ -527,7 +490,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">38</column>
             <column name="name">Nitewing</column>
             <column name="description">It carries newborn Pals to its nest and raises them as a surrogate parent. Once the baby Pal has fattened up, it hunts them.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_HawkBird_icon_normal.png</column>
@@ -541,7 +503,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">39</column>
             <column name="name">Ribbuny</column>
             <column name="description">A Pal who's never without a bright smile. Occasionally, it gets its tentacles tied up in knots by Cattiva's pranks. During those moments, its expression changes into something altogether demonic.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_PinkRabbit_icon_normal.png</column>
@@ -555,7 +516,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">40</column>
             <column name="name">Incineram</column>
             <column name="description">In the dark of night, this Pal snatches prey to bring back ot its territory. What happens to those poor souls afterwards isn't too hard to imagine.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Baphomet_icon_normal.png</column>
@@ -569,7 +529,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">41</column>
             <column name="name">Cinnamoth</column>
             <column name="description">Sniffing its scales produces a feeling of unparalleled euphoria. There was some effort to further regulate this byproduct, but the Free Pal Alliance have vehemently opposed these measures, putting a stop to them.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_CuteButterfly_icon_normal.png</column>
@@ -583,7 +542,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">42</column>
             <column name="name">Arsox</column>
             <column name="description">In ancient times, carnivorous Pals pursued them relentlessly. The Arsox's irrational rage transformed into a raging inferno, which has been passed on to this day.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_FlameBuffalo_icon_normal.png</column>
@@ -597,7 +555,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">43</column>
             <column name="name">Dumud</column>
             <column name="description">When too relaxed, its reaction time drastically declines. Even if it were sliced from head to tail, it probably wouldn't even realize that it should be dead until the next morning.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_LazyCatfish_icon_normal.png</column>
@@ -611,7 +568,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">44</column>
             <column name="name">Cawgnito</column>
             <column name="description">Long ago it freely soared the skies. After losing a contest with Galeclaw, it abandoned the skies and now lives a quiet nocturnal life.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_DarkCrow_icon_normal.png</column>
@@ -625,7 +581,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">45</column>
             <column name="name">Leezpunk</column>
             <column name="description">A Pal that always takes great care to maintain a stylish stance. Always on the hunt for the coolest poses, if given a mirror it will spend all day posing in front of it.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_LizardMan_icon_normal.png</column>
@@ -639,7 +594,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">46</column>
             <column name="name">Loupmoon</column>
             <column name="description">The horns on its head grow under the moonlight. It doesn't hate the sun, but its horns itch when sunlight hits them.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Werewolf_icon_normal.png</column>
@@ -653,7 +607,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">47</column>
             <column name="name">Galeclaw</column>
             <column name="description">A Pal that can easily take flight even while grasping a human. It is, however, prone to letting go when tired, which has led to the sudden demise of more than a few souls.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Eagle_icon_normal.png</column>
@@ -667,7 +620,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">48</column>
             <column name="name">Robinquill</column>
             <column name="description">A pal that is very similar to humans who hunt and live in the forests. It may prove to be a key for understanding what Pals are and how they diverged from humans so long ago.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_RobinHood_icon_normal.png</column>
@@ -681,7 +633,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">49</column>
             <column name="name">Gorirat</column>
             <column name="description">It beats the ground rhythmically to communicate with its comrades. The meaning of each rhythm differs by troop, but the distinction between them is still largely unknown.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Gorilla_icon_normal.png</column>
@@ -695,7 +646,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">50</column>
             <column name="name">Beegarde</column>
             <column name="description">A servant that pledges loyalty to Elizabee. Any that cause harm to the queen are immediately expelled from the hive. It will gladly give its life to protect its queen.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_SoldierBee_icon_normal.png</column>
@@ -709,7 +659,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">51</column>
             <column name="name">Elizabee</column>
             <column name="description">A chosen queen to rule over Beegardes. There is a never ending stream of servants willing to work themselves to death for the pleasure of serving their queen.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_QueenBee_icon_normal.png</column>
@@ -723,7 +672,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">52</column>
             <column name="name">Grintale</column>
             <column name="description">Grintale's eyes light up the moment anyone enters its territory. This is no figure of speech-its eyes literally light up.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_NaughtyCat_icon_normal.png</column>
@@ -737,7 +685,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">53</column>
             <column name="name">Swee</column>
             <column name="description">Crawling along the ground, it eats microscopic organic matter. After a while, it discharges any substances that provide no nutrition. By using it as a mop for cleaning, everyone wins!</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_MopBaby_icon_normal.png</column>
@@ -751,7 +698,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">54</column>
             <column name="name">Sweepa</column>
             <column name="description">While hibernating, a large number of Swee hide within its voluminous body hair. The most ever recorded is 101.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_MopKing_icon_normal.png</column>
@@ -765,7 +711,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">55</column>
             <column name="name">Chillet</column>
             <column name="description">It can curl up its body and roll around at extremely high speeds. Long ago, people would tie bags of milk to domesticated Chillet as they grazed to produce butter using this spinning force.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_WeaselDragon_icon_normal.png</column>
@@ -779,7 +724,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">56</column>
             <column name="name">Univolt</column>
             <column name="description">It used to be considered an emissary of the Thunder God, and thus was not hunted by people. However, after witnesses osberved one die from a lightning strike, its reverence faded, and it quite literally fell into the role of a workhorse.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Kirin_icon_normal.png</column>
@@ -793,7 +737,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">57</column>
             <column name="name">Foxcicle</column>
             <column name="description">On nights when the aurora is visible, it looks up towards the sky and begins to howl a beautiful song. This does, however, leave it vulnerable to attacks from enemies.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_IceFox_icon_normal.png</column>
@@ -807,7 +750,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">58</column>
             <column name="name">Pyrin</column>
             <column name="description">It's entire body has evolved into a highly efficient radiator, gifting it with astounding stamina. When someone has mounted it, this Pal takes caution not to burn them.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_FireKirin_icon_normal.png</column>
@@ -821,7 +763,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">59</column>
             <column name="name">Reindrix</column>
             <column name="description">Its transparent cerulean antlers glow with the cold of absolute zero. Any who touch them with their bare hands are instantly frozen over and smashed into pieces.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_IceDeer_icon_normal.png</column>
@@ -835,7 +776,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">60</column>
             <column name="name">Rayhound</column>
             <column name="description">At full speed, it could be mistaken for a bolt of lightning. If two Rayhounds collide, the sound is like that of a powerful thunderclap.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_ThunderDog_icon_normal.png</column>
@@ -849,7 +789,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">61</column>
             <column name="name">Kitsun</column>
             <column name="description">Despite its appearance, Kitsun is extremely sensitive and will flee into a cave when spooked. Long ago, it was considered and ill omen if one were found nearby.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_AmaterasuWolf_icon_normal.png</column>
@@ -863,7 +802,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">62</column>
             <column name="name">Dazzi</column>
             <column name="description">Often kind to lonely pals. However, the moment a Pal mistakes this for actual companionship, it seizes the opportunity to blast them with a thunderbolt.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_RaijinDaughter_icon_normal.png</column>
@@ -877,7 +815,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">63</column>
             <column name="name">Lunaris</column>
             <column name="description">It can control those who carelessly stare into its eyes. Those seen with a Lunaris are in its mind, simply under its control.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Mutant_icon_normal.png</column>
@@ -891,7 +828,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">64</column>
             <column name="name">Dinossom</column>
             <column name="description">A Pal who once angered cannot be pacified. It rages on and on like an inferno. The prahse "step on a Dinossom's tail" has come to mean enraging someone.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_FlowerDinosaur_icon_normal.png</column>
@@ -905,7 +841,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">65</column>
             <column name="name">Surfent</column>
             <column name="description">Its hydrodynamic form is well suited to life in water. Poachers often catch them and use them in place of surfboards.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Serpent_icon_normal.png</column>
@@ -919,7 +854,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">66</column>
             <column name="name">Maraith</column>
             <column name="description">It relishes the peculiar scent living things give off when they are near death. If a Mariath has taken a liking to you. It is safe to assume that is why.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_GhostBeast_icon_normal.png</column>
@@ -933,7 +867,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">67</column>
             <column name="name">Digtoise</column>
             <column name="description">A walking contradiction, possessing the strongest shell and the only drill capable of piercing it. "Digtoise's Fable" is a popular children's tale.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_DrillGame_icon_normal.png</column>
@@ -947,7 +880,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">68</column>
             <column name="name">Tombat</column>
             <column name="description">Often appears out of the blue to flaunt its prized wings in front of other Pals. Although it seems to be an intimidation tactic, the Pal seems to derive some kind of pleasure from the display.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_CatBat_icon_normal.png</column>
@@ -961,7 +893,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">69</column>
             <column name="name">Lovander</column>
             <column name="description">Seeking a night of love, it is always chasing someone around. At first, it only showed interest in other Pals, but in recent years even humans have become the target of its debauchery.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_PinkLizard_icon_normal.png</column>
@@ -975,7 +906,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">70</column>
             <column name="name">Flambelle</column>
             <column name="description">When it starts crying, this Pal produces magma in place of tears. The magma that pours out is absorbed back into its body, causing it to get hotter and hotter. The more it cries, the stronger it becomes.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_LavaGirl_icon_normal.png</column>
@@ -989,7 +919,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">71</column>
             <column name="name">Vanwyrm</column>
             <column name="description">The melodies of a flute made from the exoskeleton of a Vanwyrm are said to cross the whole mountain ranges. In ages past, such flutes were used to signal an attack.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_BirdDragon_icon_normal.png</column>
@@ -1003,7 +932,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">72</column>
             <column name="name">Bushi</column>
             <column name="description">Its body becomes a blade upon death, to be taken up by the next generation. If someone other than a Bushi wields this blade, the soul within torments them until they are driven mad.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Ronin_icon_normal.png</column>
@@ -1017,7 +945,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">73</column>
             <column name="name">Beakon</column>
             <column name="description">Some think it is a related species to Ragnahawk, but there is in fact no connection. Using its sharp beak, it descends on its prey in a quick motion that resembles a bolt of lightning.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_ThunderBird_icon_normal.png</column>
@@ -1031,7 +958,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">74</column>
             <column name="name">Ragnahawk</column>
             <column name="description">Some think it is a related species to Beakon, but there is in fact no connection. It mainly eats rocks, and after many long years its beak and head have hardened to accommodate this diet.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_RedArmorBird_icon_normal.png</column>
@@ -1045,7 +971,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">75</column>
             <column name="name">Katress</column>
             <column name="description">With the power of shadows it produces arcane phenomena. It prefers to eat food raw and is particularly hostile towards Wixen</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_CatMage_icon_normal.png</column>
@@ -1059,7 +984,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">76</column>
             <column name="name">Wixen</column>
             <column name="description">With the power of light, it produces arcane phenomena. It prefers to eat food well-done and is particularly hostile towards Katress.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_FoxMage_icon_normal.png</column>
@@ -1073,7 +997,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">77</column>
             <column name="name">Verdash</column>
             <column name="description">Land that Verdash has run across becomes extremely fertile, with thick vegetation growing there soon after. It will not run anywhere that herbicide has been used.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_GrassRabbitMan_icon_normal.png</column>
@@ -1087,7 +1010,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">78</column>
             <column name="name">Vaelet</column>
             <column name="description">The castle was filled with the king's favorite flowers. A great battle ensued, and flames approached the castle. Amidst the chaos, the spirit of a flower appeared. - From the fairy tale, The King's Flower.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_VioletFairy_icon_normal.png</column>
@@ -1101,7 +1023,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">79</column>
             <column name="name">Sibelyx</column>
             <column name="description">A Pal that likes the rain,and will often bask in rain showers until the weather clears up. On rainy days, Foxparks can often be found taking shelter beneath it.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_WhiteMoth_icon_normal.png</column>
@@ -1115,7 +1036,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">80</column>
             <column name="name">Elphidran</column>
             <column name="description">It possesses a demeanor as pure as its appearance suggests. Perhaps because of this, it is sometimes unable to discern good from evil, often allowing wrongdoers to take advantage of it.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_FairyDragon_icon_normal.png</column>
@@ -1129,7 +1049,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">81</column>
             <column name="name">Kelpsea</column>
             <column name="description">Its personality changes depending on the quality of the water it was born into. Kelpsea born into polluted waters are generally ill-tempered and quickly become delinquents.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Kelpie_icon_normal.png</column>
@@ -1143,7 +1062,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">82</column>
             <column name="name">Azurobe</column>
             <column name="description">This Pal's white ribbon turns black if doused with impure water. Given its usefulness in detecting poison, this Pal was once overhunted. This past has left them bitter towards humanity.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_BlueDragon_icon_normal.png</column>
@@ -1157,7 +1075,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">83</column>
             <column name="name">Cryolinx</column>
             <column name="description">It can easily climb steep mountains with its hard claws. However, its short legs make it difficult to descend, often leaving it stranded in high places.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_WhiteTiger_icon_normal.png</column>
@@ -1171,7 +1088,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">84</column>
             <column name="name">Blazehowl</column>
             <column name="description">While it prefers raw meat, it always ends up eating well-done meat. This is due to its blistering claws, which it uses as its weaponâ€”it simply doesn't realize its prey gets burned to a crisp.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Manticore_icon_normal.png</column>
@@ -1185,7 +1101,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">85</column>
             <column name="name">Relaxaurus</column>
             <column name="description">Contrary to its blasÃ© appearance, it's quite ferocious. It perceives everything in its sight as prey and will stop at nothing to devour it.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_LazyDragon_icon_normal.png</column>
@@ -1199,7 +1114,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">86</column>
             <column name="name">Broncherry</column>
             <column name="description">Its scent drastically changes before and after pairing. It exudes a pleasing aroma after finding a partner, which is called the "fragrance of first love."</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_SakuraSaurus_icon_normal.png</column>
@@ -1213,7 +1127,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">87</column>
             <column name="name">Petallia</column>
             <column name="description">A pal that transforms into a massive plant when at the end of its life. Once every ten years, a beautiful flower blooms and a new Petallia is born.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_FlowerDoll_icon_normal.png</column>
@@ -1227,7 +1140,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">88</column>
             <column name="name">Reptyro</column>
             <column name="description">Magma-like blood runs throughout its body. If a large amount of water is thrown on it, this water rapidly heats, causing an immense vapor explosion.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_VolcanicMonster_icon_normal.png</column>
@@ -1241,7 +1153,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">89</column>
             <column name="name">Kingpaca</column>
             <column name="description">Melpaca serve this Pal. Contests between Kingpaca offer up their vassals as a wager. Those seen alone are losers of such contests.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_KingAlpaca_icon_normal.png</column>
@@ -1255,7 +1166,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">90</column>
             <column name="name">Mammorest</column>
             <column name="description">The vegetation on its back varies between individuals. There is a long history of appreciating this veritable garden of a Pal, and there are even Mammorest pruning specialists.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_GrassMammoth_icon_normal.png</column>
@@ -1269,7 +1179,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">91</column>
             <column name="name">Wumpo</column>
             <column name="description">Researchers once tried to shave off its hair to reveal its true form. In the end, only hair was left, as if that was all there was to begin with.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Yeti_icon_normal.png</column>
@@ -1283,7 +1192,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">92</column>
             <column name="name">Warsect</column>
             <column name="description">The ultra-hard armor surrounding its body is extremely strong and heat resistant. Even a napalm blast would hardly leave a scratch.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_HerculesBeetle_icon_normal.png</column>
@@ -1297,7 +1205,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">93</column>
             <column name="name">Fenglope</column>
             <column name="description">In ancient times, it was a familiar subject for painting because of its beautiful and majestic appearance. Fenglope is an endangered species, the Fenglope whose beautiful fur and horns are much sought after by poachers!</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_FengyunDeeper_icon_normal.png</column>
@@ -1311,7 +1218,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">94</column>
             <column name="name">Felbat</column>
             <column name="description">Attacking from the shadows, this Pal traps its prey within its cloak-like wings. It's probably best not to know what happens within them, or why the inside of its wings are stained red.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_CatVampire_icon_normal.png</column>
@@ -1325,7 +1231,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">95</column>
             <column name="name">Quivern</column>
             <column name="description">Sleeping while cuddling a Quivern is said to be a heavenly experience, but there are some who have been crushed and sent to heaven by ones that toss and turn in their sleep.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_SkyDragon_icon_normal.png</column>
@@ -1339,7 +1244,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">96</column>
             <column name="name">Blazamut</column>
             <column name="description">Legends say it was born during a volcanic eruption. A strange group even claims that this continent is laid upon the back of a giant Blazamut.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_KingBahamut_icon_normal.png</column>
@@ -1353,7 +1257,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">97</column>
             <column name="name">Helzephyr</column>
             <column name="description">It calls forth lightning from the depths of hell. One who dies from Helzephyr's inferno is sure to be sent to the underworld.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_HadesBird_icon_normal.png</column>
@@ -1367,7 +1270,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">98</column>
             <column name="name">Astegon</column>
             <column name="description">A savage beast born of the abyss. Thou shall not stand before the beast. Thou shall not heed the beast.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_BlackMetalDragon_icon_normal.png</column>
@@ -1381,7 +1283,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">99</column>
             <column name="name">Menasting</column>
             <column name="description">Being made of pure energy, its insides are completely hollow. This Pal crams still-living prey into its hollow body, where it absorbs them. Hellish screams of pain can often be heard coming from inside this Pal.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_DarkScorpion_icon_normal.png</column>
@@ -1395,7 +1296,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">100</column>
             <column name="name">Anubis</column>
             <column name="description">Once seen as a symbol of nobility, and an idol for those who shunned wealth and power. Yet over time, this Pal became a token of death.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Anubis_icon_normal.png</column>
@@ -1409,7 +1309,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">101</column>
             <column name="name">Jormuntide</column>
             <column name="description">Legends says the Jormuntide was once a wise man, who after being wrongly convicted and cast into a whirlpool, returned as this Pal to destroy those who wronged him.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Umihebi_icon_normal.png</column>
@@ -1423,7 +1322,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">102</column>
             <column name="name">Suzaku</column>
             <column name="description">It was once believed to usher in the dry season. Whenever there was a drought in the previous year, people would relentlessly seek to cull it's numbers, hoping to bring a plentiful harvest in the next year.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Suzaku_icon_normal.png</column>
@@ -1437,7 +1335,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">103</column>
             <column name="name">Grizzbolt</column>
             <column name="description">With a friendly smile and a hardy physique, it is docile towards one it recognizes as a partner. For reasons unexplained, its personality undergoes a drastic change when wielding a minigun.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_ElecPanda_icon_normal.png</column>
@@ -1451,7 +1348,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">104</column>
             <column name="name">Lyleen</column>
             <column name="description">A docile Pal full of love. It watches over small Pals who have lost their parents. It uses a full-power Solar Blast to discipline naughty Pals.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_LilyQueen_icon_normal.png</column>
@@ -1465,7 +1361,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">105</column>
             <column name="name">Faleris</column>
             <column name="description">When it finds its prey it unleashes a whirlwind of flames, burning the entire area to ash. Faleris breath is known for its pleasing scent.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Horus_icon_normal.png</column>
@@ -1479,7 +1374,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">106</column>
             <column name="name">Orserk</column>
             <column name="description">It sends electricity into its foes' wounds, roasting them from the inside out. Fights between Orserk end in the blink of an eye.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_ThunderDragonMan_icon_normal.png</column>
@@ -1493,7 +1387,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">107</column>
             <column name="name">Shadowbeak</column>
             <column name="description">Forbidden existence born of madness. As he lost his genetic relationship with the other Pals, he may no longer be considered one of them.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_BlackGriffon_icon_normal.png</column>
@@ -1507,7 +1400,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">108</column>
             <column name="name">Paladius</column>
             <column name="description">In the past, he and Necromus were a single species. They say that they are an existence that has freed themselves from all negative feelings, but the depths of their eyes harbor traces of resentment.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_SaintCentaur_icon_normal.png</column>
@@ -1521,7 +1413,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">109</column>
             <column name="name">Necromus</column>
             <column name="description">Once he and Paladius were a single species. They say it is the manifestation of negative feelings, but the depths of their eyes contain traces of compassion.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_BlackCentaur_icon_normal.png</column>
@@ -1535,7 +1426,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">110</column>
             <column name="name">Frostallion</column>
             <column name="description">Guardian deity of Palpagos Island, known as the Winter Caller. In the past, when a calamity struck the land, it soared into the sky and sealed away the threat by casting the island into an eternal winter.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_IceHorse_icon_normal.png</column>
@@ -1549,7 +1439,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">111</column>
             <column name="name">Jetragon</column>
             <column name="description">Looks over the island of Palpagos from the ends of the sky. When the calamity awakens again, splitting the earth and setting the heavens on fire, he will destroy it with a glare of complete obliteration.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_JetDragon_icon_normal.png</column>
@@ -1563,7 +1452,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">112</column>
             <column name="name">Jolthog Cryst</column>
             <column name="description">It releases cold air stored in its body when under attack. The frigid blast it radiates is cold enough to freeze the surrounding air and easily pierces through any attacker's body.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Hedgehog_Ice_icon_normal.png</column>
@@ -1577,7 +1465,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">113</column>
             <column name="name">Mau Cryst</column>
             <column name="description">Its crystalline tail is beautiful, but shatters when this Pal dies. Some believe it is good luck to raise one, so Mau Cryst in captivity are treated with great care.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Bastet_Ice_icon_normal.png</column>
@@ -1591,7 +1478,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">114</column>
             <column name="name">Gobfin Ignis</column>
             <column name="description">Once upon a time, it was a giant and powerful aquatic Pal. However, with the dwindling availability of food, it ventured onto land. As a consequence of burning many calories to walk, it astonishingly awakened its power to control fire!</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_SharkKid_Fire_icon_normal.png</column>
@@ -1605,7 +1491,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">115</column>
             <column name="name">Hangyu Cryst</column>
             <column name="description">Its gigantic arms can tear through blocks of ice. There were times when great sinners were tied in the town square and had their hair torn out by as a brutal form of public humiliation.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_WindChimes_Ice_icon_normal.png</column>
@@ -1619,7 +1504,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">116</column>
             <column name="name">Mossanda Lux</column>
             <column name="description">A Pal whose power is truly shocking. By altering the electrical currents in its body, this Pal's been able to overload its own strength. When it comes to sheer power, this Pal may be top of the list.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_GrassPanda_Electric_icon_normal.png</column>
@@ -1633,7 +1517,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">117</column>
             <column name="name">Eikthyrdeer Terra</column>
             <column name="description">The individual with the hardest horns becomes the leader. Once the horns are lost, so too is the leadership status. It leaves the herd admist farewell glances and quietly returns to the earth.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Deer_Ground_icon_normal.png</column>
@@ -1647,7 +1530,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">118</column>
             <column name="name">Incineram Noct</column>
             <column name="description">It specifically targets baby pals, taking them back to its territory. One can only imagine the profound despair of the parent Pal, whose child has been taken away.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Baphomet_Dark_icon_normal.png</column>
@@ -1661,7 +1543,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">119</column>
             <column name="name">Leezpunk Ignis</column>
             <column name="description">A Pal that has an unusual obsession with their standing posture. Always in search of the hottest pose, this Pal's owner is constantly presented with fervent stances.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_LizardMan_Fire_icon_normal.png</column>
@@ -1675,7 +1556,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">120</column>
             <column name="name">Robinquill Terra</column>
             <column name="description">A Pal that lives a hunting life in rocky areas and is very close to humans. When bones are found in ruins, there are always human bones found nearby as well.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_RobinHood_Ground_icon_normal.png</column>
@@ -1689,7 +1569,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">121</column>
             <column name="name">Pyrin Noct</column>
             <column name="description">It burns mysterious dark matter as energy and expels the remaining particles from its body. If someone rides it, they should take care so as not to gallop down the path of darkness.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_FireKirin_Dark_icon_normal.png</column>
@@ -1703,7 +1582,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">122</column>
             <column name="name">Dinossom Lux</column>
             <column name="description">Though struck by lightning, it lives on. The phrase "struck by a Dinossom Lux's bolt" has come to mean narrowly escaping death.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_FlowerDinosaur_Electric_icon_normal.png</column>
@@ -1717,7 +1595,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">123</column>
             <column name="name">Surfent Terra</column>
             <column name="description">Its aerodynamic form is well suited to life on the sand. Poachers often catch them and use them in place of surfboards</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Serpent_Ground_icon_normal.png</column>
@@ -1731,7 +1608,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">124</column>
             <column name="name">Vanwyrm Cryst</column>
             <column name="description">The Melodies of a flute made from the exoskeleton of a Vanwyrm Cryst are said to cross whole mountain ranges. In ages past, such flutes were used to signal victory in a battle.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_BirdDragon_Ice_icon_normal.png</column>
@@ -1745,7 +1621,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">125</column>
             <column name="name">Elphidran Aqua</column>
             <column name="description">It possesses a demeanor as pure as its appearance suggests. Perhaps because of this, it harbors no ill will in any of its actions and is indifferent even after killing someone.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_FairyDragon_Water_icon_normal.png</column>
@@ -1759,7 +1634,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">126</column>
             <column name="name">Kelpsea Ignis</column>
             <column name="description">Their personalities change depending on the temperature of the water where they were born. Kelpsea born in warm waters generally have a passionate, motivated personality.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Kelpie_Fire_icon_normal.png</column>
@@ -1773,7 +1647,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">127</column>
             <column name="name">Blazehowl Noct</column>
             <column name="description">While it prefers raw meat, it always ends up eating tainted meat. This is due to its dark claws, which it uses as its weaponâ€”it simply doesn't realize its prey got cursed.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Manticore_Dark_icon_normal.png</column>
@@ -1787,7 +1660,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">128</column>
             <column name="name">Relaxaurus Lux</column>
             <column name="description">One day, Relaxaurus had an idea. Maybe it was about time for a change. Just then, an electric shock raced through its body!</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_LazyDragon_Electric_icon_normal.png</column>
@@ -1801,7 +1673,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">129</column>
             <column name="name">Broncherry Aqua</column>
             <column name="description">Its scent drastically changes before and after pairing. It exudes a pleasing aroma before finding a partner, which is called the "perfume of purity."</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_SakuraSaurus_Water_icon_normal.png</column>
@@ -1815,7 +1686,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">130</column>
             <column name="name">Reptyro Cryst</column>
             <column name="description">Ice cold blood runs throughout its body. If heated rapidly, its blood evaporates, causing an immense vapor explosion.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_VolcanicMonster_Ice_icon_normal.png</column>
@@ -1829,7 +1699,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">131</column>
             <column name="name">Kingpaca Cryst</column>
             <column name="description">With a heart of ice, this Pal is terrible at expressing its emotions. A solitary individual is pitiable, seen as too clumsy in the eyes of Melpaca.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_KingAlpaca_Ice_icon_normal.png</column>
@@ -1843,7 +1712,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">132</column>
             <column name="name">Mammorest Cryst</column>
             <column name="description">The vegetation on its back varies from individual to individual. There was a time when seeds of presumed extinct plants were found still frozen on the back of a Mammorest Cryst.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_GrassMammoth_Ice_icon_normal.png</column>
@@ -1857,7 +1725,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">133</column>
             <column name="name">Wumpo Botan</column>
             <column name="description">researchers once tried to cut the grass off its body to reveal its true form. In the end, only grass was left, as if that was all there was to begin with.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Yeti_Grass_icon_normal.png</column>
@@ -1871,7 +1738,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">134</column>
             <column name="name">Jormuntide Ignis</column>
             <column name="description">Legend says the Jormuntide Ignis was once a warrior who, after being wrongly convicted and cast into a volcano, returned as this Pal to destroy those who wronged him.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Umihebi_Fire_icon_normal.png</column>
@@ -1885,7 +1751,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">135</column>
             <column name="name">Suzaku Aqua</column>
             <column name="description">It was once believed to usher in the rainy season. If there was a flood the previous year, people would relentlessly seek to cull its numbers, hoping to avert disaster in the coming year.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_Suzaku_Water_icon_normal.png</column>
@@ -1899,7 +1764,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">136</column>
             <column name="name">Lyleen Noct</column>
             <column name="description">An elegant Pal full of grace. It admonishes any who are disrespectful with a painful slap. Some Pals actively seek out this punishment.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_LilyQueen_Dark_icon_normal.png</column>
@@ -1913,7 +1777,6 @@
             <column name="collection_entity_id">1</column>
         </insert>
         <insert tableName="card">
-            <column name="id">137</column>
             <column name="name">Frostallion Noct</column>
             <column name="description">Guardian deity of Palpagos Island known as the Night Caller. In the past, when a calamity struck the land, it soared into the sky and sealed away the threat by casting the island into eternal darkness.</column>
             <column name="image">https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_IceHorse_Dark_icon_normal.png</column>

@@ -91,9 +91,15 @@ public class CardController {
         CollectionDto col = collectionService.getCollectionByName("AI");
 
         CardDto cardDto = new CardDto();
+        cardDto.setName(genCardDto.getName());
         cardDto.setImage(genCardDto.getImage());
         cardDto.setDescription(genCardDto.getPrompt());
         cardDto.setCollection(col);
+        cardDto.setAttack(100);
+        cardDto.setDefense(100);
+        cardDto.setHealth(100);
+        cardDto.setDropRate(0);
+        cardDto.setRarity(0);
 
         this.cardService.insertCards(List.of(cardDto));
 

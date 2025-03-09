@@ -18,10 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 public class BannerEntity {
     @Id
-    @GeneratedValue(
-            strategy= GenerationType.AUTO,
-            generator="native"
-    )
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     private String title;
     private String description;

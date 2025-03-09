@@ -26,7 +26,7 @@ public class OrchestratorService
 
 	public void sendRequests(UUID requestId, String userToken, PromptRequest promptRequest) {
 		this.bearerToken = userToken;
-		cardRepository.save(new CardEntity(requestId, null, null));
+		cardRepository.save(new CardEntity(requestId, promptRequest.getName(), null, null));
 
 		Map<String, String> serviceQueues = Map.of(
 				"card-image", "service-image.queue",
@@ -37,7 +37,7 @@ public class OrchestratorService
 			String serviceId = entry.getKey();
 			String queueName = entry.getValue();
 
-			MessageRequest message = new MessageRequest(requestId.toString(), serviceId, Map.of("prompt", promptRequest.getPrompt()));
+			MessageRequest message = new MessageRequest(requestId.toString(), serviceId, Map.of("name", promptRequest.getName(), "prompt", promptRequest.getPrompt()));
 			jmsTemplate.convertAndSend(queueName, message);
 		}
 	}
@@ -51,17 +51,14 @@ public class OrchestratorService
 			switch (message.getServiceId())
 			{
 				case "card-image":
-					System.out.println("card-image");
-					finalCard.setImage(message.getPayload().get("data").toString());
+					finalCard.setImage((String) message.getPayload().get("data"));
 					cardRepository.save(finalCard);
 					break;
 				case "card-prompt":
-					System.out.println("card-prompt");
-					finalCard.setPrompt(message.getPayload().get("data").toString());
+					finalCard.setPrompt((String) message.getPayload().get("data"));
 					cardRepository.save(finalCard);
 					break;
 				default:
-					System.out.println("card-prompt");
 					break;
 			}
 

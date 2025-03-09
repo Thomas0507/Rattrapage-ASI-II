@@ -22,7 +22,9 @@ public class PromptGenerationService
 
 	@JmsListener(destination = "service-text.queue")
 	public void receiveMessage(MessageRequest message) {
-		ChatResponse response = ollamaChatModel.call(new Prompt("Generate exclusively a short description of a creature based on this: " + message.getPayload().get("prompt")));
+		ChatResponse response = ollamaChatModel.call(
+				new Prompt("Generate exclusively a short description of a creature named " + message.getPayload().get("name")
+						+ " based on this: " + message.getPayload().get("prompt")));
 		Map<String, Object> responsePayload = Map.of("data", response.getResult().getOutput().getText());
 		jmsTemplate.convertAndSend("response.queue", new MessageRequest(message.getRequestId(), message.getServiceId(), responsePayload));
 	}

@@ -19,10 +19,7 @@ public class UserEntity implements UserDetails
 {
 	@Id
 	@Column(nullable = false)
-	@GeneratedValue(
-			strategy= GenerationType.AUTO,
-			generator="native"
-	)
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
 
 	@Column(unique = true, length = 100, nullable = false)

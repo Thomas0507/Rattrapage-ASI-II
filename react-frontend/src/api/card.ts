@@ -1,10 +1,11 @@
 import { getOptionsByRequestType, RequestType } from "../hooks/RequestBuilder";
 
-export const generateCard = async (imagePrompt: string) => {
+export const generateCard = async (name: string, prompt: string) => {
   const response = await fetch('http://localhost:8081/cards/generateCard',
     getOptionsByRequestType(RequestType.POST,
       {
-        "prompt": imagePrompt
+        "name": name,
+        "prompt": prompt
       }
     ));
   if (!response.ok) {
