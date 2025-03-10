@@ -5,12 +5,15 @@ import { SelectCardComponent } from "../../../components/SelectCardComponent"
 import { Card } from "../../../models/Card"
 
 interface GameProcessComponentProps {
-    player: Player
+    player: Player;
+    onSelectedCard: (cards: Card[]) => void
 }
 
 
-export const GameProcessComponent = ({player}: GameProcessComponentProps) => {
+export const GameProcessComponent = ({player, onSelectedCard}: GameProcessComponentProps) => {
     
+    const [cardSelected, setCardSelected] = useState<boolean>(false);
+
     const getUniqueCard = (): Card[] => {
         const uniqueCard: Card[] = [];
         player.cards.forEach(card => {
@@ -22,17 +25,27 @@ export const GameProcessComponent = ({player}: GameProcessComponentProps) => {
     }
     const [selectedCards, setSelectedCards] = useState<Card[]>([]);
     const [filteredCards, setFilteredCards] = useState<Card[]>(getUniqueCard());
-    console.log(filteredCards);
 
 
 
     const handleSelectedCards = (cards: Card[]) => {
-        setSelectedCards([...cards]);        
+        setSelectedCards([...cards]);
+        onSelectedCard(cards);
+
     }
 
     return (
         <Container sx={{maxWidth: "1600px", display: "flex", flexDirection: "column", gap: "2em"}}>
-            <SelectCardComponent cards={filteredCards} handleCardsSelected={handleSelectedCards} />
+            { !cardSelected ? (
+                // select card
+                <SelectCardComponent cards={filteredCards} handleCardsSelected={handleSelectedCards} />
+            ) : 
+                // game 
+            (<span>
+                {selectedCards[0].name} {selectedCards[1].name} {selectedCards[2].name};
+            </span>) 
+            
+        }
         </Container>
     )
 }

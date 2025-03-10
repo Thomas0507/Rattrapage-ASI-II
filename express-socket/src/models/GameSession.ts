@@ -4,6 +4,23 @@ export interface Player {
     playerId: string;
     playerName: string;
     status?: 'connected' | 'disconnected' | 'ready' | 'waiting';
+    cards: Card[]
+}
+
+export interface Card {
+  id: number;
+  name: string;
+  description: string;
+  // is an url
+  image: string
+  attack: number;
+  health: number;
+  defense: number;
+  mainType: string;
+  // unique to nodeJs, incase we implements buff / debuff
+  maxHealth: number
+  maxAttack: number
+  maxDefense: number
 }
 
 export interface GameSession extends Document {
@@ -18,6 +35,23 @@ export interface GameSession extends Document {
     removePlayer(playerId: string): Promise<GameSession>;
   }
 
+const CardSchema = new Schema({
+  id: { type: Number, required: true},
+  name: {type: String},
+  description: {type: String},
+    // is an url
+  image: {type: String},
+  attack: {type: Number},
+  health: {type: Number},
+  defense: {type: Number},
+  mainType: {type: String},
+    // unique to nodeJs, incase we implements buff / debuff
+  maxHealth: {type: Number},
+  maxAttack: {type: Number},
+  maxDefense: {type: Number}
+ 
+})
+
 const playerSchema = new Schema({
     playerId: { type: String, required: true, unique: true, sparse: true},
     playerName: { type: String, required: true},
@@ -25,6 +59,9 @@ const playerSchema = new Schema({
       type: String,
       enum: ['connected', 'disconnected', 'ready', 'waiting'],
       default: 'waiting'
+    },
+    cards: {
+      type: [CardSchema], default:[]
     }
   }, { _id: false });
 

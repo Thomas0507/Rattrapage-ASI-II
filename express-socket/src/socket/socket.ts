@@ -129,7 +129,7 @@ export const initSocket = (server: any) => {
       }
 
       if (!gameSession?.players.find(player => player.playerName === username)) {
-        gameSession.players.push({playerId: socket.id, playerName: username, status: 'connected'});
+        gameSession.players.push({playerId: socket.id, playerName: username, status: 'connected', cards:[]});
         gameSession.currentNbPlayers += 1;
         try {
           await gameSession.save();
@@ -146,7 +146,7 @@ export const initSocket = (server: any) => {
       socket.emit('gameState', gameSession);
     });
 
-    socket.on('markAsReady', async ({username, gameSessionId}: joinGameSession) =>{
+    socket.on('markAsReady', async ({username, gameSessionId}: joinGameSession) => {
       // user is ready
       console.log(username, gameSessionId);
       let gameSession = await GameSessionEntity.findOne({"sessionId": gameSessionId});
@@ -173,7 +173,35 @@ export const initSocket = (server: any) => {
       } catch(err) {
         socket.emit("error-mongo", {status: 500, error: 'Could not save player infos'} as SocketError);
       }
-    })
+    });
+
+    socket.on('setPlayerInfo', async ({username, gameSessionId, cards}) => {
+      console.log("\nusername: ", username, "\ngameSessionId:", gameSessionId, "\ncards:",cards);
+      const gameSession = await GameSessionEntity.findOne({"sessionId": gameSessionId});
+      const playerInGameSession = gameSession.players.find(el => el.playerName === username);
+      playerInGameSession.cards = [...cards];
+      playerInGameSession.cards.forEach(el => {
+        el.maxAttack = el.attack;
+        el.maxDefense = el.defense;
+        el.maxHealth = el.health;
+      });
+      gameSession.save();
+      let nbPlayerReady = 0;
+      gameSession.players.forEach(p => {
+        if (p?.cards?.length !== 0){
+          // card were set, player is ready
+          nbPlayerReady ++;
+        }
+      });
+      if (nbPlayerReady === gameSession.capacity) {
+        // all player are ready
+        gameNamespace.emit("setGame", {
+          player1: gameSession.players[0],
+          player2: gameSession.players[1],
+          gameSession: gameSession
+        } );
+      }
+    });
 
     // Player actions =>
     socket.on('play', ({gameSession, move }) => {

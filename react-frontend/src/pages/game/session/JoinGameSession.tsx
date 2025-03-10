@@ -8,6 +8,7 @@ import Loader from "../../Loader";
 import ErrorComponent from "../../../components/ErrorComponent";
 import { GameProcessComponent } from "./GameProcessComponent";
 import { Player } from "../../../models/Player";
+import { Card } from "../../../models/Card";
 
 interface GameComponentProps {
     username: string;
@@ -36,6 +37,12 @@ interface GameSessionDto {
 interface GameSessionUpdate {
     gameSession: GameSessionDto;
     username: string;
+}
+
+interface GameSessionStatus {
+    player1: any,
+    player2: any,
+    gameSession: GameSessionDto;
 }
 
 
@@ -93,6 +100,11 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
         setRoomState(data.gameSession.status);
     }
 
+    function gameIsSet(data: GameSessionStatus) {
+
+    }
+
+
     useEffect(() => {
         if (socketRef.current === null) {
             joinGameSession()
@@ -101,6 +113,7 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
             socketRef.current.on("playerJoined", onPlayerJoined);
             socketRef.current.on("playerIsReady", onPlayerIsReady);
             socketRef.current.on("game-ready", gameIsReady);
+            socketRef.current.on("setGame", gameIsSet);
         }
 
         if (socketRef.current !== null) {
@@ -170,14 +183,18 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
             setLoading(false);
         });
     }
-
-
     const markAsReady = () => {
         console.log("mark as ready", username, uuid);
         if (socketRef.current !== null){
             socketRef.current.emit("markAsReady", ({username: username, gameSessionId: gameSession.sessionId}));
         }
     }
+
+    const handleCardsSelected = (cards: Card[]) => {
+        console.log(cards);
+        socketRef.current?.emit("setPlayerInfo", {username: username, gameSessionId: gameSession.sessionId, cards: cards});
+    }
+
     if (loading) {
         return <Loader />
     }
@@ -196,7 +213,7 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
             return (<div>
                 <span>logged as : {username}</span>
                 {/* select card */}
-                <GameProcessComponent player={playerInfo}></GameProcessComponent>
+                <GameProcessComponent player={playerInfo} onSelectedCard={handleCardsSelected}></GameProcessComponent>
                 {/*  */}
                 </div>)
         default:
