@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card } from "../models/Card";
-import { Button } from "@mui/material";
+import { Button, Container } from "@mui/material";
 import { CardSelectionComponent } from "./CardSelectionComponent";
 
 export interface SelectCardComponent {
@@ -23,21 +23,27 @@ export const SelectCardComponent = ({cards, handleCardsSelected}: SelectCardComp
         console.log(selectedCards);
     }
 
+    const isCardSelected = (card: Card): boolean => {
+        return selectedCards.findIndex(el => el.id === card.id) !== -1;
+    }
+
     const handleReadyButton = () => {
         handleCardsSelected(selectedCards)
     }
 
 
-    return <div>
+    return <Container sx={{padding: "12px", display: "flex", flexDirection: "column", gap: "3em"}}>
         {
             cards.map((_card, _index) => (
-                <CardSelectionComponent key={_index} card={_card} onCardSelected={onCardSelected}/> 
+                <CardSelectionComponent key={_index} card={_card} onCardSelected={onCardSelected} selected={isCardSelected(_card)}/> 
             ))
         }
         <Button
+        fullWidth={true}
+        variant="contained"
         disabled={selectedCards.length === 0}
-        onClick={() => handleReadyButton}>
+        onClick={handleReadyButton}>
             Ready
         </Button>
-    </div>
+    </Container>
 }

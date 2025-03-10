@@ -1,5 +1,5 @@
 import { Container } from "@mui/material"
-import React from "react"
+import React, { useState } from "react"
 import { Player } from "../../../models/Player"
 import { SelectCardComponent } from "../../../components/SelectCardComponent"
 import { Card } from "../../../models/Card"
@@ -11,13 +11,13 @@ interface GameProcessComponentProps {
 
 export const GameProcessComponent = ({player}: GameProcessComponentProps) => {
     
+    const [selectedCards, setSelectedCards] = useState<Card[]>([]);
     const handleSelectedCards = (cards: Card[]) => {
-        console.log(cards);
+        setSelectedCards([...cards]);        
     }
 
     return (
-        <Container sx={{maxWidth: "1600px"}}>
-            you have {player.cards.length} cards : choose up to 3 cards :
+        <Container sx={{maxWidth: "1600px", display: "flex", flexDirection: "column", gap: "2em"}}>
             <SelectCardComponent cards={player.cards} handleCardsSelected={handleSelectedCards} />
         </Container>
     )
