@@ -25,7 +25,7 @@ import Buy from "./pages/transaction/Buy";
 import Sell from "./pages/transaction/Sell";
 import { GamePage } from "./pages/game/GamePage";
 import { GameSessionPage } from "./pages/game/session/GameSessionPage";
-import NotifComponent from "./pages/notif/Notif";
+import NotifComponent from "./pages/notif/NotifComponent";
 
 
 function App({ }) {
