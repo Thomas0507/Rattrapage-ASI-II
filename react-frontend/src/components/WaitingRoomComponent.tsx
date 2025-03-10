@@ -1,7 +1,7 @@
 import { useState } from "react"
 import React from "react"
 import { GameSession } from "../models/GameSession"
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Box, Button, Container, Tooltip, Typography } from "@mui/material";
 
 interface WaitingRoomComponentProps {
     gameSession: GameSession | undefined;
@@ -9,7 +9,30 @@ interface WaitingRoomComponentProps {
 };
 
 
+
 export const WaitingRoomComponent = ({gameSession, updateGameSession}: WaitingRoomComponentProps) => {
+
+    const [readyPressed, setReadyPressed] = useState<boolean>(false);
+
+    console.log(gameSession);
+    function getToolTipForReadyButton(): string {
+        if (!gameSession) {
+            return "There is a problem with this game session, try to create another one";
+        } 
+        if (gameSession?.players.length < 2) {
+            return "Get ready";
+        }
+        if (gameSession.status !== 'waiting') {
+            return "Game is launching"
+        }
+        return '';
+    }
+    
+    function handleReadyClick() {
+        setReadyPressed(true);
+        updateGameSession();
+    }
+
     if (gameSession) {
         return(
             <div>
@@ -19,12 +42,14 @@ export const WaitingRoomComponent = ({gameSession, updateGameSession}: WaitingRo
 
                     </Typography>
                 <span>Player in waiting room: {gameSession.currentNbPlayers}</span>
-                <Button
-                disabled={gameSession.players.length < 2}
-                onClick={updateGameSession}
-                >
-                    Ready
-                </Button>
+                <Tooltip title={getToolTipForReadyButton()}>
+                    <Button
+                    disabled={ readyPressed && (gameSession.currentNbPlayers === 2 || gameSession.status !== 'waiting')}
+                    onClick={handleReadyClick}
+                    >
+                        Ready
+                    </Button>
+                    </Tooltip>
                 </Container>
 
             </div>

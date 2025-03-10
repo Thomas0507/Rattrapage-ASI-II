@@ -6,6 +6,8 @@ import { PlayerModel } from "../../../models/PlayerModel";
 import io, { Socket } from "socket.io-client";
 import Loader from "../../Loader";
 import ErrorComponent from "../../../components/ErrorComponent";
+import { GameProcessComponent } from "./GameProcessComponent";
+import { Player } from "../../../models/Player";
 
 interface GameComponentProps {
     username: string;
@@ -47,7 +49,7 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
     const [error, setError] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
     const [roomState, setRoomState] = useState<string>("");
-
+    const [playerInfo, setPlayerInfo] = useState<Player>(new Player(0, "", [], 0));
     const socketRef = useRef<Socket>(null)
 
     function onPlayerJoined(data: GameSessionUpdate) {
@@ -62,6 +64,24 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
     }
 
     function onPlayerIsReady(data: GameSessionUpdate) {
+        console.log(data.gameSession);
+        gameSession.capacity = data.gameSession.capacity;
+        gameSession.currentNbPlayers = data.gameSession.currentNbPlayers;
+        gameSession.players = data.gameSession.players;
+        gameSession.roomName = data.gameSession.roomName;
+        gameSession.sessionId = data.gameSession.sessionId;
+        gameSession.status = data.gameSession.status;
+        setGameSession(new GameSession(
+            data.gameSession.sessionId,
+            data.gameSession.roomName,
+            data.gameSession.capacity,
+            data.gameSession.currentNbPlayers,
+            data.gameSession.players,
+            data.gameSession.status
+        ));
+    }
+
+    function gameIsReady(data: GameSessionUpdate) {
         setGameSession(new GameSession(
             data.gameSession.sessionId,
             data.gameSession.roomName,
@@ -70,7 +90,7 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
             data.gameSession.players,
             data.gameSession.status
         ))
-        console.log(gameSession);
+        setRoomState(data.gameSession.status);
     }
 
     useEffect(() => {
@@ -80,6 +100,7 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
             socketRef.current.connect();
             socketRef.current.on("playerJoined", onPlayerJoined);
             socketRef.current.on("playerIsReady", onPlayerIsReady);
+            socketRef.current.on("game-ready", gameIsReady);
         }
 
         if (socketRef.current !== null) {
@@ -96,7 +117,8 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
     }, []);
 
     useEffect(()=> {
-        joinGameSession()
+        joinGameSession();
+        fetchPlayerInfo();
     }, [username])
 
 
@@ -125,7 +147,30 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
                 socketRef.current.emit('joinGame', {gameSessionId: gameSessionResponse.gameSessionDto.sessionId , username: username});
             }            
         });
-        }
+    }
+    const fetchPlayerInfo = async(): Promise<void> => {
+        setLoading(true);
+        await fetch("http://localhost:8081/player", getOptionsByRequestType(RequestType.GET,)).then(async (response:Response) => {
+            if (!response.ok) {
+                // could not retrieve player info
+                return response.text().then( text => {
+                    console.log(text);
+                    setLoading(false);
+                    setError(true);
+                    setErrorMessage(text);
+                });
+            }
+            // response is ok
+            const playerInfo = await response.json();
+            console.log(playerInfo);
+            setPlayerInfo(playerInfo);
+        }).catch(err => {
+            console.log(err)
+        }).finally(() => {
+            setLoading(false);
+        });
+    }
+
 
     const markAsReady = () => {
         console.log("mark as ready", username, uuid);
@@ -147,6 +192,13 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
                     <WaitingRoomComponent gameSession={gameSession} updateGameSession={markAsReady}/>
                     </div>
             )
+        case 'in-progress':
+            return (<div>
+                <span>logged as : {username}</span>
+                {/* select card */}
+                <GameProcessComponent player={playerInfo}></GameProcessComponent>
+                {/*  */}
+                </div>)
         default:
             return (
                 <div>
@@ -154,6 +206,5 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
                 </div>
             )
     }
-
 
 }

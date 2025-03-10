@@ -159,13 +159,16 @@ export const initSocket = (server: any) => {
         }
       });
       try {
-        if (gameSession.players.filter(p => p.status !== 'ready').length === 0) {
+        const everyPlayerAreReady: boolean = gameSession.players.filter(p => p.status !== 'ready').length === 0; 
+        if (everyPlayerAreReady) {
           // every player are ready
           gameSession.status = 'in-progress';
-          socket.emit("game-ready", {gameSession, username})
+          await gameSession.save();
+          gameNamespace.to(gameSessionId).emit("game-ready", {gameSession})
+        } else {
+          await gameSession.save();
+          gameNamespace.to(gameSessionId).emit('playerIsReady', {gameSession, username});
         }
-        await gameSession.save();
-        gameNamespace.to(gameSessionId).emit('playerIsReady', {gameSession, username});
 
       } catch(err) {
         socket.emit("error-mongo", {status: 500, error: 'Could not save player infos'} as SocketError);
