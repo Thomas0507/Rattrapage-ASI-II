@@ -3,6 +3,7 @@ import { getuserNameFromToken } from '../jwt/jwt-service';
 import Message from "../models/message";
 import message from '../models/message';
 import GameSessionEntity, { Card, GameSession } from '../models/GameSession';
+import { setNotifNamespace } from '../routes';
 
 interface Message {
   content: string;
@@ -42,6 +43,8 @@ interface User {
 }
 
 const privateUsers = new Map<string, User>();
+
+export const globalUsers = new Map<string, User>();
 
 export const initSocket = (server: any) => {
   
@@ -350,6 +353,29 @@ export const initSocket = (server: any) => {
         }
       });
       console.log(`User disconnected: ${socket.id}`);
+    });
+  });
+
+  // notif namespace =>
+  const notifNamespace = io.of('/notif');
+  setNotifNamespace(notifNamespace);
+
+  notifNamespace.on('connection', (socket: Socket) => {
+    console.log('Un client est connecté au namespace /notif');
+
+    socket.on("register", (username: string) => {
+      console.log(`User registered: ${username} with socket ID ${socket.id}`);
+      globalUsers.set(username,
+        {
+          id: username,
+          socketId: socket.id
+        });
+        console.log(`User registered: ${username} - Socket: ${socket.id}`);
+    })
+  
+    // Gérer la déconnexion du client
+    socket.on('disconnect', () => {
+      console.log('Client déconnecté du namespace /notif');
     });
   });
 

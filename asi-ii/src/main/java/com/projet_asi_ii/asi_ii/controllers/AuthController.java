@@ -1,5 +1,6 @@
 package com.projet_asi_ii.asi_ii.controllers;
 
+import com.projet_asi_ii.asi_ii.Exceptions.UserAlreadyExistsException;
 import com.projet_asi_ii.asi_ii.requests.UserRequest;
 import com.projet_asi_ii.asi_ii.reponses.LoginResponse;
 import com.projet_asi_ii.asi_ii.services.security.AuthenticationService;
@@ -8,7 +9,6 @@ import com.projet_asi_ii.asi_ii.services.security.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -58,7 +58,7 @@ public class AuthController {
 	}
 
 	@PostMapping("/signup")
-	public ResponseEntity<UserRequest> signup(@RequestBody UserRequest userRequest) {
+	public ResponseEntity<UserRequest> signup(@RequestBody UserRequest userRequest) throws UserAlreadyExistsException {
 		userRequest.setPassword(passwordEncoder.encode(userRequest.getPassword()));
 		boolean res = userService.insertUser(userRequest);
 		if (!res)

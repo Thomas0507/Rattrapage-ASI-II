@@ -8,6 +8,8 @@ import Box from "@mui/material/Box";
 import React from "react";
 import Loader from "../Loader";
 import { generateCard } from "../../api/card";
+import SnackbarError from '../../components/ErrorSnackbar';
+import SnackbarValidation from '../../components/SnackbarValidation';
 
 export default function Generator() {
 
@@ -18,6 +20,11 @@ export default function Generator() {
     const [prompt, setPrompt] = useState("");
     const [termsAccepted, setTermsAccepted] = useState(false);
     const [error, setError] = useState("");
+
+    const [errorMessage, setErrorMessage] = useState<string>("");
+    
+    const [errorOpen, setErrorOpen] = useState<boolean>(false);
+    const [validationOpen, setValidationOpen] = useState<boolean>(false);
 
     async function submit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -35,14 +42,15 @@ export default function Generator() {
         try {
             const newCard = { name, prompt };
             console.log("newCard: ", newCard);
-            let a = await generateCard(name, prompt);
-            console.log(a);
-            // toast.success("The generation of your card has started.");
-
+            await generateCard(name, prompt);
+            
             setName("");
             setPrompt("");
             setTermsAccepted(false);
-        } catch {
+            setValidationOpen(true);
+        } catch (err) {
+            setErrorMessage("");
+            setErrorOpen(true);
             // toast.success("An error occured, try again later.");
         } finally {
             setLoading(false);
@@ -105,6 +113,16 @@ export default function Generator() {
                 </form>
             </Box>
             {loading && <Loader overlay={loading} />}
+            <SnackbarError
+                open={errorOpen}
+                setOpen={setErrorOpen}
+                message={errorMessage}
+            />
+            <SnackbarValidation
+                open={validationOpen}
+                setOpen={setValidationOpen}
+                message={"Request sent !"}
+            />
         </Container>
     );
 }

@@ -4,17 +4,18 @@ import com.projet_asi_ii.asi_ii.Exceptions.NoBuyableCardsFoundException;
 import com.projet_asi_ii.asi_ii.dtos.CardDto;
 import com.projet_asi_ii.asi_ii.dtos.CollectionDto;
 import com.projet_asi_ii.asi_ii.dtos.GenCardDto;
+import com.projet_asi_ii.asi_ii.entities.UserEntity;
+import com.projet_asi_ii.asi_ii.requests.NotifRequest;
 import com.projet_asi_ii.asi_ii.requests.PromptRequest;
 import com.projet_asi_ii.asi_ii.services.CardService;
 import com.projet_asi_ii.asi_ii.services.CollectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 @RestController
@@ -100,7 +101,24 @@ public class CardController {
         cardDto.setRarity(0);
         cardDto.setResellPrice(500);
 
-        this.cardService.insertCards(List.of(cardDto));
+        boolean res = this.cardService.insertCards(List.of(cardDto));
+
+        if (res)
+        {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            UserEntity uE = (UserEntity) authentication.getPrincipal();
+
+            final String uri = "http://express-socket:3000/send-notification";
+            RestTemplate restTemplate = new RestTemplate();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            NotifRequest notifRequest = new NotifRequest(200, uE.getUsername(), "Card "+ genCardDto.getName() + " has been generated");
+            HttpEntity<NotifRequest> requestEntity = new HttpEntity<>(notifRequest, headers);
+
+            restTemplate.postForObject(uri, requestEntity, String.class);
+        }
 
         return ResponseEntity.ok().build();
     }
