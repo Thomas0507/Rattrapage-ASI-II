@@ -55,7 +55,7 @@ export const PrivateConversation = ({username, receiver, sendConnectedPlayer}: P
     useEffect(() => {
 
         if (socketRef.current === null) {
-            console.log("socket is null", socketRef.current);
+            // console.log("socket is null", socketRef.current);
             socketRef.current = io(SOCKET_SERVER_URL);
             socketRef.current.connect();
             socketRef.current.emit("register", username);
@@ -63,16 +63,10 @@ export const PrivateConversation = ({username, receiver, sendConnectedPlayer}: P
             socketRef.current.on('disconnect', onDisconnect);
             socketRef.current.on('receive-message', onReceiveMessage);
             socketRef.current.on('player-list', onPlayerList);
-        }
-      
-          if (socketRef.current !== null) {
-            
+        }      
+          if (socketRef.current !== null) { 
             socketRef.current.emit("send-all-players");
-            
           }
-      
-            
-          
             return () => {
               if (socketRef.current !== null) {
                 socketRef.current.off('connect', onConnect);

@@ -24,7 +24,8 @@ export const GamePage = () => {
     const [uuid, setUuid] = useState<string>("");
     const [joinDisabled, setJoinDisabled] = useState<boolean>(true);
     const [errorMessage, setErrorMessage] = useState<string>("");
-  
+    const [username, setUsername] = useState<string>("");
+
 
     const [state, setState] = useState<State>({
         open: false,

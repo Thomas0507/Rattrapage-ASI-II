@@ -134,7 +134,7 @@ export const initSocket = (server: any) => {
         try {
           await gameSession.save();
         } catch (err) {
-          console.log(`error when triying to save gameSession: ${err.message}`);
+          console.log(`error when trying to save gameSession: ${err.message}`);
         }
       }
       socket.join(gameSession.sessionId);
@@ -142,13 +142,40 @@ export const initSocket = (server: any) => {
       // Too much player etc ...
 
       // 
-      gameNamespace.to(gameSessionId).emit('playerJoined', { gameSessionId, username});
+      gameNamespace.to(gameSessionId).emit('playerJoined', { gameSession, username});
       socket.emit('gameState', gameSession);
     });
+
+    socket.on('markAsReady', async ({username, gameSessionId}: joinGameSession) =>{
+      // user is ready
+      console.log(username, gameSessionId);
+      let gameSession = await GameSessionEntity.findOne({"sessionId": gameSessionId});
+      if (gameSession === null) {
+        console.log("Game session not found");
+      }
+      gameSession.players.forEach(player => {
+        if (player.playerName === username) {
+          player.status = 'ready'
+        }
+      });
+      try {
+        if (gameSession.players.filter(p => p.status !== 'ready').length === 0) {
+          // every player are ready
+          gameSession.status = 'in-progress';
+          socket.emit("game-ready", {gameSession, username})
+        }
+        await gameSession.save();
+        gameNamespace.to(gameSessionId).emit('playerIsReady', {gameSession, username});
+
+      } catch(err) {
+        socket.emit("error-mongo", {status: 500, error: 'Could not save player infos'} as SocketError);
+      }
+    })
+
     // Player actions =>
-    socket.on('play', ({gameSessionId, move }) => {
-      console.log(`Move in game ${gameSessionId}`)
-      gameNamespace.to(gameSessionId).emit('updateGame', { gameSessionId, move });
+    socket.on('play', ({gameSession, move }) => {
+      console.log(`Move in game ${gameSession.sessionId}`)
+      gameNamespace.to(gameSession.sessionId).emit('updateGame', { gameSession, move });
       });
 
     // Handle disconnect =>
@@ -158,6 +185,7 @@ export const initSocket = (server: any) => {
       if (gameSession) {
         const playerWhoLeft = gameSession.players.find(p => p.playerId === socket.id);
         gameSession.players = gameSession.players.filter(player => player.playerId === socket.id);
+        gameSession.currentNbPlayers -= 1;
         await gameSession.save();
         gameNamespace.to(gameSession.sessionId).emit('playerleft', {socketId: socket.id, username: playerWhoLeft.playerName});
       }

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { GameSession } from "../../../models/GameSession"
 import { WaitingRoomComponent } from "../../../components/WaitingRoomComponent";
 import { getOptionsByRequestType, RequestType } from "../../../hooks/RequestBuilder";
 import { PlayerModel } from "../../../models/PlayerModel";
-import io from "socket.io-client";
+import io, { Socket } from "socket.io-client";
 import Loader from "../../Loader";
 import ErrorComponent from "../../../components/ErrorComponent";
 
@@ -31,11 +31,16 @@ interface GameSessionDto {
     players: PlayerModel[];
     status: string;
 }
+interface GameSessionUpdate {
+    gameSession: GameSessionDto;
+    username: string;
+}
+
+
+const SOCKET_SERVER_URL = "http://localhost:3000/game";
 
 
 export const GameComponent = ({username, uuid}: GameComponentProps) => {
-
-    const socket = io('http://localhost:3000/game', {autoConnect: false}); // Connect to namespace
 
     const [gameSession, setGameSession] = useState<GameSession>(new GameSession());
     const [loading, setLoading] = useState<boolean>(true);
@@ -43,14 +48,56 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
     const [errorMessage, setErrorMessage] = useState<string>("");
     const [roomState, setRoomState] = useState<string>("");
 
+    const socketRef = useRef<Socket>(null)
+
+    function onPlayerJoined(data: GameSessionUpdate) {
+        setGameSession(new GameSession(
+            data.gameSession.sessionId,
+            data.gameSession.roomName,
+            data.gameSession.capacity,
+            data.gameSession.currentNbPlayers,
+            data.gameSession.players,
+            data.gameSession.status
+        ))
+    }
+
+    function onPlayerIsReady(data: GameSessionUpdate) {
+        setGameSession(new GameSession(
+            data.gameSession.sessionId,
+            data.gameSession.roomName,
+            data.gameSession.capacity,
+            data.gameSession.currentNbPlayers,
+            data.gameSession.players,
+            data.gameSession.status
+        ))
+        console.log(gameSession);
+    }
+
     useEffect(() => {
-        if (username) {
+        if (socketRef.current === null) {
             joinGameSession()
+            socketRef.current = io(SOCKET_SERVER_URL)
+            socketRef.current.connect();
+            socketRef.current.on("playerJoined", onPlayerJoined);
+            socketRef.current.on("playerIsReady", onPlayerIsReady);
         }
+
+        if (socketRef.current !== null) {
+            // event to emit all time
+        }
+
         return () => {
-            socket.disconnect();
+            if (socketRef.current !== null ) {
+                socketRef.current.off("onPlayerJoined", onPlayerJoined);
+                socketRef.current.off("playerIsReady", onPlayerIsReady)
+                socketRef.current.disconnect();
+            }
         }
-    }, [username]);
+    }, []);
+
+    useEffect(()=> {
+        joinGameSession()
+    }, [username])
 
 
     const joinGameSession = async(): Promise<void> => {
@@ -74,14 +121,17 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
                 gameSessionResponse.gameSessionDto.status
             ));
             setRoomState(gameSession.status);
-            socket.connect();
-            socket.emit('joinGame', {gameSessionId: gameSessionResponse.gameSessionDto.sessionId , username: username});
-            
+            if (username && socketRef.current) {
+                socketRef.current.emit('joinGame', {gameSessionId: gameSessionResponse.gameSessionDto.sessionId , username: username});
+            }            
         });
         }
 
-    function onGameSessionUpdate() {
-
+    const markAsReady = () => {
+        console.log("mark as ready", username, uuid);
+        if (socketRef.current !== null){
+            socketRef.current.emit("markAsReady", ({username: username, gameSessionId: gameSession.sessionId}));
+        }
     }
     if (loading) {
         return <Loader />
@@ -94,7 +144,7 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
         case 'waiting':
             return (<div>
                     <span>logged as : {username}</span>
-                    <WaitingRoomComponent gameSession={gameSession} updateGameSession={onGameSessionUpdate}/>
+                    <WaitingRoomComponent gameSession={gameSession} updateGameSession={markAsReady}/>
                     </div>
             )
         default:
