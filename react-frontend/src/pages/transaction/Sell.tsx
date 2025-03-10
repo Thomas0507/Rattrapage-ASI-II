@@ -94,7 +94,7 @@ const Sell: React.FC = () => {
           top: 0,
           backgroundColor: "white"
         }}>
-          Buy Cards \ You have <span>{userCash} $</span>
+          Sell Cards \ You have <span>{userCash} $</span>
         </Typography>
         <CardListComponent
           cards={cards}

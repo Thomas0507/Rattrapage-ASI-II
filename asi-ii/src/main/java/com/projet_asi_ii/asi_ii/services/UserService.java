@@ -31,6 +31,7 @@ public class UserService
 	public boolean insertUser(UserRequest userRequest) {
 		UserEntity userEntity = new UserEntity();
 		userEntity.setUsername(userRequest.getUsername());
+		userEntity.setEmail(userRequest.getEmail());
 		userEntity.setPassword(userRequest.getPassword());
 		// Create a player Entity at the same time
 		PlayerEntity playerEntity = new PlayerEntity();

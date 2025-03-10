@@ -25,6 +25,8 @@ public class UserEntity implements UserDetails
 	@Column(unique = true, length = 100, nullable = false)
 	private String username;
 	@Column(nullable = false)
+	private String email;
+	@Column(nullable = false)
 	private String password;
 
 	@CreationTimestamp
