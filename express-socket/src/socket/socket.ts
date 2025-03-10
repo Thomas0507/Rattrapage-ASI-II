@@ -2,7 +2,7 @@ import { Socket, Server as SocketIOServer } from 'socket.io';
 import { getuserNameFromToken } from '../jwt/jwt-service';
 import Message from "../models/message";
 import message from '../models/message';
-import GameSessionEntity, { GameSession } from '../models/GameSession';
+import GameSessionEntity, { Card, GameSession } from '../models/GameSession';
 
 interface Message {
   content: string;
@@ -19,6 +19,13 @@ interface joinGameSession {
 interface SocketError {
   status: number;
   error : string;
+}
+
+interface ActionProps {
+  type: string;
+  selectedCards: Card[];
+  username:string;
+  gameSessionId: string;
 }
 
 
@@ -129,7 +136,7 @@ export const initSocket = (server: any) => {
       }
 
       if (!gameSession?.players.find(player => player.playerName === username)) {
-        gameSession.players.push({playerId: socket.id, playerName: username, status: 'connected', cards:[]});
+        gameSession.players.push({playerId: socket.id, playerName: username, status: 'connected', cards:[], actionPoint: 0});
         gameSession.currentNbPlayers += 1;
         try {
           await gameSession.save();
@@ -176,7 +183,7 @@ export const initSocket = (server: any) => {
     });
 
     socket.on('setPlayerInfo', async ({username, gameSessionId, cards}) => {
-      console.log("\nusername: ", username, "\ngameSessionId:", gameSessionId, "\ncards:",cards);
+      console.log("\nusername: ", username, "\ngameSessionId:", gameSessionId);
       const gameSession = await GameSessionEntity.findOne({"sessionId": gameSessionId});
       const playerInGameSession = gameSession.players.find(el => el.playerName === username);
       playerInGameSession.cards = [...cards];
@@ -184,12 +191,14 @@ export const initSocket = (server: any) => {
         el.maxAttack = el.attack;
         el.maxDefense = el.defense;
         el.maxHealth = el.health;
+        el.owner = username;
       });
       gameSession.save();
       let nbPlayerReady = 0;
       gameSession.players.forEach(p => {
         if (p?.cards?.length !== 0){
           // card were set, player is ready
+          p.actionPoint = 1;
           nbPlayerReady ++;
         }
       });
@@ -199,8 +208,34 @@ export const initSocket = (server: any) => {
           player1: gameSession.players[0],
           player2: gameSession.players[1],
           gameSession: gameSession
-        } );
+        });
       }
+    });
+
+    socket.on("action", async ({type, selectedCards, username, gameSessionId}: ActionProps) => {
+      console.log("\ntype: ", type, "\ngameSessionId: ", gameSessionId);
+
+      const gameSession = await GameSessionEntity.findOne({"sessionId": gameSessionId});
+      const playerWhoAttacked = gameSession.players.find(el => el.playerName === username);      
+      if (playerWhoAttacked.actionPoint <= 0) {
+        console.log("bizarre");
+        return;
+      }
+      const attackerCard = playerWhoAttacked.cards.find(el => el.id === selectedCards[0].id)
+      const defenserCard = gameSession.players.find(el => el.playerName !== username).cards.find(el => el.id === selectedCards[1].id);
+
+      console.log(attackerCard.name," attacked ", defenserCard.name);
+      // add dodge chance, critical rate etc... 
+      defenserCard.health = attackerCard.attack - defenserCard.defense;
+      playerWhoAttacked.actionPoint-=1;
+      await gameSession.save();
+      // emit infos
+      gameNamespace.to(gameSession.sessionId).emit('actionResult', {
+        player1: gameSession.players[0],
+        player2: gameSession.players[1],
+        gameSession: gameSession
+      });
+
     });
 
     // Player actions =>
@@ -218,7 +253,11 @@ export const initSocket = (server: any) => {
         gameSession.players = gameSession.players.filter(player => player.playerId === socket.id);
         gameSession.currentNbPlayers -= 1;
         await gameSession.save();
-        gameNamespace.to(gameSession.sessionId).emit('playerleft', {socketId: socket.id, username: playerWhoLeft.playerName});
+        gameNamespace.to(gameSession.sessionId).emit('playerleft',
+          {
+            socketId: socket.id,
+            username: playerWhoLeft.playerName
+          });
       }
     })
 

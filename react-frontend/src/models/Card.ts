@@ -31,20 +31,21 @@ export class Card {
 
 
 
-    constructor(id, name, description, image, attack, defense, health, mainType, dropRate, rarity, collection, price, resellPrice) {
-        this._id = id;
-        this._name = name;
-        this._description = description;
-        this._image = image;
-        this._attack = attack;
-        this._defense = defense;
-        this._health = health;
-        this._mainType = mainType;
-        this._dropRate = dropRate
-        this._rarity = rarity;
-        this._collection = collection;
-        this._price = price;
-        this._resellPrice = resellPrice;
+    constructor(id?: number, name?: string, description?: string, image?: string, attack?: number, defense?: number, health?: number, mainType?: string,
+        dropRate?: number, rarity?: number, collection?:Collection, price?: number, resellPrice?: number) {
+        this._id = id || 0;
+        this._name = name || "0";
+        this._description = description || "0"; 
+        this._image = image || "0";
+        this._attack = attack || 0;
+        this._defense = defense || 0;
+        this._health = health || 0;
+        this._mainType = mainType || "0";
+        this._dropRate = dropRate || 0;
+        this._rarity = rarity || 0;
+        this._collection = collection || new Collection();
+        this._price = price || 0;
+        this._resellPrice = resellPrice || 0;
     }
 
     public get id(): number {

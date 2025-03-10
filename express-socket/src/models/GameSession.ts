@@ -4,7 +4,8 @@ export interface Player {
     playerId: string;
     playerName: string;
     status?: 'connected' | 'disconnected' | 'ready' | 'waiting';
-    cards: Card[]
+    cards: Card[];
+    actionPoint: number;
 }
 
 export interface Card {
@@ -18,15 +19,17 @@ export interface Card {
   defense: number;
   mainType: string;
   // unique to nodeJs, incase we implements buff / debuff
-  maxHealth: number
-  maxAttack: number
-  maxDefense: number
+  maxHealth: number;
+  maxAttack: number;
+  maxDefense: number;
+  owner: string;
 }
 
 export interface GameSession extends Document {
     sessionId: string;
     roomName: string;
     capacity: number;
+    turnElapsed: number;
     currentNbPlayers: number;
     players: Player[];
     status: 'waiting' | 'in-progress' | 'finished';
@@ -48,7 +51,8 @@ const CardSchema = new Schema({
     // unique to nodeJs, incase we implements buff / debuff
   maxHealth: {type: Number},
   maxAttack: {type: Number},
-  maxDefense: {type: Number}
+  maxDefense: {type: Number},
+  owner: {type: String}
  
 })
 
@@ -62,7 +66,8 @@ const playerSchema = new Schema({
     },
     cards: {
       type: [CardSchema], default:[]
-    }
+    },
+    actionPoint: {type: Number, default: 0}
   }, { _id: false });
 
 const gameSessionSchema: Schema = new Schema({
@@ -76,6 +81,7 @@ const gameSessionSchema: Schema = new Schema({
     enum: ['waiting', 'in-progress', 'finished'],
     default: 'waiting'
   },
+  elapsedTurn: {type: Number, default: 0}
 }, { timestamps: true });
 
 gameSessionSchema.methods.isFull = function () {

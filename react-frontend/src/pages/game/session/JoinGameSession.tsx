@@ -9,6 +9,10 @@ import ErrorComponent from "../../../components/ErrorComponent";
 import { GameProcessComponent } from "./GameProcessComponent";
 import { Player } from "../../../models/Player";
 import { Card } from "../../../models/Card";
+import { GamePlayer } from "../../../models/GamePlayer";
+import { GameSessionDto } from "../../../models/interface/GameSessionDto";
+import { GameSessionStatus } from "../../../models/interface/GameSessionStatus";
+import { GameCard } from "../../../models/GameCard";
 
 interface GameComponentProps {
     username: string;
@@ -26,24 +30,13 @@ interface JoinSessionResponse {
     gameSessionDto: GameSessionDto;
 }
 
-interface GameSessionDto {
-    sessionId: string;
-    roomName: string;
-    capacity: number;
-    currentNbPlayers: number;
-    players: PlayerModel[];
-    status: string;
-}
+
 interface GameSessionUpdate {
     gameSession: GameSessionDto;
     username: string;
 }
 
-interface GameSessionStatus {
-    player1: any,
-    player2: any,
-    gameSession: GameSessionDto;
-}
+
 
 
 const SOCKET_SERVER_URL = "http://localhost:3000/game";
@@ -51,13 +44,19 @@ const SOCKET_SERVER_URL = "http://localhost:3000/game";
 
 export const GameComponent = ({username, uuid}: GameComponentProps) => {
 
-    const [gameSession, setGameSession] = useState<GameSession>(new GameSession());
+    const [gameSession, setGameSession] = useState<any>(new GameSession());
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
     const [roomState, setRoomState] = useState<string>("");
     const [playerInfo, setPlayerInfo] = useState<Player>(new Player(0, "", [], 0));
     const socketRef = useRef<Socket>(null)
+
+    // game constants
+    const [playerOne, setPlayerOne] = useState<GamePlayer>(new GamePlayer());
+    const [playerTwo, setPlayerTwo] = useState<GamePlayer>(new GamePlayer());
+    const [launchGame, setLaunchGame] = useState<boolean>(false);
+
 
     function onPlayerJoined(data: GameSessionUpdate) {
         setGameSession(new GameSession(
@@ -101,9 +100,28 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
     }
 
     function gameIsSet(data: GameSessionStatus) {
-
+        console.log(data);
+        setPlayerOne(data.player1);
+        setPlayerTwo(data.player2);
+        setGameSession(new GameSession(
+            data.gameSession.sessionId,
+            data.gameSession.roomName,
+            data.gameSession.capacity,
+            data.gameSession.currentNbPlayers,
+            data.gameSession.players,
+            data.gameSession.status
+        ));
+        setLaunchGame(true);
     }
 
+    // actionResult
+    function onActionResult(data: GameSessionStatus) {
+        console.log(data);
+        setPlayerOne(data.player1);
+        setPlayerTwo(data.player2);
+        setGameSession(data.gameSession);
+        // action ended, need to update everything;
+    }
 
     useEffect(() => {
         if (socketRef.current === null) {
@@ -114,6 +132,7 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
             socketRef.current.on("playerIsReady", onPlayerIsReady);
             socketRef.current.on("game-ready", gameIsReady);
             socketRef.current.on("setGame", gameIsSet);
+            socketRef.current.on("actionResult", onActionResult);
         }
 
         if (socketRef.current !== null) {
@@ -123,7 +142,8 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
         return () => {
             if (socketRef.current !== null ) {
                 socketRef.current.off("onPlayerJoined", onPlayerJoined);
-                socketRef.current.off("playerIsReady", onPlayerIsReady)
+                socketRef.current.off("playerIsReady", onPlayerIsReady);
+                socketRef.current.off("actionResult", onActionResult);
                 socketRef.current.disconnect();
             }
         }
@@ -191,8 +211,16 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
     }
 
     const handleCardsSelected = (cards: Card[]) => {
-        console.log(cards);
         socketRef.current?.emit("setPlayerInfo", {username: username, gameSessionId: gameSession.sessionId, cards: cards});
+    }
+    
+    // Action game 
+    const onAction = (cards: GameCard[]) => {
+        console.log("onAction", cards);
+        if(socketRef.current) {
+            // card one attack card two
+            socketRef.current.emit("action", {type: "attack", username: username, selectedCards: cards, gameSessionId: uuid});
+        }
     }
 
     if (loading) {
@@ -213,7 +241,7 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
             return (<div>
                 <span>logged as : {username}</span>
                 {/* select card */}
-                <GameProcessComponent player={playerInfo} onSelectedCard={handleCardsSelected}></GameProcessComponent>
+                    <GameProcessComponent player={playerInfo} onSelectedCard={handleCardsSelected} gameSessionStatus={gameSession} launchGame={launchGame} playerOne={playerOne} playerTwo={playerTwo} onAction={onAction}></GameProcessComponent>
                 {/*  */}
                 </div>)
         default:

@@ -11,6 +11,7 @@ export interface SelectCardComponent {
 export const SelectCardComponent = ({cards, handleCardsSelected}: SelectCardComponent) => {
 
     const [selectedCards, setSelectedCards] = useState<Card[]>([]);
+    const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
     const onCardSelected = (card: Card) => {
         const indexOfCard = selectedCards.findIndex(el => el.id === card.id);
@@ -33,6 +34,7 @@ export const SelectCardComponent = ({cards, handleCardsSelected}: SelectCardComp
     }
 
     const handleReadyButton = () => {
+        setIsProcessing(true);
         handleCardsSelected(selectedCards)
     }
 
@@ -53,7 +55,7 @@ export const SelectCardComponent = ({cards, handleCardsSelected}: SelectCardComp
             <Button
             fullWidth={true}
             variant="contained"
-            disabled={selectedCards.length === 0}
+            disabled={selectedCards.length === 0 || isProcessing}
             onClick={handleReadyButton}>
                 Ready
             </Button>

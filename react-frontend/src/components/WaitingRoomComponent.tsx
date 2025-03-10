@@ -46,6 +46,7 @@ export const WaitingRoomComponent = ({gameSession, updateGameSession}: WaitingRo
                     <Button
                     disabled={ readyPressed && (gameSession.currentNbPlayers === 2 || gameSession.status !== 'waiting')}
                     onClick={handleReadyClick}
+                    variant="contained"
                     >
                         Ready
                     </Button>
