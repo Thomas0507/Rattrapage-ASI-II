@@ -18,11 +18,12 @@ interface GameProcessComponentProps {
     launchGame: boolean;
     playerOne: GamePlayer;
     playerTwo: GamePlayer;
-    onAction: (cards: GameCard[]) => void
+    onAction: (cards: GameCard[]) => void;
+    onEndOfTurn: () => void;
 }
 
 
-export const GameProcessComponent = ({player, onSelectedCard, gameSessionStatus, launchGame, playerOne, playerTwo, onAction }: GameProcessComponentProps) => {
+export const GameProcessComponent = ({player, onSelectedCard, gameSessionStatus, launchGame, playerOne, playerTwo, onAction, onEndOfTurn}: GameProcessComponentProps) => {
     
     // use only unique card
     const getUniqueCard = (): Card[] => {
@@ -36,7 +37,6 @@ export const GameProcessComponent = ({player, onSelectedCard, gameSessionStatus,
     }
     const [cardSelected, setCardSelected] = useState<boolean>(false);
     const [gameSession, setGameStatus] = useState<GameSession>(new GameSession);
-    const [selectedCards, setSelectedCards] = useState<Card[]>([]);
     const [filteredCards, setFilteredCards] = useState<Card[]>(getUniqueCard());
     
     useEffect(() => {
@@ -44,13 +44,15 @@ export const GameProcessComponent = ({player, onSelectedCard, gameSessionStatus,
 
     // fired when cards are selected => trigger the start of the game if both players selected theirs cards
     const handleSelectedCards = (cards: Card[]) => {
-        setSelectedCards([...cards]);
         onSelectedCard(cards);
+    }
+
+    const handleEndOfTurn = () => {
+        onEndOfTurn();
     }
 
     const handleGameAction = (data: GameCard[]) => {
         console.log("handleGameAction", data);
-        setSelectedCards([...data]);
         onAction(data)
     }
     return (
@@ -61,7 +63,7 @@ export const GameProcessComponent = ({player, onSelectedCard, gameSessionStatus,
             ) : 
                 // game
             (
-                <GameMainComponent actionHandling={handleGameAction} playerOne={playerOne} playerTwo={playerTwo} gameSession={gameSessionStatus} username={player.username}/>
+                <GameMainComponent actionHandling={handleGameAction} playerOne={playerOne} playerTwo={playerTwo} gameSession={gameSessionStatus} username={player.username} endOfTurnFunction={handleEndOfTurn}/>
             )   
         }
         </Container>

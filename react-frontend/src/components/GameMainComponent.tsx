@@ -14,13 +14,13 @@ export interface GameMainComponentProps {
     playerOne: GamePlayer;
     playerTwo: GamePlayer;
     username: string // player logged in
+    endOfTurnFunction: Function
 }
 
 
-export const GameMainComponent = ({username, playerOne, playerTwo, gameSession, actionHandling}: GameMainComponentProps) => {
+export const GameMainComponent = ({username, playerOne, playerTwo, gameSession, actionHandling, endOfTurnFunction}: GameMainComponentProps) => {
 
   const [adversaryUsername, setAdversaryUsername] = useState<string>("");
-  const [myTurn, setMyTurn] = useState<boolean>(true);
 
 
   
@@ -29,12 +29,11 @@ export const GameMainComponent = ({username, playerOne, playerTwo, gameSession, 
   
   const [selectedCards, setSelectedCards] = useState<GameCard[]>([]);
 
-  const [resetSelection, setResetSelection] = useState<boolean>(false);
-
   useEffect(() => {
-      console.log("rerendering game main component");
+      console.log("rerendering game main component", username, gameSession.playerWhoCanPlay);
       setPlayerOneCards(playerOne.cards);
       setplayerTwoCards(playerTwo.cards)
+
       setPlayerAsBottom();
     }, [adversaryUsername, playerOneCards, playerTwoCards, gameSession]);
 
@@ -80,6 +79,8 @@ export const GameMainComponent = ({username, playerOne, playerTwo, gameSession, 
 
 
     const onCardClicked = (card: GameCard) => {
+      console.log("test");
+      console.log(selectedCards.length);
       const selectedCardsLength = selectedCards.length;
       switch(selectedCardsLength) {
         case 0 :
@@ -103,12 +104,21 @@ export const GameMainComponent = ({username, playerOne, playerTwo, gameSession, 
 
             resetAllCard();
             actionHandling(selectedCards)
+            setSelectedCards([...selectedCards]);
           }
+        case 2 : 
+          resetAllCard();
+          setSelectedCards([]);
           break;
         default:
+          setSelectedCards([]);
           break;
       }
    
+    }
+
+    const handleEndOfTurn = () => {
+      endOfTurnFunction(username);
     }
 
     return (
@@ -136,15 +146,16 @@ export const GameMainComponent = ({username, playerOne, playerTwo, gameSession, 
       </Box>
       <Box sx={{display: 'flex', alignItems: 'center', width: "100%", gap: "2em"}}>
         <div>
-          Turn n°{gameSession.turnElapsed}
+          Turn n°{gameSession.elapsedTurn}
         </div>
         <Divider sx={{ borderBottomWidth: 2, borderColor: 'black', flexGrow: 1}}/>
         <div style={{display: "flex", flexDirection: "column", gap:"0.5em"}}>
           <Button
           sx={{width: "fit-content"}}
-          disabled={!myTurn}
+          disabled={gameSession.playerWhoCanPlay !== username}
           variant="contained"
-          color="primary">
+          color="primary"
+          onClick={handleEndOfTurn}>
             End of turn
           </Button>
           <span>

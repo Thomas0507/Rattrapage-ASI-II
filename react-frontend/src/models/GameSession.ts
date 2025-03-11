@@ -13,17 +13,20 @@ export class GameSession {
     
     private _status: string;
 
-    private _turnElapsed: number;
+    private _elapsedTurn: number;
+
+    private _playerWhoCanPlay: string;
 
 
-    constructor(sessionId?: string, roomName?: string, capacity?: number, currentNbPlayers?: number, players?: PlayerModel[], status?: string, turnElapsed?: number) {
+    constructor(sessionId?: string, roomName?: string, capacity?: number, currentNbPlayers?: number, players?: PlayerModel[], status?: string, elapsedTurn?: number, playerWhoCanPlay?: string) {
         this._sessionId = sessionId || '';
         this._roomName = roomName || '';
         this._capacity = capacity || 0;
         this._currentNbPlayers = currentNbPlayers || 0;
         this._players = players || [];
         this._status = status || 'waiting';
-        this._turnElapsed = turnElapsed || 0;
+        this._elapsedTurn = elapsedTurn || 0;
+        this._playerWhoCanPlay = playerWhoCanPlay || '';
     }
     // Getter & Setter => 
 
@@ -64,10 +67,16 @@ export class GameSession {
     public set status(value: string) {
         this._status = value;
     }
-    public get turnElapsed(): number {
-        return this._turnElapsed;
+    public get elapsedTurn(): number {
+        return this._elapsedTurn;
     }
-    public set turnElapsed(value: number) {
-        this._turnElapsed = value;
+    public set elapsedTurn(value: number) {
+        this._elapsedTurn = value;
+    }
+    public get playerWhoCanPlay(): string {
+        return this._playerWhoCanPlay;
+    }
+    public set playerWhoCanPlay(value: string) {
+        this._playerWhoCanPlay = value;
     }
 }

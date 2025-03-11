@@ -31,6 +31,7 @@ export interface GameSession extends Document {
     capacity: number;
     turnElapsed: number;
     currentNbPlayers: number;
+    playerWhoCanPlay: string;
     players: Player[];
     status: 'waiting' | 'in-progress' | 'finished';
     isFull(): boolean;
@@ -81,6 +82,7 @@ const gameSessionSchema: Schema = new Schema({
     enum: ['waiting', 'in-progress', 'finished'],
     default: 'waiting'
   },
+  playerWhoCanPlay: {type: String},
   elapsedTurn: {type: Number, default: 0}
 }, { timestamps: true });
 

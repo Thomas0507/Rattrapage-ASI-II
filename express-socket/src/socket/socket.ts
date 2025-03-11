@@ -28,6 +28,11 @@ interface ActionProps {
   gameSessionId: string;
 }
 
+interface EndOfTurnProps {
+  username: string;
+  gameSessionId: string;
+}
+
 
 const users: string[] = [];
 
@@ -193,30 +198,37 @@ export const initSocket = (server: any) => {
         el.maxHealth = el.health;
         el.owner = username;
       });
-      gameSession.save();
       let nbPlayerReady = 0;
       gameSession.players.forEach(p => {
         if (p?.cards?.length !== 0){
           // card were set, player is ready
-          p.actionPoint = 1;
           nbPlayerReady ++;
         }
       });
       if (nbPlayerReady === gameSession.capacity) {
         // all player are ready
+        // decide who's gonna play first =>
+        const randomBinary: number = Math.floor(Math.random() * 2);
+        gameSession.playerWhoCanPlay = gameSession.players[randomBinary].playerName;
+        gameSession.players[randomBinary].actionPoint = 1;
+        await gameSession.save();
         gameNamespace.emit("setGame", {
           player1: gameSession.players[0],
           player2: gameSession.players[1],
           gameSession: gameSession
         });
+      } else {
+        await gameSession.save();
       }
     });
 
     socket.on("action", async ({type, selectedCards, username, gameSessionId}: ActionProps) => {
-      console.log("\ntype: ", type, "\ngameSessionId: ", gameSessionId);
+      console.log("\ntype: ", type, "\ngameSessionId: ", gameSessionId, "\nusername: ", username);
 
       const gameSession = await GameSessionEntity.findOne({"sessionId": gameSessionId});
-      const playerWhoAttacked = gameSession.players.find(el => el.playerName === username);      
+
+      const playerWhoAttacked = gameSession.players.find(el => el.playerName === username);    
+      console.log(`playerWhoAttacked: ${playerWhoAttacked}`);  
       if (playerWhoAttacked.actionPoint <= 0) {
         console.log("bizarre");
         return;
@@ -224,10 +236,14 @@ export const initSocket = (server: any) => {
       const attackerCard = playerWhoAttacked.cards.find(el => el.id === selectedCards[0].id)
       const defenserCard = gameSession.players.find(el => el.playerName !== username).cards.find(el => el.id === selectedCards[1].id);
 
-      console.log(attackerCard.name," attacked ", defenserCard.name);
+      console.log(attackerCard.name," attacked ", defenserCard.name, `${attackerCard.attack} - ${defenserCard.defense} = ${attackerCard.attack - defenserCard.defense}`);
       // add dodge chance, critical rate etc... 
-      defenserCard.health = attackerCard.attack - defenserCard.defense;
-      playerWhoAttacked.actionPoint-=1;
+      defenserCard.health -= attackerCard.attack - defenserCard.defense;
+      playerWhoAttacked.actionPoint -= 1;
+      // check for victory xd 
+      // todo :
+
+      //
       await gameSession.save();
       // emit infos
       gameNamespace.to(gameSession.sessionId).emit('actionResult', {
@@ -238,6 +254,20 @@ export const initSocket = (server: any) => {
 
     });
 
+    socket.on("endOfTurn", async({username, gameSessionId}: EndOfTurnProps) => {
+      const gameSession = await GameSessionEntity.findOne({"sessionId": gameSessionId});
+      
+      // const playerWhoPlayed = gameSession.players.find(el => el.playerName === username);      
+
+      
+      const playerToPlay = gameSession.players.find(el => el.playerName !== username);
+      playerToPlay.actionPoint += 1;
+      gameSession.turnElapsed +=1;
+      gameSession.playerWhoCanPlay = playerToPlay.playerName;
+      await gameSession.save();
+      gameNamespace.to(gameSessionId).emit("turnEnded", {username, gameSessionId, gameSession});
+
+    })
     // Player actions =>
     socket.on('play', ({gameSession, move }) => {
       console.log(`Move in game ${gameSession.sessionId}`)
