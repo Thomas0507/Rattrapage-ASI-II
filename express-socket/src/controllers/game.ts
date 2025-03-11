@@ -1,4 +1,4 @@
-import { Get, Route } from "tsoa";
+import { Get, Route, Post, Body } from "tsoa";
 import {v4 as uuidv4} from 'uuid';
 import GameSessionService from '../services/GameSessionService';
 import { GameSession } from "../models/GameSession";
@@ -27,18 +27,51 @@ export interface GameSessionDto {
     players: any[],
 }
 
+export type CreateSessionRequest = {
+  roomName: string;
+  roomDescription: string;
+  capacity: number;
+  autoJoin: boolean;
+}
+
+export interface CreateSessionResponse {
+  uuid: string;
+  errorResponse: ErrorResponse;
+}
 
 @Route("game")
 export default class GameController {
+  // depreciated
   @Get("/session")
   public getSessionId(): SessionResponse {
     let sessionId = uuidv4();
     const gameSession = GameSessionService.createGameSession(sessionId).then(
-        res => console.log(res)
+        // res => console.log(res)
     );
     return {
       uuid: sessionId,
     };
+  }
+
+  @Get("/all")
+  public async getAllSession(): Promise<any> {
+    const gameSession: any[] = await GameSessionService.getAllSessions()
+    if (gameSession) {
+      return {
+        gameSessionArray: gameSession,
+        errorResponse: null
+      }
+    } else {
+      return {
+        gameSessionArray: null,
+        errorResponse :{
+          status: 500,
+          message: "Error with database",
+          reason: "No more info given"
+        }
+      }
+    }
+
   }
   @Get("/joinSession/:id")
   public async joinSession(id: string): Promise<JoinSessionResponse> {
@@ -78,5 +111,25 @@ export default class GameController {
       } as ErrorResponse
     });
     return response
+  }
+  @Post("/session")
+  public async createGameSession(@Body() createSessionRequest: CreateSessionRequest): Promise<CreateSessionResponse> {
+    let sessionId = uuidv4();
+    const gameSessionIdCreated = await GameSessionService.createGameSessionWithDetails(sessionId, createSessionRequest);
+    if (gameSessionIdCreated) {
+      return {
+        uuid: gameSessionIdCreated,
+        errorResponse: null
+      }
+    } else {
+      return {
+        uuid: null,
+        errorResponse: {
+          status: 500,
+          message: "Error when creating room",
+          reason: "No more infos were given"
+        }
+      }
+    }
   }
 }

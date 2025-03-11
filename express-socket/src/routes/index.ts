@@ -1,7 +1,7 @@
 import express from "express";
 import { Request, Response, NextFunction } from "express";
 import PingController from "../controllers/ping";
-import GameController from "../controllers/game";
+import GameController, { CreateSessionRequest } from "../controllers/game";
 import { Namespace } from "socket.io";
 import { globalUsers } from "../socket/socket";
 
@@ -10,6 +10,7 @@ const router = express.Router();
 interface ErrorResponse {
 
 }
+
 
 router.get("/ping", function (req: Request, res: Response, next: NextFunction) {
   const controller = new PingController();
@@ -36,6 +37,38 @@ router.get("/game/join-session/:id", async function (req: Request, res: Response
     res.send(response);
   }
 });
+router.get("/game/all", async function (req:Request, res:Response, next: NextFunction) {
+  const controller = new GameController();
+  const response = await controller.getAllSession();
+  if (response.errorResponse) {
+    // error
+    res.statusCode = response.errorResponse.status;
+    res.send(response)
+  } else {
+    res.statusCode = 200;
+    res.send(response);
+  }
+});
+router.post("/game/session", async function (req:Request, res:Response, next: NextFunction) {
+  const controller = new GameController();
+  console.log(req);
+  if (!req.body) {
+    res.statusCode = 400;
+    res.send({message: "Bad Request", reason: "The form was invalid"})
+    return;
+  }
+  const createSessionRequest: CreateSessionRequest = req.body;
+  const response = await controller.createGameSession(createSessionRequest);
+  if (response.errorResponse) {
+    // error
+    res.statusCode = response.errorResponse.status;
+    res.send(response.errorResponse);
+  } else {
+    res.statusCode = 200;
+    res.send(response);
+  }
+});
+
 
 let notifNamespace: Namespace | null = null;
 

@@ -1,3 +1,4 @@
+import { CreateSessionRequest } from "../controllers/game";
 import { Player } from "../models/GameSession";
 import GameSessionEntity from "../models/GameSession";
 import { Document } from 'mongoose';
@@ -9,6 +10,8 @@ interface GameSessionService {
     getGameSessionById(sessionId: string): Promise<Document | null>;
     updateGameSessionState(sessionId: string, newState: 'waiting' | 'in-progress' | 'finished'): Promise<Document>;
     deleteGameSession(sessionId: string): Promise<Document | null>;
+    getAllSessions(): Promise<Document[]>
+    createGameSessionWithDetails(sessionId, createSessionRequest: CreateSessionRequest)
 }
 
 class GameSessionService implements GameSessionService {
@@ -86,6 +89,29 @@ class GameSessionService implements GameSessionService {
             throw new Error('Error deleting game session: ' + error.message);
         }
     }
+    // get all joinable sessions
+    static async getAllSessions(): Promise<Document[] | null> {
+        try {
+            const gameSession: Document[] = await GameSessionEntity.find();
+            console.log(gameSession);
+            return gameSession
+        } catch (error) {
+            throw new Error('Error when fetching game session' + error.message);
+        }
+    }
+    // create a joinable session
+    static async createGameSessionWithDetails(sessionId, createSessionRequest: CreateSessionRequest): Promise<string> {
+        try {
+            const newGameSession = new GameSessionEntity({ sessionId });
+            newGameSession.roomName = createSessionRequest.roomName;
+            newGameSession.description = createSessionRequest?.roomDescription;
+            const savedGameSession = await newGameSession.save();
+            return savedGameSession.sessionId;
+        } catch (error) {
+            throw new Error('Error creating game session: ' + error.message);
+        }
+    }
+
 }
 
 export default GameSessionService;
