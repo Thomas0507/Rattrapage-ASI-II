@@ -238,7 +238,10 @@ export const initSocket = (server: any) => {
 
       console.log(attackerCard.name," attacked ", defenserCard.name, `${attackerCard.attack} - ${defenserCard.defense} = ${attackerCard.attack - defenserCard.defense}`);
       // add dodge chance, critical rate etc... 
-      defenserCard.health -= attackerCard.attack - defenserCard.defense;
+      const damageDealth = attackerCard.attack - defenserCard.defense;
+      defenserCard.health -= damageDealth > 0 ? damageDealth : 0;
+      
+      if (defenserCard.health < 0) defenserCard.health = 0;
       playerWhoAttacked.actionPoint -= 1;
       // check for victory xd 
       // todo :

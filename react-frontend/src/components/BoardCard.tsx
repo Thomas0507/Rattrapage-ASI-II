@@ -6,9 +6,10 @@ import { motion } from "framer-motion";
 interface BoardCardProps {
     card: GameCard;
     handleCardClick: (card: GameCard) => void
+    disabled: boolean
 }
 
-export const BoardCard = ({card, handleCardClick}: BoardCardProps) => {
+export const BoardCard = ({card, handleCardClick, disabled}: BoardCardProps) => {
 
 
     const onCardSelected = () => {
@@ -17,7 +18,7 @@ export const BoardCard = ({card, handleCardClick}: BoardCardProps) => {
 
     return (
 
-        <Card  onClick={onCardSelected} sx={{ width: 250, height: 200, margin: 1, backgroundColor: 'lightblue' }}>
+        <Card  onClick={onCardSelected} sx={{ width: 250, height: 200, margin: 1, backgroundColor: disabled ? 'black' : 'lightblue' }}>
                 <div style={{textAlign: 'center', width: "100%"}}>{card.name}</div>
                 <CardContent sx={{display: 'flex', flexDirection:"row", justifyContent: 'space-between'}}>
                   <div className="left container" style={{display: 'flex', flexDirection: 'column',}}>

@@ -79,13 +79,13 @@ export const GameMainComponent = ({username, playerOne, playerTwo, gameSession, 
 
 
     const onCardClicked = (card: GameCard) => {
-      console.log("test");
-      console.log(selectedCards.length);
+      if (card.health <= 0) {
+        return
+      };
       const selectedCardsLength = selectedCards.length;
       switch(selectedCardsLength) {
         case 0 :
           if (card.owner === username) {
-            console.log(card.owner, username);
             // user selected is own card first
             selectedCards.push(card);
             setSelectedCards([...selectedCards]);
@@ -131,14 +131,14 @@ export const GameMainComponent = ({username, playerOne, playerTwo, gameSession, 
             playerOneCards.map((card, index) => (
               <motion.div key={index}
               animate={card.selected ? { scale: 1.1, opacity: 1 } : { scale: 1, opacity: 0.8 }}>
-                <BoardCard card={card} handleCardClick={onCardClicked}/>
+                <BoardCard disabled={card.health <= 0} card={card} handleCardClick={onCardClicked}/>
               </motion.div>
             ))
           ) : (
             playerTwoCards.map((card, index) => (
               <motion.div key={index}
               animate={card.selected ? { scale: 1.1, opacity: 1 } : { scale: 1, opacity: 0.8 }}>
-                <BoardCard card={card} handleCardClick={onCardClicked}/>
+                <BoardCard card={card} disabled={card.health <= 0} handleCardClick={onCardClicked}/>
               </motion.div>
             ))
           )
@@ -171,14 +171,14 @@ export const GameMainComponent = ({username, playerOne, playerTwo, gameSession, 
             playerOneCards.map((card, index) => (
               <motion.div key={index}
               animate={card.selected ? { scale: 1.1, opacity: 1 } : { scale: 1, opacity: 0.8 }}>
-                <BoardCard card={card} handleCardClick={onCardClicked}/>
+                <BoardCard card={card} disabled={card.health <= 0} handleCardClick={onCardClicked}/>
               </motion.div>
             ))
           ) : (
             playerTwoCards.map((card, index) => (
               <motion.div key={index}
               animate={card.selected ? { scale: 1.1, opacity: 1 } : { scale: 1, opacity: 0.8 }}>
-                <BoardCard card={card} handleCardClick={onCardClicked}/>
+                <BoardCard card={card} disabled={card.health <= 0} handleCardClick={onCardClicked}/>
               </motion.div>
             ))
           )
