@@ -171,7 +171,7 @@ export const initSocket = (server: any) => {
         }
       });
       try {
-        const everyPlayerAreReady: boolean = gameSession.players.filter(p => p.status !== 'ready').length === 0; 
+        const everyPlayerAreReady: boolean = gameSession.players.filter(p => p.status !== 'ready').length === 0 && gameSession.players.length === gameSession.capacity; 
         if (everyPlayerAreReady) {
           // every player are ready
           gameSession.status = 'in-progress';
@@ -259,7 +259,7 @@ export const initSocket = (server: any) => {
           console.log("winner");
           gameSession.status = "finished";
           gameSession.turnElapsed += 1;
-          gameNamespace.to(gameSessionId).emit("gameResult", {winner: username, loser: playerAttacked.playerName});
+          gameNamespace.to(gameSessionId).emit("gameResult", {winner: username, loser: playerAttacked.playerName, gameSession: gameSession});
           await gameSession.save();
           return;
         }
@@ -289,6 +289,12 @@ export const initSocket = (server: any) => {
       gameSession.playerWhoCanPlay = playerToPlay.playerName;
       await gameSession.save();
       gameNamespace.to(gameSessionId).emit("turnEnded", {username, gameSessionId, gameSession});
+
+    })
+
+    socket.on("gameEnded", async(gameSessionId: string) => {
+      // clean gameSession after it has ended, the historic is on the springboot backend
+      await GameSessionEntity.deleteOne({"sessionId": gameSessionId});
 
     })
 

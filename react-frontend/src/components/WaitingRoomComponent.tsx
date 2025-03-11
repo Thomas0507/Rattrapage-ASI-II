@@ -44,7 +44,7 @@ export const WaitingRoomComponent = ({gameSession, updateGameSession}: WaitingRo
                 <span>Player in waiting room: {gameSession.currentNbPlayers}</span>
                 <Tooltip title={getToolTipForReadyButton()}>
                     <Button
-                    disabled={ readyPressed && (gameSession.currentNbPlayers === 2 || gameSession.status !== 'waiting')}
+                    disabled={ readyPressed}
                     onClick={handleReadyClick}
                     variant="contained"
                     >

@@ -13,6 +13,8 @@ import { GamePlayer } from "../../../models/GamePlayer";
 import { GameSessionDto } from "../../../models/interface/GameSessionDto";
 import { GameSessionStatus } from "../../../models/interface/GameSessionStatus";
 import { GameCard } from "../../../models/GameCard";
+import { Container } from "@mui/material";
+import { GameResultComponent } from "../../../components/GameResultComponents";
 
 interface GameComponentProps {
     username: string;
@@ -45,6 +47,7 @@ interface EndOfTurnEvent {
 interface GameResult {
     winner: string;
     loser: string;
+    gameSession: GameSession;
 }
 
 
@@ -53,7 +56,7 @@ const SOCKET_SERVER_URL = "http://localhost:3000/game";
 
 export const GameComponent = ({username, uuid}: GameComponentProps) => {
 
-    const [gameSession, setGameSession] = useState<any>(new GameSession());
+    const [gameSession, setGameSession] = useState<GameSession>(new GameSession());
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
@@ -66,7 +69,9 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
     const [playerTwo, setPlayerTwo] = useState<any>(new GamePlayer());
     const [launchGame, setLaunchGame] = useState<boolean>(false);
 
+    const [winner, setWinner] = useState<string>("");
 
+    // socket event handling =>
     function onPlayerJoined(data: GameSessionUpdate) {
         setGameSession(new GameSession(
             data.gameSession.sessionId,
@@ -127,6 +132,9 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
 
     function onGameResult(data: GameResult) {
         console.log(data);
+        setWinner(data.winner);
+        setGameSession(data.gameSession);
+        setRoomState(data.gameSession.status);
     }
 
     // actionResult
@@ -183,6 +191,7 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
     }, [username])
 
 
+    //  Api calls =>
     const joinGameSession = async(): Promise<void> => {
         await fetch("http://localhost:3000/game/join-session/" + uuid, getOptionsByRequestType(RequestType.GET)).then(async (response: Response) => {
             if (!response.ok) {
@@ -233,6 +242,9 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
             setLoading(false);
         });
     }
+
+
+    // function called from children =>
     const markAsReady = () => {
         console.log("mark as ready", username, uuid);
         if (socketRef.current !== null){
@@ -247,6 +259,18 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
     const handleEndofTurn = () => {
         console.log("end of turn");
         socketRef.current?.emit("endOfTurn", {username: username, gameSessionId: gameSession.sessionId});
+    }
+
+    const handleModalClosed = (isWinner: boolean) => {
+        console.log(`isWinner: ${isWinner}`);
+        socketRef.current?.emit("gameEnded", gameSession.sessionId)
+        if (isWinner) {
+            // winner get + 500$
+        } else {
+            // loser get - 500$
+        } 
+        // add battle history?
+
     }
     
     // Action game 
@@ -287,10 +311,23 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
                     onEndOfTurn={handleEndofTurn}></GameProcessComponent>
                 {/*  */}
                 </div>)
+        case 'finished':
+            return (
+                <div>
+                    <span>logged as : {username}</span>
+                    <GameResultComponent
+                    username={username}
+                    winner={winner}
+                    onModalClose={handleModalClosed}
+                    modalTitle={username === winner ? "Victory!" : "Defeat"}
+                    modalText={username === winner ? "You won 500$! " : "You lost 500$!"}/>                    
+                </div>
+            )
         default:
             return (
                 <div>
                     <span>logged as : {username}</span>
+                    <span>Game has ended, return to the main screen by hitting the home button</span>
                 </div>
             )
     }
