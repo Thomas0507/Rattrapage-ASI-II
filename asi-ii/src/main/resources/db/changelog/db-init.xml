@@ -273,5 +273,34 @@
             <column name="featured_drop_rate" type="FLOAT"/>
         </addColumn>
     </changeSet>
+    <changeSet id="1741689234517-1" author="Thomas0507">
+        <createTable tableName="historized_game">
+            <column autoIncrement="true"
+                    name="id"
+                    type="BIGINT">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="pk_historizedgame"/>
+            </column>
+            <column name="player_one"
+                    type="VARCHAR(255)"/>
+            <column name="player_two"
+                    type="VARCHAR(255)"/>
+            <column name="room_name"
+                    type="VARCHAR(255)"/>
+            <column name="elapsed_turn"
+                    type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="game_date"
+                    type="DATETIME"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1741690583667-1" author="Thomas0507">
+        <addColumn tableName="historized_game">
+            <column name="uuid"
+                    type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
 
 </databaseChangeLog>

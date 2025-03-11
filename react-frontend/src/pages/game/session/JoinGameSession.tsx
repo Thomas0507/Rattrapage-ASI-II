@@ -15,6 +15,8 @@ import { GameSessionStatus } from "../../../models/interface/GameSessionStatus";
 import { GameCard } from "../../../models/GameCard";
 import { Container } from "@mui/material";
 import { GameResultComponent } from "../../../components/GameResultComponents";
+import { GameHistorization } from "../../../models/interface/GameHistorization";
+import { truncateString } from "../../../utils/StringUtils";
 
 interface GameComponentProps {
     username: string;
@@ -243,6 +245,36 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
         });
     }
 
+    const historizeGame = async(): Promise<void> => {
+        await fetch("http://localhost:8081/game/saveGame", getOptionsByRequestType(RequestType.POST, {
+            playerOne: playerOne.playerName,
+            playerTwo: playerTwo.playerName,
+            winner: winner,
+            roomName: gameSession.roomName,
+            elapsedTurn: gameSession.elapsedTurn,
+            uuid: uuid
+        } as GameHistorization)).then(async (response: Response) => {
+            if (!response.ok) {
+                return response.text().then( text => {
+                    console.log(text);
+                    setError(true);
+                    setErrorMessage(text);
+                });
+            }
+            setLoading(false);
+            const hitorizationGameResponse = await response.json();
+            console.log(hitorizationGameResponse);
+            const url = window.location.href;
+            console.log("redirect to: ", truncateString(url, "/app") + "/main");
+            window.location.href = truncateString(url, "/app") + "/main" 
+
+        }).catch(err => {
+            setError(true);
+            setErrorMessage(err.message);
+        }).finally(() =>{
+            setLoading(false);
+        });
+    }
 
     // function called from children =>
     const markAsReady = () => {
@@ -260,8 +292,16 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
         console.log("end of turn");
         socketRef.current?.emit("endOfTurn", {username: username, gameSessionId: gameSession.sessionId});
     }
-
-    const handleModalClosed = (isWinner: boolean) => {
+    // Action game 
+    const onAction = (cards: GameCard[]) => {
+        console.log("onAction", cards);
+        if(socketRef.current) {
+            // card one attack card two
+            socketRef.current.emit("action", {type: "attack", username: username, selectedCards: cards, gameSessionId: uuid});
+        }
+    }
+    
+    const handleModalClosed = async (isWinner: boolean) => {
         console.log(`isWinner: ${isWinner}`);
         socketRef.current?.emit("gameEnded", gameSession.sessionId)
         if (isWinner) {
@@ -270,16 +310,7 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
             // loser get - 500$
         } 
         // add battle history?
-
-    }
-    
-    // Action game 
-    const onAction = (cards: GameCard[]) => {
-        console.log("onAction", cards);
-        if(socketRef.current) {
-            // card one attack card two
-            socketRef.current.emit("action", {type: "attack", username: username, selectedCards: cards, gameSessionId: uuid});
-        }
+        await historizeGame();
     }
 
     if (loading) {
