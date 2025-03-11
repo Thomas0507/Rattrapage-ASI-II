@@ -229,7 +229,9 @@ export const initSocket = (server: any) => {
       console.log("\ntype: ", type, "\ngameSessionId: ", gameSessionId, "\nusername: ", username);
 
       const gameSession = await GameSessionEntity.findOne({"sessionId": gameSessionId});
-
+      if (gameSession.playerWhoCanPlay !== username) {
+        return;
+      }      
       const playerWhoAttacked = gameSession.players.find(el => el.playerName === username);
       const playerAttacked = gameSession.players.find(el => el.playerName !== username)
       console.log(`playerWhoAttacked: ${playerWhoAttacked}`);  
@@ -261,7 +263,7 @@ export const initSocket = (server: any) => {
           // username won
           console.log("winner");
           gameSession.status = "finished";
-          gameSession.turnElapsed += 1;
+          gameSession.elapsedTurn += 1;
           gameNamespace.to(gameSessionId).emit("gameResult", {winner: username, loser: playerAttacked.playerName, gameSession: gameSession});
           await gameSession.save();
           return;
@@ -288,7 +290,7 @@ export const initSocket = (server: any) => {
       
       const playerToPlay = gameSession.players.find(el => el.playerName !== username);
       playerToPlay.actionPoint += 1;
-      gameSession.turnElapsed +=1;
+      gameSession.elapsedTurn +=1;
       gameSession.playerWhoCanPlay = playerToPlay.playerName;
       await gameSession.save();
       gameNamespace.to(gameSessionId).emit("turnEnded", {username, gameSessionId, gameSession});

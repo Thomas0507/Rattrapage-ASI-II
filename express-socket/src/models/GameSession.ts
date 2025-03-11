@@ -30,7 +30,7 @@ export interface GameSession extends Document {
     roomName: string;
     description: string;
     capacity: number;
-    turnElapsed: number;
+    elapsedTurn: number;
     currentNbPlayers: number;
     playerWhoCanPlay: string;
     players: Player[];
@@ -54,7 +54,8 @@ const CardSchema = new Schema({
   maxHealth: {type: Number},
   maxAttack: {type: Number},
   maxDefense: {type: Number},
-  owner: {type: String}
+  owner: {type: String},
+  elapsedTurn: {type: Number}
  
 })
 
