@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
 
@@ -20,8 +21,13 @@ public class PromptGenerationService
 	@Autowired
 	private JmsTemplate jmsTemplate;
 
+	private static final String SERVICE_2_API_URL = "http://logger:8089/messages";
+
 	@JmsListener(destination = "service-text.queue")
 	public void receiveMessage(MessageRequest message) {
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.postForEntity(SERVICE_2_API_URL, message, String.class);
+
 		ChatResponse response = ollamaChatModel.call(
 				new Prompt("Generate exclusively a short description of a creature named " + message.getPayload().get("name")
 						+ " based on this: " + message.getPayload().get("prompt")));

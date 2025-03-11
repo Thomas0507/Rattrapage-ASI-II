@@ -24,6 +24,10 @@ public class OrchestratorService
 
 	private String bearerToken;
 
+	private static final String SERVICE_BACK_API_URL = "http://spring-back:8081/cards/generateFromOrchestrator";
+
+	private static final String SERVICE_2_API_URL = "http://logger:8089/messages";
+
 	public void sendRequests(UUID requestId, String userToken, PromptRequest promptRequest) {
 		this.bearerToken = userToken;
 		cardRepository.save(new CardEntity(requestId, promptRequest.getName(), null, null));
@@ -44,6 +48,9 @@ public class OrchestratorService
 
 	@JmsListener(destination = "response.queue")
 	public void receiveResponse(MessageRequest message) {
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.postForEntity(SERVICE_2_API_URL, message, String.class);
+
 		Optional<CardEntity> optionalCard = cardRepository.findByCardId(UUID.fromString(message.getRequestId()));
 		if (optionalCard.isPresent())
 		{
@@ -67,17 +74,13 @@ public class OrchestratorService
 				return;
 			}
 
-			final String uri = "http://spring-back:8081/cards/generateFromOrchestrator";
-
-			RestTemplate restTemplate = new RestTemplate();
-
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
 			headers.setBearerAuth(bearerToken.replace("Bearer ", ""));
 
 			HttpEntity<CardEntity> requestEntity = new HttpEntity<>(finalCard, headers);
 
-			restTemplate.postForObject(uri, requestEntity, String.class);
+			restTemplate.postForObject(SERVICE_BACK_API_URL, requestEntity, String.class);
 		}
 	}
 }

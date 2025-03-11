@@ -100,6 +100,7 @@ services:
     depends_on:
       - activemq
       - ollama
+      - logger
     build: ./card-prompt
     container_name: card-prompt
     ports:
@@ -108,6 +109,7 @@ services:
   spring-card-image:
     depends_on:
         - activemq
+        - logger
     build: ./card-image
     container_name: card-image
     ports:
@@ -117,11 +119,21 @@ services:
     depends_on:
       - activemq
       - mongo-orch
+      - logger
     build: ./orchestrator
     container_name: orchestrator
     ports:
       - "8088:8088"
       - "5008:5008"
+  logger:
+    depends_on:
+      - activemq
+      - db
+    build: ./logger
+    container_name: logger
+    ports:
+      - "8089:8089"
+      - "5009:5009"
   mongo-orch:
     image: mongo:6
     container_name: mongo-orch
