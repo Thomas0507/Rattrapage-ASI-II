@@ -42,6 +42,340 @@ interface User {
   socketId: string;
 }
 
+class GameEvent {
+  eventType: string;
+  eventTarget: string;
+  eventFrom: string;
+  color: string;
+  attackSuccess: number;
+  constructor(eventType?:string, eventTarget?:string, eventFrom?:string, color?:string, attackSuccess?:number) {
+    this.eventType = eventType || '';
+    this.eventTarget = eventTarget || '';
+    this.eventFrom = eventFrom || '';
+    this.color = color || '';
+    this.attackSuccess = attackSuccess || 0;
+  }
+}
+
+enum typeEnum {
+  NEUTRAL = "NEUTRAL",
+  GRASS = "GRASS",
+  GROUND = "GROUND",
+  WATER = "WATER",
+  ICE = "ICE",
+  DRAGON = "DRAGON",
+  DARK = "DARK",
+  ELECTRIC = "ELECTRIC",
+  FIRE = "FIRE"
+}
+
+// static function for damage calculation 
+
+function calculateDamage(cardAttacker: Card, cardDefenser: Card, critMultiplier: number): number {
+  return (cardAttacker.attack * calculateTypeMultiplicator(cardAttacker, cardDefenser) * critMultiplier - cardDefenser.defense);
+}
+
+
+function calculateTypeMultiplicator(cardAttacker, cardDefenser): number {
+  let multiplicator = 1;
+  // type advantage is damage * 1.5
+  // type disadvantage is datam * 0.5
+  // type neutrality is damage * 1
+  switch(cardAttacker.mainType) {
+    case typeEnum.NEUTRAL:
+      switch(cardDefenser.mainType) {
+        case typeEnum.NEUTRAL:
+          multiplicator = 1;
+          break;
+        case typeEnum.GRASS:
+          multiplicator = 1;
+          break;
+        case typeEnum.GROUND:
+          multiplicator = 1;
+          break;
+        case typeEnum.WATER:
+          multiplicator = 1;
+          break;
+        case typeEnum.ICE:
+          multiplicator = 1;
+          break;
+        case typeEnum.DRAGON:
+          multiplicator = 1;
+          break;
+        case typeEnum.DARK:
+          multiplicator = 0.5;
+          break;
+        case typeEnum.ELECTRIC:
+          multiplicator = 1;
+          break;
+        case typeEnum.FIRE:
+          multiplicator = 1;
+          break;    
+      }
+      break;
+    case typeEnum.FIRE:
+      switch(cardDefenser.mainType) {
+        case typeEnum.NEUTRAL:
+          multiplicator = 1;
+          break;
+        case typeEnum.GRASS:
+          multiplicator = 1.5;
+          break;
+        case typeEnum.GROUND:
+          multiplicator = 1.2;
+          break;
+        case typeEnum.WATER:
+          multiplicator = 0.5;
+          break;
+        case typeEnum.ICE:
+          multiplicator = 1.5;
+          break;
+        case typeEnum.DRAGON:
+          multiplicator = 1;
+          break;
+        case typeEnum.DARK:
+          multiplicator = 1;
+          break;
+        case typeEnum.ELECTRIC:
+          multiplicator = 0.8;
+          break;
+        case typeEnum.FIRE:
+          multiplicator = 1;
+          break;    
+      }
+    break;
+    case typeEnum.GRASS:
+      switch(cardDefenser.mainType) {
+        case typeEnum.NEUTRAL:
+          multiplicator = 1;
+          break;
+        case typeEnum.GRASS:
+          multiplicator = 1;
+          break;
+        case typeEnum.GROUND:
+          multiplicator = 1.5;
+          break;
+        case typeEnum.WATER:
+          multiplicator = 0.8;
+          break;
+        case typeEnum.ICE:
+          multiplicator = 1;
+          break;
+        case typeEnum.DRAGON:
+          multiplicator = 1;
+          break;
+        case typeEnum.DARK:
+          multiplicator = 1;
+          break;
+        case typeEnum.ELECTRIC:
+          multiplicator = 1.2;
+          break;
+        case typeEnum.FIRE:
+          multiplicator = 0.5;
+          break;    
+      }
+      break;
+    case typeEnum.GROUND:
+      switch(cardDefenser.mainType) {
+        case typeEnum.NEUTRAL:
+          multiplicator = 1;
+          break;
+        case typeEnum.GRASS:
+          multiplicator = 0.5;
+          break;
+        case typeEnum.GROUND:
+          multiplicator = 1;
+          break;
+        case typeEnum.WATER:
+          multiplicator = 1.2;
+          break;
+        case typeEnum.ICE:
+          multiplicator = 1;
+          break;
+        case typeEnum.DRAGON:
+          multiplicator = 1;
+          break;
+        case typeEnum.DARK:
+          multiplicator = 1;
+          break;
+        case typeEnum.ELECTRIC:
+          multiplicator = 1.5;
+          break;
+        case typeEnum.FIRE:
+          multiplicator = 0.8;
+          break;    
+      }
+      break;
+    case typeEnum.WATER:
+      switch(cardDefenser.mainType) {
+        case typeEnum.NEUTRAL:
+          multiplicator = 1;
+          break;
+        case typeEnum.GRASS:
+          multiplicator = 1.2;
+          break;
+        case typeEnum.GROUND:
+          multiplicator = 0.8;
+          break;
+        case typeEnum.WATER:
+          multiplicator = 1;
+          break;
+        case typeEnum.ICE:
+          multiplicator = 1;
+          break;
+        case typeEnum.DRAGON:
+          multiplicator = 1;
+          break;
+        case typeEnum.DARK:
+          multiplicator = 1;
+          break;
+        case typeEnum.ELECTRIC:
+          multiplicator = 0.5;
+          break;
+        case typeEnum.FIRE:
+          multiplicator = 1.5;
+          break;    
+      }
+      break;
+    case typeEnum.ICE:
+      switch(cardDefenser.mainType) {
+        case typeEnum.NEUTRAL:
+          multiplicator = 1;
+          break;
+        case typeEnum.GRASS:
+          multiplicator = 0.8;
+          break;
+        case typeEnum.GROUND:
+          multiplicator = 1;
+          break;
+        case typeEnum.WATER:
+          multiplicator = 0.8;
+          break;
+        case typeEnum.ICE:
+          multiplicator = 1;
+          break;
+        case typeEnum.DRAGON:
+          multiplicator = 1.5;
+          break;
+        case typeEnum.DARK:
+          multiplicator = 1.2;
+          break;
+        case typeEnum.ELECTRIC:
+          multiplicator = 1;
+          break;
+        case typeEnum.FIRE:
+          multiplicator = 0.5;
+          break;    
+      }
+      break;
+    case typeEnum.DRAGON:
+      switch(cardDefenser.mainType) {
+        case typeEnum.NEUTRAL:
+          multiplicator = 1.2;
+          break;
+        case typeEnum.GRASS:
+          multiplicator = 1;
+          break;
+        case typeEnum.GROUND:
+          multiplicator = 1;
+          break;
+        case typeEnum.WATER:
+          multiplicator = 1;
+          break;
+        case typeEnum.ICE:
+          multiplicator = 0.5;
+          break;
+        case typeEnum.DRAGON:
+          multiplicator = 1;
+          break;
+        case typeEnum.DARK:
+          multiplicator = 1.5;
+          break;
+        case typeEnum.ELECTRIC:
+          multiplicator = 1;
+          break;
+        case typeEnum.FIRE:
+          multiplicator = 0.8;
+          break;    
+      }
+      break;
+    case typeEnum.DARK:
+      switch(cardDefenser.mainType) {
+        case typeEnum.NEUTRAL:
+          multiplicator = 1.5;
+          break;
+        case typeEnum.GRASS:
+          multiplicator = 1;
+          break;
+        case typeEnum.GROUND:
+          multiplicator = 1;
+          break;
+        case typeEnum.WATER:
+          multiplicator = 1;
+          break;
+        case typeEnum.ICE:
+          multiplicator = 0.8;
+          break;
+        case typeEnum.DRAGON:
+          multiplicator = 0.5;
+          break;
+        case typeEnum.DARK:
+          multiplicator = 1;
+          break;
+        case typeEnum.ELECTRIC:
+          multiplicator = 1;
+          break;
+        case typeEnum.FIRE:
+          multiplicator = 1;
+          break;    
+      }
+      break;
+    case typeEnum.ELECTRIC:
+      switch(cardDefenser.mainType) {
+        case typeEnum.NEUTRAL:
+          multiplicator = 1;
+          break;
+        case typeEnum.GRASS:
+          multiplicator = 0.8;          
+          break;
+        case typeEnum.GROUND:
+          multiplicator = 0.5;
+          break;
+        case typeEnum.WATER:
+          multiplicator = 1.5;
+          break;
+        case typeEnum.ICE:
+          multiplicator = 1;
+          break;
+        case typeEnum.DRAGON:
+          multiplicator = 1;
+          break;
+        case typeEnum.DARK:
+          multiplicator = 1;
+          break;
+        case typeEnum.ELECTRIC:
+          multiplicator = 1;
+          break;
+        case typeEnum.FIRE:
+          multiplicator = 1.2;
+          break;    
+      }
+    break;
+  }
+  return multiplicator;
+}
+
+function getCriticalCoef(cardAttacker: Card, cardDefenser: Card): number {
+  const randomBinary: number = Math.floor(Math.random() * 101);
+  return randomBinary <= 90 ? 1 : 2;
+}
+
+function didHeDodge(): boolean {
+  const randomBinary: number = Math.floor(Math.random() * 101);
+  console.log(randomBinary, randomBinary >= 95);
+  return randomBinary >= 95;
+}
+
 const privateUsers = new Map<string, User>();
 
 export const globalUsers = new Map<string, User>();
@@ -226,7 +560,7 @@ export const initSocket = (server: any) => {
     });
 
     socket.on("action", async ({type, selectedCards, username, gameSessionId}: ActionProps) => {
-      console.log("\ntype: ", type, "\ngameSessionId: ", gameSessionId, "\nusername: ", username);
+      // console.log("\ntype: ", type, "\ngameSessionId: ", gameSessionId, "\nusername: ", username);
 
       const gameSession = await GameSessionEntity.findOne({"sessionId": gameSessionId});
       if (gameSession.playerWhoCanPlay !== username) {
@@ -234,9 +568,9 @@ export const initSocket = (server: any) => {
       }      
       const playerWhoAttacked = gameSession.players.find(el => el.playerName === username);
       const playerAttacked = gameSession.players.find(el => el.playerName !== username)
-      console.log(`playerWhoAttacked: ${playerWhoAttacked}`);  
+      // console.log(`playerWhoAttacked: ${playerWhoAttacked}`);  
       if (playerWhoAttacked.actionPoint <= 0) {
-        console.log("bizarre");
+        // console.log("bizarre");
         return;
       }
       const adversaryCard: Card[] = playerAttacked.cards
@@ -244,11 +578,26 @@ export const initSocket = (server: any) => {
       const attackerCard = playerWhoAttacked.cards.find(el => el.id === selectedCards[0].id);
       const defenserCard = adversaryCard.find(el => el.id === selectedCards[1].id);
 
-      console.log(attackerCard.name," attacked ", defenserCard.name, `${attackerCard.attack} - ${defenserCard.defense} = ${attackerCard.attack - defenserCard.defense}`);
-      // add dodge chance, critical rate etc... 
-      const damageDealth = attackerCard.attack - defenserCard.defense;
-      defenserCard.health -= damageDealth > 0 ? damageDealth : 0;
+      // console.log(attackerCard.name," attacked ", defenserCard.name, `${attackerCard.attack} - ${defenserCard.defense} = ${attackerCard.attack - defenserCard.defense}`);
       
+      const gameEventToEmit = new GameEvent("ATTACK", defenserCard.name, attackerCard.name, "", 1);
+      // add dodge chance, critical rate etc... 
+      if (didHeDodge()) {
+        gameEventToEmit.eventType = "DODGE";
+      } else {
+        const criticalCoef = getCriticalCoef(attackerCard, defenserCard);
+
+        
+        const typeAdvantage = calculateTypeMultiplicator(attackerCard, defenserCard)
+        gameEventToEmit.attackSuccess = typeAdvantage;
+        const damageDealth = calculateDamage(attackerCard, defenserCard, criticalCoef);
+        // const damageDealth = attackerCard.attack - defenserCard.defense;
+        defenserCard.health -= damageDealth > 0 ? damageDealth : 0;
+        if (criticalCoef !== 1) {
+          gameEventToEmit.eventType = "CRITICAL";
+        }
+      }
+            
       if (defenserCard.health < 0) {
         defenserCard.health = 0;
         // atleast one card is dead, check if all the others are :
@@ -274,10 +623,13 @@ export const initSocket = (server: any) => {
       //
       await gameSession.save();
       // emit infos
+      
+      // event for frontend display:
       gameNamespace.to(gameSession.sessionId).emit('actionResult', {
         player1: gameSession.players[0],
         player2: gameSession.players[1],
-        gameSession: gameSession
+        gameSession: gameSession,
+        gameEvent: gameEventToEmit
       });
 
     });
