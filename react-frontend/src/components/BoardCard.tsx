@@ -12,7 +12,8 @@ interface BoardCardProps {
 export const BoardCard = ({card, handleCardClick, disabled}: BoardCardProps) => {
 
     function getImagePath(mainType: string) {
-        return "/assets/" + mainType.toLocaleUpperCase() +".png";
+
+        return disabled ? "" : "/assets/" + mainType.toLocaleUpperCase() +".png";
     }
 
     const onCardSelected = () => {
