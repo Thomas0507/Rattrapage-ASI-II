@@ -42,6 +42,10 @@ interface EndOfTurnEvent {
     gameSession: GameSession;
 }
 
+interface GameResult {
+    winner: string;
+    loser: string;
+}
 
 
 const SOCKET_SERVER_URL = "http://localhost:3000/game";
@@ -121,6 +125,10 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
         setLaunchGame(true);
     }
 
+    function onGameResult(data: GameResult) {
+        console.log(data);
+    }
+
     // actionResult
     function onActionResult(data: GameSessionStatus) {
         console.log(data);
@@ -148,6 +156,7 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
             socketRef.current.on("setGame", gameIsSet);
             socketRef.current.on("actionResult", onActionResult);
             socketRef.current.on("turnEnded", onTurnEnd);
+            socketRef.current.on("gameResult", onGameResult)
         }
 
         if (socketRef.current !== null) {
@@ -162,6 +171,7 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
                 socketRef.current.off("setGame", gameIsSet);
                 socketRef.current.off("actionResult", onActionResult);
                 socketRef.current.off("turnEnded", onTurnEnd);
+                socketRef.current.off("gameResult", onGameResult)
                 socketRef.current.disconnect();
             }
         }

@@ -227,24 +227,44 @@ export const initSocket = (server: any) => {
 
       const gameSession = await GameSessionEntity.findOne({"sessionId": gameSessionId});
 
-      const playerWhoAttacked = gameSession.players.find(el => el.playerName === username);    
+      const playerWhoAttacked = gameSession.players.find(el => el.playerName === username);
+      const playerAttacked = gameSession.players.find(el => el.playerName !== username)
       console.log(`playerWhoAttacked: ${playerWhoAttacked}`);  
       if (playerWhoAttacked.actionPoint <= 0) {
         console.log("bizarre");
         return;
       }
-      const attackerCard = playerWhoAttacked.cards.find(el => el.id === selectedCards[0].id)
-      const defenserCard = gameSession.players.find(el => el.playerName !== username).cards.find(el => el.id === selectedCards[1].id);
+      const adversaryCard: Card[] = playerAttacked.cards
+
+      const attackerCard = playerWhoAttacked.cards.find(el => el.id === selectedCards[0].id);
+      const defenserCard = adversaryCard.find(el => el.id === selectedCards[1].id);
 
       console.log(attackerCard.name," attacked ", defenserCard.name, `${attackerCard.attack} - ${defenserCard.defense} = ${attackerCard.attack - defenserCard.defense}`);
       // add dodge chance, critical rate etc... 
       const damageDealth = attackerCard.attack - defenserCard.defense;
       defenserCard.health -= damageDealth > 0 ? damageDealth : 0;
       
-      if (defenserCard.health < 0) defenserCard.health = 0;
+      if (defenserCard.health < 0) {
+        defenserCard.health = 0;
+        // atleast one card is dead, check if all the others are :
+        let deadCard: number = 0;
+        adversaryCard.forEach(card => {
+          if (card.health <= 0) {
+            deadCard++;
+          }
+        });
+        console.log(`deadCard: ${deadCard} - advseraryCard.length: ${adversaryCard.length}`);
+        if (deadCard === adversaryCard.length) {
+          // username won
+          console.log("winner");
+          gameSession.status = "finished";
+          gameSession.turnElapsed += 1;
+          gameNamespace.to(gameSessionId).emit("gameResult", {winner: username, loser: playerAttacked.playerName});
+          await gameSession.save();
+          return;
+        }
+      }
       playerWhoAttacked.actionPoint -= 1;
-      // check for victory xd 
-      // todo :
 
       //
       await gameSession.save();
@@ -271,11 +291,6 @@ export const initSocket = (server: any) => {
       gameNamespace.to(gameSessionId).emit("turnEnded", {username, gameSessionId, gameSession});
 
     })
-    // Player actions =>
-    socket.on('play', ({gameSession, move }) => {
-      console.log(`Move in game ${gameSession.sessionId}`)
-      gameNamespace.to(gameSession.sessionId).emit('updateGame', { gameSession, move });
-      });
 
     // Handle disconnect =>
     socket.on('disconnect', async() => {
