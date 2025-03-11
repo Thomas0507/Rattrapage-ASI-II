@@ -13,10 +13,11 @@ import { GamePlayer } from "../../../models/GamePlayer";
 import { GameSessionDto } from "../../../models/interface/GameSessionDto";
 import { GameSessionStatus } from "../../../models/interface/GameSessionStatus";
 import { GameCard } from "../../../models/GameCard";
-import { Container } from "@mui/material";
+import { AlertColor, Container } from "@mui/material";
 import { GameResultComponent } from "../../../components/GameResultComponents";
 import { GameHistorization } from "../../../models/interface/GameHistorization";
 import { truncateString } from "../../../utils/StringUtils";
+import SnackbarGameEvent from "../../../components/SnackbarGameEvent";
 
 interface GameComponentProps {
     username: string;
@@ -52,6 +53,13 @@ interface GameResult {
     gameSession: GameSession;
 }
 
+export type GameEvent = {
+    eventType: string,
+    eventTarget: string,
+    eventFrom: string,
+    color: string;
+    attackSuccess: number
+}
 
 const SOCKET_SERVER_URL = "http://localhost:3000/game";
 
@@ -66,6 +74,15 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
     const [playerInfo, setPlayerInfo] = useState<Player>(new Player(0, "", [], 0));
     const socketRef = useRef<Socket>(null)
 
+    // snackbar events  
+    const [gameEvent, setGameEvent] = useState<GameEvent>({eventType: "", eventTarget: "", eventFrom: "", color:"", attackSuccess: 1});
+    const snackbarRef = useRef<any>(null);
+
+    const handleShowSnackbar = () => {
+        if (snackbarRef.current) {
+          snackbarRef.current.show();
+        }
+      };
 
 
     // game constants
@@ -148,6 +165,9 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
         setPlayerOne(data.player1);
         setPlayerTwo(data.player2);
         setGameSession(data.gameSession);
+        setGameEvent(data.gameEvent);
+
+        handleShowSnackbar()
         // action ended, need to update everything;
     }
     // end of turn 
@@ -344,6 +364,10 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
                     playerTwo={playerTwo}
                     onAction={onAction}
                     onEndOfTurn={handleEndofTurn}></GameProcessComponent>
+                          <SnackbarGameEvent
+                            ref={snackbarRef}
+                            gameEvent={gameEvent}
+                        />
                 {/*  */}
                 </div>)
         case 'finished':

@@ -1,11 +1,12 @@
 import { Box, Button, Card, CardContent, Container, Divider, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { GameSession } from "../models/GameSession";
 import { PlayerModel } from "../models/PlayerModel";
 import { GamePlayer } from "../models/GamePlayer";
 import { BoardCard } from "./BoardCard";
 import { GameCard } from "../models/GameCard";
 import { motion } from "framer-motion";
+import SnackbarGameEvent from "./SnackbarGameEvent";
 
 // Contains all game logic
 export interface GameMainComponentProps {
@@ -21,13 +22,11 @@ export interface GameMainComponentProps {
 export const GameMainComponent = ({username, playerOne, playerTwo, gameSession, actionHandling, endOfTurnFunction}: GameMainComponentProps) => {
 
   const [adversaryUsername, setAdversaryUsername] = useState<string>("");
-
-
-  
   const [playerOneCards, setPlayerOneCards] = useState<GameCard[]>(playerOne.cards);
-  const [playerTwoCards, setplayerTwoCards] = useState<GameCard[]>(playerTwo.cards);
-  
+  const [playerTwoCards, setplayerTwoCards] = useState<GameCard[]>(playerTwo.cards); 
   const [selectedCards, setSelectedCards] = useState<GameCard[]>([]);
+
+
 
   useEffect(() => {
       console.log("rerendering game main component", username, gameSession.playerWhoCanPlay);
@@ -57,7 +56,7 @@ export const GameMainComponent = ({username, playerOne, playerTwo, gameSession, 
       })
       setPlayerOneCards([...playerOneCards]);
       setplayerTwoCards([...playerTwoCards]);
-      console.log("should have been reset");
+      // console.log("should have been reset");
     }
 
     function updateCard(card: GameCard) {
