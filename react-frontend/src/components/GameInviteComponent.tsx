@@ -7,7 +7,7 @@ interface GameInviteProps {
 
 export const GameInviteComponent = ({onChange}: GameInviteProps) => {
     return (
-        <div>
+        <div style={{flexGrow: 1}}>
             <Input
             placeholder="Enter the game UUID"
             fullWidth

@@ -54,6 +54,17 @@
                             <outputDirectory>../card-image</outputDirectory>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>logger</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>logger</classifier>
+                            <outputDirectory>../logger</outputDirectory>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>

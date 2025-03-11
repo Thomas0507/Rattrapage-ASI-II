@@ -102,6 +102,46 @@
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"CreateSessionResponse": {
+				"properties": {
+					"uuid": {
+						"type": "string"
+					},
+					"errorResponse": {
+						"$ref": "#/components/schemas/ErrorResponse"
+					}
+				},
+				"required": [
+					"uuid",
+					"errorResponse"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CreateSessionRequest": {
+				"properties": {
+					"autoJoin": {
+						"type": "boolean"
+					},
+					"capacity": {
+						"type": "number",
+						"format": "double"
+					},
+					"roomDescription": {
+						"type": "string"
+					},
+					"roomName": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"autoJoin",
+					"capacity",
+					"roomDescription",
+					"roomName"
+				],
+				"type": "object"
 			}
 		},
 		"securitySchemes": {}
@@ -148,6 +188,50 @@
 								"schema": {
 									"$ref": "#/components/schemas/SessionResponse"
 								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateGameSession",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CreateSessionResponse"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateSessionRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/game/all": {
+			"get": {
+				"operationId": "GetAllSession",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
 							}
 						}
 					}

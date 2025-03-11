@@ -32,6 +32,14 @@ public class CustomExceptionHandler
 		return new ErrorDto(HttpStatus.UNAUTHORIZED.value(), e.getMessage(), "Invalid credentials");
 
 	}
+
+	@ExceptionHandler(UserAlreadyExistsException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ErrorDto processAuthenticationException(UserAlreadyExistsException e) {
+		return new ErrorDto(HttpStatus.BAD_REQUEST.value(), e.getMessage(), e.getErrorReason());
+
+	}
+
 	@ExceptionHandler(BadEndpointException.class)
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
 	public ErrorDto processIllegalSummon(BadEndpointException e) {
@@ -39,21 +47,21 @@ public class CustomExceptionHandler
 	}
 
 	@ExceptionHandler(BannerNotActiveException.class)
-	@ResponseStatus(HttpStatus.UNAUTHORIZED)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ErrorDto processBannerNotActive(BannerNotActiveException e) {
-		return new ErrorDto(HttpStatus.UNAUTHORIZED.value(), e.getMessage(), e.getErrorReason());
+		return new ErrorDto(HttpStatus.BAD_REQUEST.value(), e.getMessage(), e.getErrorReason());
 	}
 
 	@ExceptionHandler(NotEnoughMoneyException.class)
-	@ResponseStatus(HttpStatus.UNAUTHORIZED)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ErrorDto processNotEnough(NotEnoughMoneyException e) {
-		return new ErrorDto(HttpStatus.UNAUTHORIZED.value(), e.getMessage(), e.getErrorReason());
+		return new ErrorDto(HttpStatus.BAD_REQUEST.value(), e.getMessage(), e.getErrorReason());
 	}
 
 	@ExceptionHandler(BannerHasEndedException.class)
-	@ResponseStatus(HttpStatus.UNAUTHORIZED)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public ErrorDto processBannerHasEnded(BannerHasEndedException e) {
-		return new ErrorDto(HttpStatus.UNAUTHORIZED.value(), e.getMessage(), e.getErrorReason());
+		return new ErrorDto(HttpStatus.NOT_FOUND.value(), e.getMessage(), e.getErrorReason());
 	}
 
 	@ExceptionHandler(NotABeginnerException.class)

@@ -28,8 +28,9 @@ export interface Card {
 export interface GameSession extends Document {
     sessionId: string;
     roomName: string;
+    description: string;
     capacity: number;
-    turnElapsed: number;
+    elapsedTurn: number;
     currentNbPlayers: number;
     playerWhoCanPlay: string;
     players: Player[];
@@ -53,7 +54,8 @@ const CardSchema = new Schema({
   maxHealth: {type: Number},
   maxAttack: {type: Number},
   maxDefense: {type: Number},
-  owner: {type: String}
+  owner: {type: String},
+  elapsedTurn: {type: Number}
  
 })
 
@@ -74,6 +76,7 @@ const playerSchema = new Schema({
 const gameSessionSchema: Schema = new Schema({
   sessionId: { type: String, required: true, unique: true },
   roomName: { type: String, default: "Untitled room"},
+  description: {type: String, default: "No description were given"},
   capacity: { type: Number, required: true, default: 2},
   currentNbPlayers: { type: Number, required: true, default: 0},
   players: { type: [playerSchema], default:[] },

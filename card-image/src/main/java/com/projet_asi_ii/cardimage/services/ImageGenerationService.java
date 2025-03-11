@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,8 +23,13 @@ public class ImageGenerationService {
     @Autowired
     private OpenAiImageModel openAiImageModel;
 
+    private static final String SERVICE_2_API_URL = "http://logger:8089/messages";
+
     @JmsListener(destination = "service-image.queue")
     public void receiveMessage(MessageRequest message) {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.postForEntity(SERVICE_2_API_URL, message, String.class);
+
         String requestId = message.getRequestId();
         Map<String, Object> payload = message.getPayload();
         String imageUrl = null;

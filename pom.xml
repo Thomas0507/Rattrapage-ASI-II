@@ -15,6 +15,7 @@
         <module>card-image</module>
         <module>card-prompt</module>
         <module>asi-ii</module>
+        <module>logger</module>
     </modules>
 
 

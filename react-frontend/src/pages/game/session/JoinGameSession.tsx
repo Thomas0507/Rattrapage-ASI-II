@@ -66,6 +66,8 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
     const [playerInfo, setPlayerInfo] = useState<Player>(new Player(0, "", [], 0));
     const socketRef = useRef<Socket>(null)
 
+
+
     // game constants
     const [playerOne, setPlayerOne] = useState<any>(new GamePlayer());
     const [playerTwo, setPlayerTwo] = useState<any>(new GamePlayer());
@@ -135,6 +137,7 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
     function onGameResult(data: GameResult) {
         console.log(data);
         setWinner(data.winner);
+        console.log("onGameResult", data);
         setGameSession(data.gameSession);
         setRoomState(data.gameSession.status);
     }
@@ -246,6 +249,7 @@ export const GameComponent = ({username, uuid}: GameComponentProps) => {
     }
 
     const historizeGame = async(): Promise<void> => {
+        console.log(`gameSessionElapsedTurn: ${gameSession.elapsedTurn}, gameSession${gameSession}`);
         await fetch("http://localhost:8081/game/saveGame", getOptionsByRequestType(RequestType.POST, {
             playerOne: playerOne.playerName,
             playerTwo: playerTwo.playerName,

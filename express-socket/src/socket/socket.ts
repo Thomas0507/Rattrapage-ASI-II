@@ -3,6 +3,7 @@ import { getuserNameFromToken } from '../jwt/jwt-service';
 import Message from "../models/message";
 import message from '../models/message';
 import GameSessionEntity, { Card, GameSession } from '../models/GameSession';
+import { setNotifNamespace } from '../routes';
 
 interface Message {
   content: string;
@@ -42,6 +43,8 @@ interface User {
 }
 
 const privateUsers = new Map<string, User>();
+
+export const globalUsers = new Map<string, User>();
 
 export const initSocket = (server: any) => {
   
@@ -226,7 +229,9 @@ export const initSocket = (server: any) => {
       console.log("\ntype: ", type, "\ngameSessionId: ", gameSessionId, "\nusername: ", username);
 
       const gameSession = await GameSessionEntity.findOne({"sessionId": gameSessionId});
-
+      if (gameSession.playerWhoCanPlay !== username) {
+        return;
+      }      
       const playerWhoAttacked = gameSession.players.find(el => el.playerName === username);
       const playerAttacked = gameSession.players.find(el => el.playerName !== username)
       console.log(`playerWhoAttacked: ${playerWhoAttacked}`);  
@@ -258,7 +263,7 @@ export const initSocket = (server: any) => {
           // username won
           console.log("winner");
           gameSession.status = "finished";
-          gameSession.turnElapsed += 1;
+          gameSession.elapsedTurn += 1;
           gameNamespace.to(gameSessionId).emit("gameResult", {winner: username, loser: playerAttacked.playerName, gameSession: gameSession});
           await gameSession.save();
           return;
@@ -285,7 +290,7 @@ export const initSocket = (server: any) => {
       
       const playerToPlay = gameSession.players.find(el => el.playerName !== username);
       playerToPlay.actionPoint += 1;
-      gameSession.turnElapsed +=1;
+      gameSession.elapsedTurn +=1;
       gameSession.playerWhoCanPlay = playerToPlay.playerName;
       await gameSession.save();
       gameNamespace.to(gameSessionId).emit("turnEnded", {username, gameSessionId, gameSession});
@@ -350,6 +355,29 @@ export const initSocket = (server: any) => {
         }
       });
       console.log(`User disconnected: ${socket.id}`);
+    });
+  });
+
+  // notif namespace =>
+  const notifNamespace = io.of('/notif');
+  setNotifNamespace(notifNamespace);
+
+  notifNamespace.on('connection', (socket: Socket) => {
+    console.log('Un client est connecté au namespace /notif');
+
+    socket.on("register", (username: string) => {
+      console.log(`User registered: ${username} with socket ID ${socket.id}`);
+      globalUsers.set(username,
+        {
+          id: username,
+          socketId: socket.id
+        });
+        console.log(`User registered: ${username} - Socket: ${socket.id}`);
+    })
+  
+    // Gérer la déconnexion du client
+    socket.on('disconnect', () => {
+      console.log('Client déconnecté du namespace /notif');
     });
   });
 

@@ -1,5 +1,6 @@
 package com.projet_asi_ii.asi_ii.services;
 
+import com.projet_asi_ii.asi_ii.Exceptions.UserAlreadyExistsException;
 import com.projet_asi_ii.asi_ii.dtos.UserDto;
 import com.projet_asi_ii.asi_ii.entities.PlayerEntity;
 import com.projet_asi_ii.asi_ii.entities.UserEntity;
@@ -28,7 +29,14 @@ public class UserService
 	private CardRepository cardRepository;
 
 	@Transactional
-	public boolean insertUser(UserRequest userRequest) {
+	public boolean insertUser(UserRequest userRequest) throws UserAlreadyExistsException
+	{
+
+		if (appUserRepository.findByUsername(userRequest.getUsername()).isPresent())
+		{
+			throw new UserAlreadyExistsException("User already exists", "The user cannot sign up with this username as it is already used");
+		}
+
 		UserEntity userEntity = new UserEntity();
 		userEntity.setUsername(userRequest.getUsername());
 		userEntity.setEmail(userRequest.getEmail());

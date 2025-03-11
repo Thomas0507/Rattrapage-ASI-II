@@ -25,6 +25,7 @@ import Buy from "./pages/transaction/Buy";
 import Sell from "./pages/transaction/Sell";
 import { GamePage } from "./pages/game/GamePage";
 import { GameSessionPage } from "./pages/game/session/GameSessionPage";
+import NotifComponent from "./pages/notif/NotifComponent";
 
 
 function App({ }) {
@@ -34,6 +35,7 @@ function App({ }) {
   return (
     <>
     <Header user={user}/>
+    <NotifComponent/>
     <Routes>
       {/* public routes */}
       <Route element={<HomeLayout/>}>
