@@ -108,7 +108,7 @@ public class CardController {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             UserEntity uE = (UserEntity) authentication.getPrincipal();
 
-            final String uri = "http://express-socket:3000/send-notification";
+            final String uri = "http://nginx/ws/send-notification";
             RestTemplate restTemplate = new RestTemplate();
 
             HttpHeaders headers = new HttpHeaders();
