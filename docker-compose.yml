@@ -79,7 +79,6 @@ services:
     depends_on:
       - spring-back
       - express-socket
-
   mongodb:
     image: mongo
     restart: always
@@ -95,7 +94,6 @@ services:
       MONGO_INITDB_DATABASE: asi-ii-mdb
     volumes:
       - mongodb-data:/var/lib/mongodb-data
-
   mongo-express:
     image: mongo-express
     restart: always
@@ -107,7 +105,6 @@ services:
       ME_CONFIG_MONGODB_URL: mongodb://root:root@mongodb:27017/
       ME_CONFIG_BASICAUTH: false
       ME_CONFIG_MONGODB_SERVER: mongodb
-
   spring-card-prompt:
     depends_on:
       - activemq
@@ -169,7 +166,6 @@ services:
         limits:
           memory: 4g
           cpus: "2.0"
-  
 volumes:
   local_pgdata:
   pgadmin-data:

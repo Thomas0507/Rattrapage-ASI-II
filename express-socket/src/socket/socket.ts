@@ -607,14 +607,15 @@ export const initSocket = (server: any) => {
             deadCard++;
           }
         });
-        console.log(`deadCard: ${deadCard} - advseraryCard.length: ${adversaryCard.length}`);
+        // console.log(`deadCard: ${deadCard} - advseraryCard.length: ${adversaryCard.length}`);
         if (deadCard === adversaryCard.length) {
           // username won
-          console.log("winner");
+          // console.log("winner");
           gameSession.status = "finished";
           gameSession.elapsedTurn += 1;
           gameNamespace.to(gameSessionId).emit("gameResult", {winner: username, loser: playerAttacked.playerName, gameSession: gameSession});
           await gameSession.save();
+          // send info to backend for synchro =>S
           return;
         }
       }
