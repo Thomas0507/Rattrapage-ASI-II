@@ -37,17 +37,19 @@ public class CardService {
         return cardDtos;
     }
     @Transactional
-    public boolean insertCards(List<CardDto> cards) {
+    public List<CardDto> insertCards(List<CardDto> cards) {
+        List<CardDto> list = new ArrayList<>();
         for(CardDto cardDto : cards) {
             CardEntity ce = CardMapper.INSTANCE.toCardEntity(cardDto);
             try {
-                cardRepository.save(ce);
+                ce = cardRepository.save(ce);
+                list.add(CardMapper.INSTANCE.toCardDto(ce));
             } catch (Exception e) {
                 e.printStackTrace();
-                return false;
+                return null;
             }
         }
-        return true;
+        return list;
     }
 
     public List<CardDto>getCardsWithRange(Integer page, Integer size) {

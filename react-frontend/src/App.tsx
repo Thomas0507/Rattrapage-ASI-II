@@ -35,7 +35,7 @@ function App({ }) {
   return (
     <>
     <Header user={user}/>
-    <NotifComponent/>
+    {user && <NotifComponent user={user}/>}
     <Routes>
       {/* public routes */}
       <Route element={<HomeLayout/>}>
